@@ -3,6 +3,7 @@
 *.bbl
 *.blg
 *.brf
+*.dvi
 *.idx
 *.ilg
 *.ind
