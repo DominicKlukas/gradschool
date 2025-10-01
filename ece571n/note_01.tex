@@ -1,0 +1,43 @@
+\note{1}{Wed 03 Sep}{Course Introduction}
+
+Definition from wikipedia: maximize some reward function with respect to a sequence of decisions over time. Applications we looked at in class: drone racing project, fusion reactor plasma shape. Fleets of autonomous vehicles. Smart power grids. City-wide traffic control. Chess, and poker. But then, the same algorithm used for chess and poker, can then find faster matrix multiplication algorithms: find fastest matrix decompositions. In a word: not just robotics, a lot of problems can be framed in this way.
+
+Course objectives: formulate real-world decision-making problems mathematically. Then, we will implement and apply DP and RL algorithms to solve those problems. Critically analyze current research in the field.
+
+\section{Part 1: Dynamic Programming}
+
+\subsection{Markov Decision Processes}
+
+\subsubsection{Definitions}
+An \textit{agent} implements a \textit{policy} that selects actions $a_t$ at each point in time $t$, resulting in rewards $r_0, r_1, \ldots$.
+The state $s_t$ gives the agent information after decision $a_{t-1}$ about the state that it has landed itself in, and then decides on $a_{t}$, resulting in reward $r_{t}$ and state $s_{t+1}$.
+Sequential decision making: greedy rewards are not enough\ldots have to think about the future context.
+
+\[
+\mathcal{M} = (S, A, T, R, \gamma, \mu)
+.\] 
+$S$ is the set of all the states that the agent can be in. 
+In MDPs, the state is what gives you enough information to make optimal decisions.
+$A$ is the set of all actions that the robot can make in the environment.
+$R(s, a) \in \R$ is a function that defines the reward the agent receives for transitioning from state $s\in S$ to $s' \in S$ under action $a \in A$.
+$\mu$ is the initial state distribution (the probability that the initial state is $s$).
+Finally, $\gamma \in [0, 1]$ is the discount factor, which reduces the impact of future rewards on decisions made now.
+$T$ is a stochastic transition function defining the probability of the agent going to $s'$ given action $a$ and state $s$.
+
+\subsubsection{Girdworld}
+See the slides for the problem, but we made the following conceptual observation:
+\begin{itemize}
+    \item Sometimes, we will have something called "slip" probability (the probability that something goes wrong with your robot and you go to the wrong square).
+    \item If an action is impossible, you can have a transition function which adjust for this, or have a high negative reward. Watch for unintended/unwanted "exploitable" loopholes that let your algorithm hack the reward function.
+For example, if you have obstacle have -1, but -0.5 for staying put, and the path is long, you will have a hack where the robot will try and commit suicide in an obstacle to end the run before more delay penalty can be accrued.
+    \item Why should we have stochastic transitions? The real world is imperfect. Our model is imperfect. Stochasticity introduces conservative behavior. In this case, for example, it will lead to avoiding obstacles and staying as far from them as possible.
+\end{itemize}
+
+\subsubsection{Gambler's Ruin}
+Again, some interesting points were made.
+\begin{itemize}
+    \item Action space can be a function of $S$, such as $A(S)$.
+    \item State spaces can be continuous, but we will be looking at the discrete case in our class.
+    \item Here, we more naturally see a stochastic transition function, where we win with probability $p$ and lose with probability $1-p$.
+\end{itemize}
+

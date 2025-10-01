@@ -1,0 +1,171 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{parskip}
+
+\input{../../preamble.tex}
+
+\begin{document}
+
+% ==== BEGIN ASSIGNMENT BODY (paste after \begin{document}) ====
+
+ \textbf{Math 418/544 Assignment 4} 
+ \hfill September 29, 2025\\[6pt]
+    Dr. J. Hermon
+
+\vspace{0.5em}
+\textbf{This assignment is due in Canvas at 23:59 p.m. on Monday, October 6.}\\
+\textbf{\textit{Late assignments are not accepted.}}
+
+\vspace{0.5em}
+\begin{enumerate}[leftmargin=1.2cm]
+
+  \item A searchlight is distance 1 from an infinitely long wall. Let $Q$ denote the closest point on the wall
+  and assume the searchlight scans along the wall so that at any given time, the angle $\Theta$ the beam of
+  light makes is uniform on $(-\pi/2, \pi/2)$ (the point $Q$ corresponds to angle 0). Let $X \in \mathbb{R}$ (positive
+  or negative) be the position of the beam on the wall as measured from $Q$. Find the cumulative
+  distribution function and density function for $X$.  
+  \emph{(This is the Cauchy distribution; its expectation is undefined.)}
+
+  \textbf{Solution}
+  
+  If the angle sampled from the uniform distribution $\omega \in (-\pi / 2, \pi / 2)$, then we have that the point on the wall is given by $z = \tan(\omega) \times   (1 \text{m})$.
+  Thus, the random variable $Z(\omega) = \tan(\omega)$.
+  To compute the CDF, we notice that the uniform distribution over $(-\pi / 2, \pi / 2)$ is $\frac{1}{\pi} \lambda$: the lebesgue measure normalized on $(-\pi / 2, \pi / 2)$.
+  We then compute:
+  \begin{align*}
+      F_Z(z) = P(Z(\omega) \le  z) &= P(\omega \le  \tan^{-1}(z))  \\
+      &=\frac{1}{\pi} \lambda((-\pi / 2, \tan^{-1}(z))) \\
+      &= \frac{1}{\pi} \tan^{-1}(z) + \frac{1}{2}
+  .\end{align*}
+
+  The probability density function, by FTC, is given by
+  \[
+      f_Z(z) = F_Z'(z) = \frac{1}{\pi} \frac{1}{x^2 + 1}
+  .\]
+
+  \item Suppose that $X, Y$ are independent standard normal random variables.\footnote{The independence has the consequence that the joint density $g$ of $X, Y$ is the product of the densities. In other words, for a Borel subset $B$ of $\mathbb{R}^2$,
+  \[
+  P((X,Y) \in B) = \int_B g(x,y)\, dxdy
+  \]
+  with $g(x,y) = f_X(x)f_Y(y)$. We have not yet discussed integration over arbitrary Borel sets (this requires Lebesgue
+  integration which we will discuss soon) but the sets $B$ encountered in this assignment are nice enough that Riemann
+  integration does the job.}  
+  By differentiating the cumulative distribution function for the random variable $Z = X/Y$ to obtain the density of $Z$,
+  show that $Z$ has a standard Cauchy distribution.
+
+  \textbf{Solution.}
+
+  We follow the hint in the footnote. 
+  Now, $F_Z(z) = P(\frac{X}{Y} \le  z)$ is described by $x, y \in \R^2$, where $X(\omega) = x$ and $Y(\omega) = y$ such that $\frac{x}{y} \le  z$.
+  This set, is then described by
+  \[
+  B = (\{X \le  z Y\}  \cap \{Y >  0\} ) \cup (\{X \ge  z Y \} \cap \{Y < 0\}  )
+  .\] 
+  We integrate over this region, with the pdf being $f_X(x)\cdot f_Y(y)$.
+  When we differentiate, we use the Leibnitz integral rule:
+  \begin{align*}
+      F_Z(z) &= \int_{-\infty}^{0} \int_{yz}^{\infty} f_X(x) f_Y(y) dx dy + \int_{0}^{\infty}\int_{-\infty}^{yz} f_X(x)f_Y(y) dx dy \\
+     f_Z(z) = F'(z) &= \int_{-\infty}^{0} -y f_X(yz)f_Y(y) dy + \int_{0}^{\infty} f_X(yz) f_Y(y) dx dy \\
+     &= 5
+  .\end{align*}
+
+  Now, we substitue the pdf's for the normal distributions and compute each of these integrals:
+  \begin{align*}
+      \frac{1}{2\pi} \int_{-\infty}^{0} (-y) \exp(-\frac{1}{2}(z^2 + 1) y^2)dy &=  \frac{1}{2\pi} \int_{\infty}^{0} (- 1 / 2) \exp(- \frac{1}{2} (z^2 + 1) u) du \\
+      &= \frac{1}{2\pi} (- \frac{1}{2})(\frac{-2}{z^2 + 1}) \left[ \exp(- \frac{1}{2} (z^2 + 1)) \right]_{\infty}^{0}  \\
+      &= \frac{1}{2\pi (z^2 + 1)}
+  .\end{align*}
+  \begin{align*}
+      \frac{1}{2\pi} \int_{0}^{\infty} y \exp(-\frac{1}{2}(z^2 + 1) y^2)dy &=  \frac{1}{2\pi} \int_{0}^{\infty} ( 1 / 2) \exp(- \frac{1}{2} (z^2 + 1) u) du \\
+      &= \frac{1}{2\pi} (\frac{1}{2})(\frac{-2}{z^2 + 1}) \left[ \exp(- \frac{1}{2} (z^2 + 1)) \right]_{0}^{\infty}  \\
+      &= \frac{1}{2\pi (z^2 + 1)}(0 - 1) = \frac{1}{2\pi (z^2 + 1)}
+  .\end{align*}
+  Thus,
+  \[
+  f_Z(z) = \frac{1}{2\pi (z^2 + 1)} + \frac{1}{2\pi (z^2 + 1)} = \frac{1}{\pi (z^2 + 1)}
+  .\] 
+
+  \item Suppose that $X, Y$ are independent $\mathrm{Exp}(\lambda)$ random variables. By differentiating the cumulative
+  distribution function for the random variable $Z = X - Y$, find the density function of $Z$ (it is a Laplace distribution).
+
+  Similar to last problem, we fix $z$ and determine the probability $P(Z \le  z)$.
+  We consider two cases for $z$, $z \ge  0$ and $z < 0$.
+  First, consider $z > 0$.
+  In particular, this occurs when $X \le  Y + z$.
+  Also, we recall that $X \ge  0$ and $Y \ge  0$ (since they are independent exponential random variables).
+  We integrate over this region with the pdf being the joint pdf of $X$ and $Y$.
+
+  \begin{align*}
+      F_Z(z) &= \int_{0}^{\infty} \int_{0}^{y + z} f_X(x) f_Y(y) dx dy\\
+      f_Z(z) = F_Z'(z)&= \int_{0}^{\infty} f_X(y + z) f_Y(y) dy
+  .\end{align*}
+
+  If $z \le  0$, then instead, we can use the equivalent inequality $X + (-z) \le  Y$, where $-z > 0$.
+  Then,
+  \begin{align*}
+      F_Z(z) &= \int_{0}^{\infty} \int_{0}^{x - z} f_X(x) f_Y(y) dy dx\\
+      f_Z(z) = F'(z) &= \int_{0}^{\infty} f_X(x) f_Y(x-z) dx 
+  .\end{align*}
+
+  We compute each of these integrals.
+  For $z > 0$:
+  \begin{align*}
+      \int_{0}^{\infty} f_X(y + z) f_Y(y) dy &= \int_{0}^{\infty} \lambda^2 \exp(-\lambda(y + z)) \exp(-\lambda y)dy \\
+      &= \lambda^2 \exp(-\lambda z) \int_{0}^{\infty} \exp(-2 \lambda y) dy \\
+      &= \lambda^2 \exp(-\lambda z) \frac{1}{2 \lambda} = \frac{\lambda}{2} \exp(- \lambda z)
+  .\end{align*}
+  Likewise, for $z < 0$, we compute a very similar integral to be $\frac{\lambda}{2} \exp(\lambda z)$.
+  Putting these together, we get $f_Z(z) = F_Z'(z) = \frac{\lambda}{2} \exp(-\lambda |z|)$, as desired.
+
+  \item Suppose that $X$ is a random variable whose cumulative distribution function $F$ is continuous on
+  $\mathbb{R}$. Let $Y = F(X)$. Prove that $Y$ has a uniform distribution, i.e., that $F_Y(x) = x$ for $x \in (0,1)$.
+
+  \item Let $X_0, X_1, \ldots$ be i.i.d.\ continuous random variables
+  with cumulative distribution function
+  \[
+  F(x) = \int_{-\infty}^x f(t)\, dt,
+  \]
+  for some probability density function $f : \mathbb{R} \to [0,\infty)$. Let
+  \[
+  N = \min\{n : X_n > X_0\}.
+  \]
+  \begin{enumerate}
+    \item Show that the cumulative distribution function $F_N$ of $N$ is given by
+    \[
+    F_N(n) = 1 - \frac{1}{n+1}
+    \]
+    for $n \in \mathbb{N}$. (Of course $F_N(x) = 0$ for $x < 1$ and $F_N(x) = F_N(n)$ for $x \in (n, n+1)$.)
+    
+    \item Show\footnote{One way, not the only way, is to employ a higher-dimensional version of the previous footnote.} 
+    that the cumulative distribution function of $X_N$ is
+    \[
+    F + (1-F)\log(1-F).
+    \]
+    (Recall that $\log(1 - t) = -\sum_{n=1}^\infty \tfrac{t^n}{n}$ for $|t| < 1$; if $F = 1$ we interpret $(1-F)\log(1-F)$ as
+    zero.)
+  \end{enumerate}
+\end{enumerate}
+
+\textbf{Recommended problems (Do not hand in).}
+\begin{enumerate}
+  \item Suppose that $X$ has a continuous density function $f$, that $P(\alpha \leq X \leq \beta) = 1$, and that
+  $g$ is a strictly increasing differentiable function on $(\alpha,\beta)$. Show that the density of $g(X)$ is
+  $f(g^{-1}(x)) / g'(g^{-1}(x))$ if $x \in (g(\alpha), g(\beta))$ and otherwise is zero.
+
+  \item Use the result of (1) to determine the density of $aX + b$ for constants $a > 0$ and $b \in \mathbb{R}$.
+
+  \item Suppose $X$ has a standard normal distribution. Use the result of (1) to compute the density of
+  $\exp(X)$ (this is the lognormal distribution).
+
+  \item Suppose that $X$ has continuous density function $f$. Find the density of $X^2$. Let $Z$ have a standard
+  normal distribution, and find the density of $Z^2$ (this is a special case of the $\chi^2$-distribution).
+\end{enumerate}
+
+\begin{quote}
+\emph{Quote of the week: Probability theory is measure theory with a soul.}  
+--- Mark Kac
+\end{quote}
+
+
+\end{document}

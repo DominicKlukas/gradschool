@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{config}
+\input{macros}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[L]{[Short Title] Project Proposal Template} % List title of the project proposal here.
+\fancyhead[R]{Cyrus Neary} % List names of team members here.
+
+\section{Motivation and Problem Statement}
+
+Briefly describe the challenge you plan to address.
+Elaborate on the potential impacts that solving this challenge could have on a specific industry, societal group, or specific research community.
+While writing this section, think to yourselves ``If this project were to turn into a research paper, who would the target audience be?"
+
+State the technical problem(s) that this project will solve in order to address the challenge described above.
+There is no need to go into deep mathematical detail here, or to describe all the necessary background---only go into the detail that is necessary to have a precise problem statement that could be understood by someone who already has the necessary background knowledge. 
+
+Include a figure to help set the stage if one is relevant.
+
+\section{Background and Related Work}
+
+Provide a brief survey of relevant prior work.
+What are the pre-existing concepts, theory, and algorithms that are absolutely necessary to understanding your proposed approach?
+What are some related approaches to solving technical problems similar to the ones that you plan to address? Try and include at least 3-5 related works. Of course, more than this is fine as well.
+
+You can use the \verb|\parencite| command to include citations included at the end of sentences.
+For example, here is a sentence about something interesting in reinforcement learning \parencite{sutton2018reinforcement}.
+Alternatively, you can use the \verb|\textcite| command to include the names of the authors being cited as a subject in your sentence.
+For example, \textcite{sutton2018reinforcement} wrote the definite textbook on the topic of reinforcement learning.
+
+\section{Proposed Approach}
+
+How will you accomplish the project's goals?
+What will the core technical and conceptual contributions of this project be?
+% For each aspect of the planned approach, give technical justifications for taking this approach?
+Give technical justifications for each aspect of the planned approach.
+
+Clearly state the planned contribution(s) of this project.
+Be as specific as possible.
+For each contribution or benefit of the proposed approach, describe the example(s), simulation(s) and/or experiment(s) that will showcase this idea clearly.
+
+Include a figure to help describe the planned approach at a high level if one is relevant.
+
+
+\section{Timeline and Division of Work}
+
+Provide a detailed breakdown of the project into several major milestones.
+What technical components will each milestone require?
+What is the planned division of labour amongst the teammates for each of the planned milestones?
+Give target deadlines for when each milestone be completed.
+
+Give a brief justification that the planned experiments, simulations, or implemented examples will be feasible to complete within the scope of the semester, and with the planned project resources.
+
+\printbibliography
+
+\color{blue}
+\section*{Grading Rubric}
+The entire project proposal should be 2-3 pages in length, with unlimited extra space for references.
+It is fine to go a little over the page limit, especially if you include figures that take up a large chunk of space.
+However, please try to not go too far beyond the 3 page limit.
+\begin{itemize}
+    \item (20\%) \textbf{Motivation and Problem Statement} Clear consideration of a challenge to be overcome, and of what the impacts of overcoming that challenge would be. Clarity of problem statement.
+    \item (20\%) \textbf{Background and Related Work} Evidence of having read relevant prior work.
+    \item (30\%) \textbf{Proposed Approach} Does the proposed approach address the technical problems described above? Is the proposed approach clearly written and feasible?
+    \item (20\%) \textbf{Timeline and Division of Work} Are the milestones clearly described? Is the proposed timeline realistic and specific? Is the work divided roughly evenly between the team members?
+    \item (10\%) \textbf{References} Do the references follow a style that is self-consistent?
+\end{itemize}
+
+\section*{Helpful Prompts}
+Here is a list of helpful questions that I like to keep in mind as I'm developing a research project.
+There is no need to have concrete answers to each of these before writing the proposal or starting on the project itself.
+However, I often find that the sooner I can answer each of the questions listed below, the more efficient and focused my work becomes.
+
+\begin{enumerate}
+    \item What problem does this project solve?
+    \item Who is the target audience of this work? What sub-community will be interested in this work?
+    \item What are the core technical and conceptual contributions?
+    \item What are the technical justifications for taking this approach?
+    \item What can we now do that wasn’t possible before? What are the benefits of this method? (For the course project, don't worry so much about novelty.)
+    \item What are some previous methods and why couldn’t they do the same things? (Again, for the course project, don't worry so much about novelty with respect to prior work.)
+    \item For each contribution / benefit of the method(s), describe the example(s), simulation(s) and/or experiment(s) that will showcase this benefit clearly.
+    \item Why would somebody else use this work or build on it?
+    \item What are the limitations of the work, and for each limitation, how will it be addressed?
+    \item What is the single most important point that you want a reader to take away from a paper on this project?
+\end{enumerate}
+\color{black}
+
+
+\end{document}

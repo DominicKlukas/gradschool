@@ -1,0 +1,124 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{parskip}
+
+\include{../../preamble.tex}
+
+\begin{document}
+
+% ==== BEGIN ASSIGNMENT BODY (paste after \begin{document}) ====
+
+ \textbf{Math 418/544 Assignment 3} 
+ \hfill September 22, 2024\\[6pt]
+    Dr. J. Hermon
+
+\vspace{0.5em}
+\textbf{This assignment is due in Canvas by 23:59 p.m. on Monday, September 29.}\\
+\textbf{Please read the submission instructions on Canvas.}\\
+\textbf{\textit{Late assignments are not accepted.}}
+
+\vspace{0.5em}
+\begin{enumerate}[leftmargin=1.2cm]
+
+\item An ecology graduate student goes to a pond containing $n$ water beetles and captures 60 of them,
+marks each with a dot of paint, and then releases them. A few days later she goes back and
+captures another sample of 50. Let $X$ denote the number of marked beetles found in her sample
+of 50.
+\begin{enumerate}[label=(\alph*)]
+    \item Determine the probability mass function of $X$, i.e., find $P(X = k)$ for each $k$.
+    \item She finds 12 beetles in her sample. Show that the function $P(X = 12)$ is initially an increasing
+    function of $n$ which then becomes decreasing after reaching a maximum value. Find the
+    maximum likelihood estimate for $n$; that is the value of $n$ which maximises $P(X = 12)$.
+\end{enumerate}
+
+\textbf{Solution.}
+\begin{enumerate}
+    \item We observe the following.
+        \begin{itemize}
+            \item There are $n$ choose 50 ways to choose the 50 waterbeetles.
+            \item If we know that $k$ of the 50 have marks, then those $k$ can be chosen in $60$ choose $k$ ways, and the remaining $50 - k$  can be chosen in $n - 60$ choose $50 - k $ ways.
+            \item The previous point helps us realize, that if $n - 60 < 50 - k$, there are not enough water beetles without marks fo r us to choose 50 with $50 - k$ not having marks.
+        \end{itemize}
+        Putting these together, we have:
+        \[
+        P(X = k) = \begin{cases}
+            \frac{\binom{60}{k} \binom{n - 60}{50 - k}}{\binom{n}{50}} & \text{ if } n \ge  110 - k\\
+            0 \text{ else}
+        \end{cases}
+        .\] 
+\end{enumerate}
+
+\item By definition, a random variable is a function $X : \Omega \to \mathbb{R}$ such that $\{\omega : X(\omega) \leq x\} \in \mathcal{F}$ for
+every $x \in \mathbb{R}$. The distribution function $F_X : \mathbb{R} \to [0, 1]$ of the random variable $X$ is defined by
+$F_X(x) = P(X \leq x)$. Suppose that $X_1$ and $X_2$ are both random variables.
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that $Y = \min\{X_1, X_2\}$ and $Z = \max\{X_1, X_2\}$ are also both random variables.
+    \item Let $X_1, X_2$ be independent random variables. Find simple expressions for the distribution
+    functions $F_Y$ and $F_Z$ in terms of $F_{X_1}$ and $F_{X_2}$.
+\end{enumerate}
+
+\item 
+\begin{enumerate}[label=(\alph*)]
+    \item Let $Z_n$ be any sequence of random variables. Prove that if $P(|Z_n| \geq \varepsilon \ \text{i.o.}) = 0$ for every
+    $\varepsilon > 0$ then $P(\lim_{n\to\infty} Z_n = 0) = 1$.
+    \item Let $X_n$ be any sequence of random variables. Use part (a) and the Borel–Cantelli Lemma to
+    prove that there are constants $c_n \to \infty$ such that $P(\lim_{n\to\infty} X_n/c_n = 0) = 1$.\\
+    \textit{Hint:} Start by fixing a sequence $\varepsilon_n \downarrow 0$ and find $c_n$ such that $P(|X_n| \geq \varepsilon_n c_n)$ is summable.
+\end{enumerate}
+
+\item Let $A_1, A_2, \ldots \in \mathcal{F}$ and let $\tau$ be the tail field. If you have good intuition about the events $\{A_n \ \text{i.o.}\}$
+and $\{A_n \ \text{a.a.}\}$ and about the meaning of $\tau$ then it should be “obvious” that these two events each
+lie in the tail field. Write a proof that $\{A_n \ \text{i.o.}\} \in \tau$ and $\{A_n \ \text{a.a.}\} \in \tau$.
+
+\item For integers $d \geq 2$, the integer lattice $\mathbb{Z}^d$ is the set of all $d$-component vectors of integers. A bond
+is a pair $\{x, y\}$ of adjacent elements of $\mathbb{Z}^d$, i.e., with $\|x - y\|_1 = \sum_{i=1}^d |x_i - y_i| = 1$. In bond
+percolation, bonds are independently occupied with probability $p$ and vacant with probability
+$1- p$, where $p \in [0, 1]$ is fixed.
+
+We enumerate the bonds in some manner, from inside out, as $b_1, b_2, \ldots$. The sample space $\Omega$
+consists of binary strings representing the occupancy status of the bonds, and the probability space
+is the corresponding biased coin flip space (heads with probability $p$ and tails with probability $1-p$
+for fixed $p \in [0, 1]$), which is the modification of the probability space for independent fair coin
+flips (Section 2.6) with $P(A_{a_1a_2\cdots a_n}) = p^h(1 - p)^{n-h}$, where $h =
+\sum_{i=1}^n a_i$ denotes the number of heads among $a_1a_2 \cdots a_n$.
+
+\begin{enumerate}[label=(\alph*)]
+    \item Let $E$ be the event that there is an infinite connected cluster of occupied bonds. Prove that
+    $E$ truly is an event, i.e., is in the $\sigma$-algebra.\\
+    (Suggestion: for $x \in \mathbb{Z}^d$ and $k \in \mathbb{N}$, consider the event $E_{x,k}$ that $x$ is a vertex in a connected
+    cluster of size at least $k$ vertices. Construct $E$ from these events.)
+    \item Prove that $E$ is in fact a tail event for the sequence of events $O_1, O_2, \ldots$, where $O_n$ is the
+    event that the $n$th bond is occupied.
+    \item Let $E_0$ be the event that the origin is in an infinite cluster. Prove or disprove: $E_0$ is a tail
+    event for the sequence of events $O_1, O_2, \ldots$.
+\end{enumerate}
+
+\end{enumerate}
+
+\vspace{1em}
+Reference book for percolation: G. Grimmett, \textit{Percolation}, available for download at UBC library.
+
+\vspace{1em}
+\noindent \textbf{Recommended problems.} The following problems from Rosenthal are recommended but are not to
+be handed in:
+
+3.6.4 (assume that $f$ is bounded below), 3.6.10, 3.6.12, 3.6.14 (assume the $X_i$ are independent),
+3.6.18 (This problem is different in different printings of the text; use $S_x = \{\liminf_{n\to\infty}
+\frac{1}{n} \sum_{i=1}^n \mathbf{1}_{A_i} \le x\}$. If the $A_i$ all have $P(A_i) = p \in (0, 1)$ then what do you think the graph of the function $f(x) = P(S_x)$
+looks like? Later we’ll have the theory for this, the Strong Law of Large Numbers.)
+
+For solutions to even-numbered problems see: \texttt{http://www.probability.ca/jeff/grprobbook.html}.
+
+\vspace{2em}
+\noindent \textbf{Quote of the week:}\\
+\emph{I graduated from Douglass College without distinction. I was in the top 98\% of my class and damn glad to be there. I slept in the library and daydreamed my way through history lecture.
+I failed math twice, never fully grasping probability theory. I mean, first off, who cares if you pick a
+black ball or a white ball out of the bag? And second, if you’re bent over about the color, don’t leave it
+to chance. Look in the damn bag and pick the color you want.}\\
+--- Stephanie Plum in \textit{Hard Eight} by Janet Evanovich
+
+% ==== END ASSIGNMENT BODY ====
+
+
+\end{document}

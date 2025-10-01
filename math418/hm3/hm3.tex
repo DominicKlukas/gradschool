@@ -1,0 +1,300 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{parskip}
+
+\input{../../preamble.tex}
+
+\begin{document}
+
+% ==== BEGIN ASSIGNMENT BODY (paste after \begin{document}) ====
+
+ \textbf{Math 418/544 Assignment 3} 
+ \hfill September 22, 2024\\[6pt]
+    Dr. J. Hermon
+
+\vspace{0.5em}
+\textbf{This assignment is due in Canvas by 23:59 p.m. on Monday, September 29.}\\
+\textbf{Please read the submission instructions on Canvas.}\\
+\textbf{\textit{Late assignments are not accepted.}}
+
+\vspace{0.5em}
+\begin{enumerate}[leftmargin=1.2cm]
+
+\item An ecology graduate student goes to a pond containing $n$ water beetles and captures 60 of them,
+marks each with a dot of paint, and then releases them. A few days later she goes back and
+captures another sample of 50. Let $X$ denote the number of marked beetles found in her sample
+of 50.
+\begin{enumerate}[label=(\alph*)]
+    \item Determine the probability mass function of $X$, i.e., find $P(X = k)$ for each $k$.
+    \item She finds 12 beetles in her sample. Show that the function $P(X = 12)$ is initially an increasing
+    function of $n$ which then becomes decreasing after reaching a maximum value. Find the
+    maximum likelihood estimate for $n$; that is the value of $n$ which maximises $P(X = 12)$.
+\end{enumerate}
+
+\textbf{Solution.}
+\begin{enumerate}
+    \item We observe the following.
+        \begin{itemize}
+            \item There are $n$ choose 50 ways to choose the 50 waterbeetles.
+            \item If we know that $k$ of the 50 have marks, then those $k$ can be chosen in $60$ choose $k$ ways, and the remaining $50 - k$  can be chosen in $n - 60$ choose $50 - k $ ways.
+            \item The previous point helps us realize, that if $n - 60 < 50 - k$, there are not enough water beetles without marks for us to choose 50 with $50 - k$ not having marks.
+        \end{itemize}
+        Putting these together, we have:
+        \[
+        P(X = k) = \begin{cases}
+            \frac{\binom{60}{k} \binom{n - 60}{50 - k}}{\binom{n}{50}} & \text{ if } n \ge  110 - k\\
+            0 \text{ else}
+        \end{cases}
+        .\] 
+    \item Let $P_n$ be the probability that $12$ marked beetles are in her sample of 50, if there were $n$ beetles to begin with. The last bullet point in our observations in part (a) shows that $P_n(X = 12) = 0$ if $n \le  98$.
+        We start at $n = 98$:
+        \begin{align*}
+            P_{98} &=  \frac{\binom{60}{12} \binom{38}{38}}{\binom{98}{50}} 
+        .\end{align*}
+        Now, for $n > 98$, we compute:
+        \begin{align*}
+            P_{n}&= \frac{\binom{60}{12} \binom{n - 60}{38}}{\binom{n}{50}} = \binom{60}{12} \frac{(n-60)!(n-50)!50!}{38! (n-98)!n!}\\
+            &= \frac{(n-60)(n-50)}{n(n-98)} \left(\binom{60}{12} \frac{((n - 1) -60)!((n-1)-50)!50!}{38! ((n-1)-98)!(n-1)!}\right)\\
+            &=  \frac{(n-60)(n-50)}{n(n-98)} P_{n-1}
+        .\end{align*}
+
+        We can see, that if $\frac{(n-60)(n-50)}{n(n-98)} > 1$, then $P_n > P_{n-1}$. We test when this is the case.
+        Note that, the following inequalities requires that $n(n-98) > 0$, which is the case when $n >  98$, but this is the case we are interested in.
+        \begin{align*}
+            \frac{n^2 - 110n + 60 \cdot  50}{n^2 - 98n} &> 1\\
+            n^2 - 110 n + 60 \cdot  50 &> n^2 - 98n\\
+            60 \cdot  50 &> 12 n\\
+            250 &> n
+        .\end{align*}
+        So, we have that $P_{249} \ge   P_{248}$, but $P_{n} < P_{n-1}$ for all $n \ge  250$.
+        Therefore, the maximum likelihood estimate for $n$ is $249$.
+
+\end{enumerate}
+
+\item By definition, a random variable is a function $X : \Omega \to \mathbb{R}$ such that $\{\omega : X(\omega) \leq x\} \in \mathcal{F}$ for
+every $x \in \mathbb{R}$. The distribution function $F_X : \mathbb{R} \to [0, 1]$ of the random variable $X$ is defined by
+$F_X(x) = P(X \leq x)$. Suppose that $X_1$ and $X_2$ are both random variables.
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that $Y = \min\{X_1, X_2\}$ and $Z = \max\{X_1, X_2\}$ are also both random variables.
+    \item Let $X_1, X_2$ be independent random variables. Find simple expressions for the distribution
+    functions $F_Y$ and $F_Z$ in terms of $F_{X_1}$ and $F_{X_2}$.
+\end{enumerate}
+
+
+\textbf{Solution.}
+\begin{enumerate}
+    \item We observe:
+        \begin{align*}
+            \omega \in \{Y \le  x\}  &\iff \min \{X_1, X_2\}(\omega) \le  x\\
+                                     &\iff X_1(\omega) \le  x \vee X_2(\omega) \le  x \iff \omega \in \{X_1 \le  x\} \cup \{X_2 \le  x\} 
+        .\end{align*}
+        Therefore, $\{Y \le  x\} = \{X_1 \le  x\} \cup \{X_2 \le  x\}   $.
+        Since $\{X_1 \le  x\}, \{X_2 \le  x\} \in \mathcal{F}$, and $\mathcal{F}$ is a $\sigma$-algebra, we have that their union $ \{X_1 \le  x\} \cup \{X_2 \le  x\} \in \mathcal{F}$.
+        Since $x$ was arbitrary, we conclude $Y$ is a random variable.
+
+        We perform a similar calculation:
+        \begin{align*}
+            \omega \in \{Z \le  x\}  &\iff \max \{X_1, X_2\}(\omega) \le  x\\
+                                     &\iff X_1(\omega) \le  x \wedge X_2(\omega) \le  x \iff \omega \in \{X_1 \le  x\} \cap \{X_2 \le  x\} 
+        ,\end{align*}
+        which shows $\{Z \le  x\} = \{X_1 \le x \} \cap \{X_2 \le  x\}$.
+        The fact that $\sigma$-algebras are closed under intersections immediately affords $\{Z \le  x\} \in \mathcal{F}$.
+    \item Independence of $X_1$ and $X_2$ implies $P(\{X_1 \le  x\} \cap \{X_2 \le  x\}  ) = P(X_1 \le  x) P(X_2 \le  x)$.
+        For $Y$, the inclusion exclusion principle gives us:
+        \begin{align*}
+            F_{Y}(x) = P(Y \le  x) &= P(\{X_1 \le  x\} \cup \{X_2 \le  x\}  )\\
+                                   &= P(X_1 \le  x) + P(X_2 \le  x) - P(\{X_1 \le  x\} \cap \{X_2 \le  x\}  )\\
+            &= F_{X_1}(x) + F_{X_2} (x) - P(X_1 \le  x) P(X_2 \le  x)  \\
+            &= F_{X_1}(x) + F_{X_2} (x) - F_{X_1}(x) F_{X_2}(x)
+        .\end{align*}
+
+        For $Z$, we simply apply independence:
+        \[
+        F_{Z}(z) = P(Z \le  x) = P(\{X_1 \le  x\} \cap \{X_2 \le  x\}  ) = P(X_1 \le  x)P(X_2 \le  x) = F_{X_1}(x) F_{X_2}(x)
+        .\] 
+\end{enumerate}
+
+\item 
+\begin{enumerate}[label=(\alph*)]
+    \item Let $Z_n$ be any sequence of random variables. Prove that if $P(|Z_n| \geq \varepsilon \ \text{i.o.}) = 0$ for every
+    $\varepsilon > 0$ then $P(\lim_{n\to\infty} Z_n = 0) = 1$.
+    \item Let $X_n$ be any sequence of random variables. Use part (a) and the Borel–Cantelli Lemma to
+    prove that there are constants $c_n \to \infty$ such that $P(\lim_{n\to\infty} X_n/c_n = 0) = 1$.\\
+    \textit{Hint:} Start by fixing a sequence $\varepsilon_n \downarrow 0$ and find $c_n$ such that $P(|X_n| \geq \varepsilon_n c_n)$ is summable.
+\end{enumerate}
+
+
+\textbf{Solution.}
+\begin{enumerate}
+    \item Suppose that $P(|Z_n| \ge  \epsilon \ \text{ i.o.}) = 0$ for every $\epsilon > 0$.
+        Recall that $\{|Z_n| \ge  \epsilon \  \text{ i.o.}\}^{c} = \{|Z_n| < \epsilon \  \text{ a.a.}\}$.
+        Thus, $P(|Z_n| < \epsilon \ \text{ a.a.}) = 1$ for every $\epsilon > 0$.
+
+        Let $A_m = \{|Z_n| < \frac{1}{m} \ \text{a.a.}\} $.
+        We show that $A_m \searrow \{\lim_{n \to \infty} Z_n = 0\}$.
+        \begin{itemize}
+            \item If $\omega \in A_{m+1}$, then $|Z_n| \le  \frac{1}{m+1}$ for finitely many $n$, which implies that $|Z_n| \le  \frac{1}{m}$ for finitely many $n$, so $\omega \in A_{m}$. Therefore, $A_{m+1} \subset  A_m$.
+            \item Let $\omega \in \cap_{m} A_m$.
+                Let $\epsilon > 0$.
+                Then, there exists some $m$ such that $\frac{1}{m} < \epsilon$.
+                But then, $\omega \in A_{m}$, so that $|Z_n| < \frac{1}{m}$ for all but finitely many $n$.
+                That is, there exists $N\in \N$ such that $|Z_n(\omega) | < \frac{1}{m}  < \epsilon$ for all $n > N$.
+                Since this applies for all $\epsilon > 0$, this implies $\lim_{n \to \infty} Z_n(\omega) = 0$.
+                In conclusion, $\cap_{m} A_m \subseteq \{\omega : \lim_{n \to \infty} Z_n(\omega) = 0\} $.
+
+                Suppose $\omega \in \{\lim_{n \to \infty}Z_n = 0 \} $.
+                Let $m \in \N$.
+                Then, there exists $N$ such that for all $n > N$, we have $|Z_n(\omega)| < \frac{1}{m}$.
+                In particular, $|Z_n(\omega)| < \frac{1}{m}$ almost always.
+                Thus, $\omega \in A_m$.
+                Since $m$ was arbitrary, $\omega \in \cap_{m}A_m$.
+                In conclusion, $\{\omega : \lim_{n \to \infty} Z_n(\omega) = 0\} \subseteq \cap_{m}A_m$.
+                Therefore, $\{\omega : \lim_{n \to \infty} Z_n(\omega) = 0\} = \cap_{m}A_m$.
+
+
+                We apply continuity from above, to conclude that:
+                \[
+                P(\lim_{n \to \infty} Z_n = 0) = P(\cap_{m} A_m) = \lim_{m \to \infty} P(A_m) = 1
+                .\] 
+        \end{itemize}
+    \item Let $\epsilon_n = \frac{1}{n}$.
+        Fix $n$.
+        Now, $X_n \in [-N, N] \nearrow X_n \in \R$.
+        By continuity of probabilities, we have $\lim_{n \to \infty}P(X_n \in [-N, N]) = P(X_n \in \R) = 1$.
+        Therefore, there exists some $N_n$ such that $P(X_n \in [-N_n, N_n]) \ge  1 - \frac{1}{2^{n}}$.
+        In particular, this implies $P(|X_n| \ge  N_n) \le  \frac{1}{2^{n}}$.
+        Then, choose $c_n$ such that $c_n \epsilon_n \ge  N$.
+        In particular, $c_n > N\cdot n \ge n$.
+        Therefore, $c_n \to \infty$.
+
+        In particular, this implies that
+        \begin{align*}
+            \sum_{n = 1}^{\infty} P(|X_n| \ge  c_n \epsilon_n) &\le  \sum_{n=1}^{\infty} P(|X_n| \ge  N_n) \text{ by monotonicity}\\
+                                                               &\le \sum_{n=1}^{\infty} \frac{1}{2^{n}} = 1
+        .\end{align*}
+        Now, fix $\epsilon > 0$.
+        Then, there exists some $N$ such that $\epsilon > \frac{1}{n}$ for all $n > N$.
+        However, this implies that
+        \begin{align*}
+            \sum_{i = n}^{\infty} P\left(\frac{|X_i|}{c_i} \ge  \epsilon \right) &\leq \sum_{i = n}^{\infty} P\left(\frac{|X_i|}{c_i} \ge   \frac{1}{i}\right) \text{ by monotonicity}\\
+            &= \sum_{i=n}^{\infty} P \left( |X_i| \ge c_i \epsilon_i  \right) \le  \sum_{n=1}^{\infty} P(|X_n| \ge c_n \epsilon_n)   \le  1
+        .\end{align*}
+        By the Borel-Cantelli lemma, we have that $P\left( \frac{|X_n|}{c_n} \ge   \epsilon \ \text{i.o.} \right) = 0$.
+
+        Since $\epsilon$ was arbitrary, this applies for every $\epsilon > 0$, and we apply part (a) to conclude that $P\left( \lim_{n \to \infty} \frac{X_n}{c_n} = 0 \right) $.
+        By construction, the constants $c_n \to \infty$.
+\end{enumerate}
+
+\item Let $A_1, A_2, \ldots \in \mathcal{F}$ and let $\tau$ be the tail field. If you have good intuition about the events $\{A_n \ \text{i.o.}\}$
+and $\{A_n \ \text{a.a.}\}$ and about the meaning of $\tau$ then it should be “obvious” that these two events each
+lie in the tail field. Write a proof that $\{A_n \ \text{i.o.}\} \in \tau$ and $\{A_n \ \text{a.a.}\} \in \tau$.
+
+\textbf{Solution}
+
+First, we note that only need to prove $\{A_{n} \ \text{a.a.}\} \in \tau $.
+Since $\sigma$ algebras are closed under complements, $\sigma(A_{i_1}^{c}, A_{i_2}^{c}, \ldots) = \sigma(A_{i_1}, A_{i_2}, \ldots)$.
+So, a proof that $\{A_n \ \text{a.a.}\} \in \tau $ will work just as well for $\{A_{n}^{c} \ \text{a.a.}\} \in \tau $, and $\tau$ being a $\sigma$-algebra closed under complements gives us $\{A_{n}^{c} \ \text{a.a.}\}^{c} = \{A_n \ \text{i.o.}\} \in \tau$.
+
+Now, we prove $A = \{A_{n} \ \text{a.a.}\} \in \tau $.
+By definition, $\tau = \bigcap_{n \in \N} \sigma(A_n, A_{n+1}, \ldots)$.
+Fix $n \in \N$.
+We show $ A \in \sigma(A_n, A_{n+1}, \ldots) $.
+First, we note $A = \bigcup_{m = 1}^{\infty} \bigcap_{k = m}^{\infty} A_k $.
+However, since $\bigcap_{k = m} A_k \subseteq \bigcap_{k = m+1}A_k$ for every $m$, we have that $\bigcup_{m = 1}^{\infty} \bigcap_{k=m}^{\infty} A_k = \bigcup_{m = n}^{\infty} \bigcap_{k=m}^{\infty} A_k$.
+However, this set is the intersection and union of sets exclusively in $\{A_n, A_{n + 1}, \ldots\} $, so we conclude that $A \in \sigma(A_n, A_{n+1}, \ldots)$.
+Since $n$ was arbitrary, this holds for all $n$, so $A \in \tau = \bigcap_{n = 1}^{\infty} \sigma(A_n, A_{n+1}, \ldots)$.
+
+\item For integers $d \geq 2$, the integer lattice $\mathbb{Z}^d$ is the set of all $d$-component vectors of integers. A bond
+is a pair $\{x, y\}$ of adjacent elements of $\mathbb{Z}^d$, i.e., with $\|x - y\|_1 = \sum_{i=1}^d |x_i - y_i| = 1$. In bond
+percolation, bonds are independently occupied with probability $p$ and vacant with probability
+$1- p$, where $p \in [0, 1]$ is fixed.
+
+We enumerate the bonds in some manner, from inside out, as $b_1, b_2, \ldots$. The sample space $\Omega$
+consists of binary strings representing the occupancy status of the bonds, and the probability space
+is the corresponding biased coin flip space (heads with probability $p$ and tails with probability $1-p$
+for fixed $p \in [0, 1]$), which is the modification of the probability space for independent fair coin
+flips (Section 2.6) with $P(A_{a_1a_2\cdots a_n}) = p^h(1 - p)^{n-h}$, where $h =
+\sum_{i=1}^n a_i$ denotes the number of heads among $a_1a_2 \cdots a_n$.
+
+\begin{enumerate}[label=(\alph*)]
+    \item Let $E$ be the event that there is an infinite connected cluster of occupied bonds. Prove that
+    $E$ truly is an event, i.e., is in the $\sigma$-algebra.\\
+    (Suggestion: for $x \in \mathbb{Z}^d$ and $k \in \mathbb{N}$, consider the event $E_{x,k}$ that $x$ is a vertex in a connected
+    cluster of size at least $k$ vertices. Construct $E$ from these events.)
+    \item Prove that $E$ is in fact a tail event for the sequence of events $O_1, O_2, \ldots$, where $O_n$ is the
+    event that the $n$th bond is occupied.
+    \item Let $E_0$ be the event that the origin is in an infinite cluster. Prove or disprove: $E_0$ is a tail
+    event for the sequence of events $O_1, O_2, \ldots$.
+\end{enumerate}
+
+\textbf{Solution.}
+\begin{enumerate}
+    \item We follow the hint. $E$ occurs when an infinite cluster of occupied bonds exists.
+        That is, there exists some vertex $x$ such that $x$ is in an infinite cluster.
+        $x$ being in an infinite cluster means that $\bigcap_{n = 1}^{\infty} E_{x, n}$, since for every $n$ the cluster it is a part of has at least $n$ vertices because it is infinite.
+        Since $E$ is a statement saying that such an $x$ must exist, it follows
+        \[
+        E = \bigcup_{x \in \Z^{d}} \bigcap_{n =1 }^{\infty} E_{x, n}
+        .\] 
+    \item Let $\Omega$ denote the set of grids.
+        We can write $\Omega = \{0, 1\}^{\N} $, where the $i$-th element in the sequence is $1$ if the $i$-th bond is occupied, and $0$ if not.
+        So, for $\omega \in \Omega$, we have $\omega = (\mathbf{1}_{O_1}(\omega), \mathbf{1}_{O_2}(\omega), \ldots)$.
+        Let $\pi_i$ be the co-ordinate map.
+        Now, consider the set $\Omega_{n}$ the set of grids on $\Z^{d}$ with the first $n$ bonds removed.
+        Then define $\pi : \Omega \to \Omega_{n}$ as $\pi(\omega) = (\pi_{n}(\omega), \pi_{n+1}(\omega), \ldots)$.
+        In particular, by definition we have $O_{i} = \pi^{-1}(0, \ldots, 0, 1, 0, \ldots)$, where the $1$ is the $i$-th slot.
+        But, since the set of percolation events are on $\Omega_{n}$ are generated by $(1, 0, \ldots), \ldots, (0,\ldots, 0, 1, 0, \ldots)$, and unions and complements are preserved by the mapping $\pi$, we have that for any event $A \subset  \Omega_{n}$,
+        $\pi^{-1}(A) \in \sigma(O_n, \ldots)$.
+
+        Also, 
+        \[
+        \pi^{-1}(A) = \{0, 1\} \times  \ldots_{n-1 \text{times}} \times \{0, 1\} \times A
+        .\] 
+        We show that $E = \pi^{-1}(\pi(E)) $.
+        Let $\omega \in E$.
+        Fix $1 \le i < n$.
+        Suppose $\pi_i (\omega) = 1$.
+        Define $\omega'$ such that $\pi_j(\omega) = \pi_j(\omega')$  for $j \neq i$, and $\pi_i(\omega') = 0$.
+        If bond $i$ is in an infinite cluster, and if $i$ is contained in the path between any two elements in the infinite cluster (so that removing it breaks the cluster apart), then we must have that at least one of the two remaining clusters is infinite.
+        Otherwise, the two clusters would be finite, and connecting them would result in another finite cluster, which contradicts the assumption that the original cluster was infinite.
+        Therefore, $\omega' \in E$.
+        If $\pi_i(\omega) = 0$, then defining $\omega'$ similarly to have $\pi_{i}(\omega') = 1$, would result in adding a bond, so clearly $\omega$'s infinite cluster would be undisturbed.
+        Since this applies for all $1 \le i < n$, we have that
+        \[
+        E = \{0, 1\} \times \ldots (n-1 \text{times}) \times  \{0, 1\}  \times \pi(E) = \pi^{-1}(E) \in \sigma(O_n, \ldots)
+        .\]
+        Since this applies for all $n$, $E \in \tau$.
+
+    \item Fix $\Omega_{2}$ from last problem, and consider that for the corresponding $\pi$, as we showed in the previous problem, $E \in \sigma(O_2,\ldots)$ iff $E = \pi^{-1}(\pi(E))$, namely if $E = \{0, 1\} \times  \pi(E) $.
+        However, for every $\omega \in E$, we have $\pi(\omega) = 1$, with no $\omega' \in E$ such that $\pi(\omega') = 0$.
+        Therefore, $E \neq  \{0,1\} \times  \pi(E) $, so $E \not\in  \sigma(O_2, O_3, \ldots)$, so it is not a tail event.
+\end{enumerate}
+\end{enumerate}
+
+\vspace{1em}
+Reference book for percolation: G. Grimmett, \textit{Percolation}, available for download at UBC library.
+
+\vspace{1em}
+\noindent \textbf{Recommended problems.} The following problems from Rosenthal are recommended but are not to
+be handed in:
+
+3.6.4 (assume that $f$ is bounded below), 3.6.10, 3.6.12, 3.6.14 (assume the $X_i$ are independent),
+3.6.18 (This problem is different in different printings of the text; use $S_x = \{\liminf_{n\to\infty}
+\frac{1}{n} \sum_{i=1}^n \mathbf{1}_{A_i} \le x\}$. If the $A_i$ all have $P(A_i) = p \in (0, 1)$ then what do you think the graph of the function $f(x) = P(S_x)$
+looks like? Later we’ll have the theory for this, the Strong Law of Large Numbers.)
+
+For solutions to even-numbered problems see: \texttt{http://www.probability.ca/jeff/grprobbook.html}.
+
+\vspace{2em}
+\noindent \textbf{Quote of the week:}\\
+\emph{I graduated from Douglass College without distinction. I was in the top 98\% of my class and damn glad to be there. I slept in the library and daydreamed my way through history lecture.
+I failed math twice, never fully grasping probability theory. I mean, first off, who cares if you pick a
+black ball or a white ball out of the bag? And second, if you’re bent over about the color, don’t leave it
+to chance. Look in the damn bag and pick the color you want.}\\
+--- Stephanie Plum in \textit{Hard Eight} by Janet Evanovich
+
+% ==== END ASSIGNMENT BODY ====
+
+
+\end{document}

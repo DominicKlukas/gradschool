@@ -1,0 +1,305 @@
+\documentclass[hidelinks]{article}[12pt]
+
+\evensidemargin 3mm
+\oddsidemargin 3mm
+\topmargin -12mm
+\textheight 660pt
+\textwidth 450pt
+
+\input{../../preamble.tex}
+
+\usepackage{hyperref}
+\usepackage{url}
+
+\newcommand{\Fcal}{{\cal F}}
+
+\begin{document}
+
+
+\pagestyle{empty}
+
+\noindent
+{\bf Math 544   Assignment 1} \hfill  September 8, 2025
+
+\medskip \noindent
+
+Professor: Dr. J. Hermon
+
+Student: Dominic Klukas
+
+Student Number: 64348378
+
+\medskip \noindent
+{\bf This assignment is due in Canvas at 23:59 a.m.\ on Friday, September 15. \\
+\emph{Late assignments are not accepted.}}
+
+
+
+\begin{enumerate}
+
+\item    
+In this problem, explain how you are counting---do not just write down an answer without
+explanation.
+\begin{enumerate}
+\item
+Compute the probability that a poker hand\footnote{A poker hand
+consists of five cards drawn from a deck of 52 cards. The cards have 13 distinct values $2,3,4,5,6,7,8,9,10,J,Q,K,A$, each in four
+suits called Hearts, Diamonds, Clubs, Spades.} contains:
+\begin{enumerate}
+\item
+one pair ($aabcd$ with $a,b,c,d$ distinct face values;
+answer:  0.4226)
+\item
+two pairs ($aabbc$ with $a,b,c$ distinct face values;
+answer: 0.04754).
+\end{enumerate}
+\item
+Poker dice\footnote{Each die is a cube with six
+sides labelled 1,2,3,4,5,6.} is played by simultaneously rolling 5 dice.
+Compute the probabilities of the following outcomes:
+\begin{enumerate}
+\item
+one pair ($aabcd$ with $a,b,c,d$ distinct numbers;
+answer: 0.4630)
+\item
+two pairs ($aabbc$ with $a,b,c$ distinct numbers;
+answer: 0.2315).
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}
+    \item In both cases, we count the number of decks satisfying the required property, and then divide by the total number of decks to get the total probability.
+        \begin{enumerate}
+            \item First, we determine the number of ways we can count the values. We have 13 choices for the value of $a$, and $\binom{12}{3}$ choices for the values for $b, c, d$.
+                Next, we count the number of suits for the different decks. We have $\binom{4}{2}$ choices for the suits of $a$, and 4 choices for each of $b, c, d$.
+                Finally, we have $\binom{52}{5}$ decks in total to draw from. Thus, we get:
+                \[
+                P(\text{One pair}) = \frac{13 \cdot \binom{12}{3} \cdot \binom{4}{2} \cdot 4^3}{\binom{52}{5}} = \frac{1,098,240}{2,598,960} = 0.4226
+                .\] 
+            \item Similarly, we count values and then suits. 
+                For values, we have 13 choices for $c$, and then $\binom{12}{2}$ choices for the values of the pairs $a, a$ and $b, b$. 
+                Then, we have 4 choices for the suit of $c$ and $\binom{4}{2}^2$ choices for the suits of $a, a$ and $b, b$.
+                In total, this then gives us
+                \[
+                    P(\text{Two pairs}) = \frac{13 \cdot \binom{12}{2} \cdot 4 \cdot \binom{4}{2}^{2}}{\binom{52}{5}} = \frac{123,552}{2,598,960} = 0.04754
+                .\] 
+        \end{enumerate}
+    \item In this case, we don't have to count suits (since there are only values). For simplicity I will keep track of the orderings of the dice. There are then $6^5$ different dice roll sequences.
+        \begin{enumerate}
+            \item We have $6 \cdot 5 \cdot 4 \cdot 3$ choices for the numbers, and $\binom{5}{2}$ choices for choosing which indices of the dice in the sequence are doubled. We compute:
+                \[
+                    P(\text{One pair}) = \frac{6 \cdot 5 \cdot 4 \cdot 3 \cdot \binom{5}{2}}{6^5} = \frac{3600}{7776} = 0.4630
+                .\] 
+            \item We have $6 \cdot 5 \cdot 4$ choices for the values $a, b, c$. 
+                Next, choose which two dice show $a$ ($\binom{5}{2}$ ways), and then which two of the remaining dice show $b$ ($\binom{3}{2}$ ways). 
+                Since swapping $a$ and $b$ gives the same outcome, we divide by 2. 
+                Finally, the last die is $c$. Thus, we get:
+                \[
+                P(\text{Two pairs}) = \frac{6 \cdot 5 \cdot 4 \cdot \tfrac{1}{2}\binom{5}{2}\binom{3}{2}}{6^5} = \frac{1800}{7776} = 0.2315
+                .\] 
+        \end{enumerate}
+\end{enumerate}
+
+
+\item
+Let $S=\{1,2,\ldots, n\}$ and suppose that a pair of subsets $(A,B)$ of $S$
+is chosen uniformly at random from all possible pairs of subsets.  More precisely, the
+probability of choosing any specific pair is $2^{-2n}$.
+Show that
+\[
+    P(A \subset B) = \left( \frac{3}{4} \right)^n.
+\]
+
+
+\subsection*{Solution}
+
+We consider each element $x \in S$ independently. For a uniformly random pair $(A,B)$, the membership of $x$ in $A$ and $B$ is independent and each of the four outcomes
+\[
+x \in A \cap B,\quad x \notin A \cup B,\quad x \in A \setminus B,\quad x \in B \setminus A
+\]
+occurs with probability $1/4$.
+
+The event $A \subset B$ fails iff $x \in A \setminus B$. Thus, for a fixed $x$,
+\[
+P\big(x \in A \Rightarrow x \in B\big)=1-P(x \in A \setminus B)=1-\tfrac14=\tfrac34.
+\]
+Since the choices for different $x$ are independent, we obtain
+\[
+P(A \subset B)= \Pi_{x \in S}P(x \in A \implies x \in B) = \left(\tfrac34\right)^n.
+\]
+
+
+\item %Billingsley 2.3 page 33
+Let $\Omega$ be a nonempty set and suppose that $\Fcal$ is a collection
+of subsets of $\Omega$ such that $\Omega \in \Fcal \subset 2^\Omega$.
+\begin{enumerate}
+\item
+Prove that $\Fcal$ is an algebra if $A,B\in \Fcal$ implies that $A \setminus B = A \cap B^c
+\in \Fcal$.
+\\
+(For an algebra the condition of closure under countable unions in the
+definition of a $\sigma$-algebra is replaced by closure under finite unions.)
+\item
+Suppose that $\Fcal$ is closed under complements and finite \emph{disjoint}
+unions.  Show that $\Fcal$
+need not be an algebra.
+\end{enumerate}
+\subsection*{Solution}
+
+
+
+\begin{enumerate}
+    \item We check the requirements that $\mathcal{F}$ is an algebra.
+          \begin{itemize}
+            \item $\Omega \in \mathcal{F}$, by assumption.
+            \item $\emptyset \in \mathcal{F}$ since $\emptyset = \Omega \setminus \Omega \in \mathcal{F}$.
+            \item Closed under complements: for $A \in \mathcal{F}$,
+              $A^c = \Omega \setminus A \in \mathcal{F}$.
+            \item Closed under finite intersections: for $A,B \in \mathcal{F}$,
+              \[
+              A \cap B \;=\; A \setminus B^c \in \mathcal{F},
+              \]
+              since $B^c \in \mathcal{F}$ and $\mathcal{F}$ is closed under set difference.
+              By induction, $\bigcap_{i=1}^n A_i \in \mathcal{F}$ for any finite family.
+            \item Closed under finite unions: by De Morgan,
+              \[
+              A \cup B \;=\; (A^c \cap B^c)^c \in \mathcal{F}.
+              \]
+              Hence $\bigcup_{i=1}^n A_i \in \mathcal{F}$ for any finite family.
+          \end{itemize}
+          Therefore, $\mathcal{F}$ is an algebra.
+
+    \item Consider the set $\Omega = \left\{ 1, 2, 3, 4 \right\} $, and the family $\mathcal{F} = \left\{ \emptyset, \left\{ 1, 2 \right\} , \left\{ 3, 4 \right\} , \left\{ 1, 4 \right\} , \left\{ 2, 3 \right\} , \left\{  1, 2, 3, 4 \right\} \right\} $.
+        Aside from pairs containing the empty set, the only other disjoint unions are $\left\{ 1, 2 \right\} \dot\cup \left\{ 3, 4 \right\} = \Omega$ and $\left\{ 1, 4 \right\} \dot\cup \left\{ 2, 3 \right\} = \Omega$.
+        Also, $\mathcal{F}$ is closed under complements: Indeed, we have, for non-empty sets, the following complementary pairs: $\left\{ 1, 2 \right\} = \left\{3, 4  \right\}^{c} $, and $\left\{ 1, 4 \right\}  = \left\{ 2, 3 \right\}^{c}$.
+        Therefore, $\mathcal{F}$ satisfies the requirements of this definition.
+        However, $\mathcal{F}$ is not closed under finite intersections, so it is not an algebra, since $\left\{ 1, 2 \right\} \cap \left\{ 2, 3 \right\} = \left\{ 2 \right\}  \not\in  \mathcal{F}$.
+    \item
+        Consider $\Omega = \{1,2,3,4\}$ and
+        \[
+        \mathcal{F} = \{\emptyset,\ \{1,2\},\ \{3,4\},\ \{1,4\},\ \{2,3\},\ \Omega\}.
+        \]
+        Then $\mathcal{F}$ is closed under complements (e.g., $\{1,2\}^c=\{3,4\}$ and $\{1,4\}^c=\{2,3\}$).
+        It is also closed under finite disjoint unions: aside from unions with $\emptyset$, the only nontrivial disjoint pairs are
+        $\{1,2\}\dot\cup\{3,4\}=\Omega$ and $\{1,4\}\dot\cup\{2,3\}=\Omega$, both in $\mathcal{F}$.
+
+        However, $\mathcal{F}$ is not an algebra because it is not closed under finite intersections or finite unions. We can see that:
+        \[
+        \{1,2\}\cap\{2,3\}=\{2\}\notin\mathcal{F}
+        \quad\text{and}\quad
+        \{1,2\}\cup\{2,3\}=\{1,2,3\}\notin\mathcal{F}.
+        \]
+        Thus, closure under complements and finite disjoint unions does not imply that $\mathcal{F}$ is an algebra.
+
+\end{enumerate}
+
+\item
+\begin{enumerate}
+\item
+Given an arbitrary nonempty
+collection of sets $\{E_\alpha : \alpha \in A\}$, prove that there is
+a smallest $\sigma$-algebra that contains every $E_\alpha$.  This $\sigma$-algebra
+is called the $\sigma$-algebra \emph{generated} by $\{E_\alpha : \alpha \in A\}$.
+
+\item
+Suppose that we have $\sigma$-algebras $\Fcal_1$ and $\Fcal_2$.
+Show (by counterexample) that the union $\Fcal_1 \cup \Fcal_2$
+need not be a $\sigma$-algebra.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}
+    \item Let $\Omega = \bigcup_{\alpha \in A} E_\alpha$ and set $S = \{E_\alpha : \alpha \in A\}$.
+    There exists at least one $\sigma$-algebra on $\Omega$ containing $S$, namely $2^\Omega$.
+
+    Define
+    \[
+      \mathcal{F} \;=\; \bigcap_{\substack{\mathcal{X}\ \text{a }\sigma\text{-algebra on }\Omega\\ S \subset \mathcal{X}}} \mathcal{X}.
+    \]
+    We check that $\mathcal{F}$ is a $\sigma$-algebra: clearly $\Omega,\emptyset \in \mathcal{F}$, since every $\sigma$-algebra on $\Omega$ must contain $\emptyset$ and $\Omega$.
+    If $A \in \mathcal{F}$, then $A \in \mathcal{X}$ for every such $\mathcal{X}$, hence $A^c \in \mathcal{X}$ for each $\mathcal{X}$, so $A^c \in \mathcal{F}$.
+    If $A_1,A_2,\ldots \in \mathcal{F}$, then $A_i \in \mathcal{X}$ for every $\mathcal{X}$, and since each $\mathcal{X}$ is a $\sigma$-algebra, $\bigcup_{i=1}^\infty A_i \in \mathcal{X}$ for all $\mathcal{X}$; hence $\bigcup_{i=1}^\infty A_i \in \mathcal{F}$.
+    Thus $\mathcal{F}$ is a $\sigma$-algebra containing $S$.
+    Finally, if $\mathcal{G}$ is any $\sigma$-algebra on $\Omega$ with $S \subset \mathcal{G}$, then $\mathcal{G}$ appears in the intersection above, so $\mathcal{F} \subset \mathcal{G}$.
+    Therefore $\mathcal{F}$ is the smallest $\sigma$-algebra containing $\{E_\alpha : \alpha \in A\}$ (the $\sigma$-algebra generated by this collection).
+
+    \item If the whole space isn’t fixed, we could take $\mathcal{F}_1 = \{\emptyset,\{1\}\}$ and $\mathcal{F}_2=\{\emptyset,\{2\}\}$; then $\mathcal{F}_1\cup\mathcal{F}_2=\{\emptyset,\{1\},\{2\}\}$ is not a $\sigma$-algebra (e.g., it is not closed under unions, and doesn't contain the whole space).
+
+    If we insist both $\sigma$-algebras are on the same sample space, take $\Omega=\{1,2,3\}$ and
+    \[
+      \mathcal{F}_1=\{\emptyset,\{1\},\{2,3\},\Omega\},\qquad
+      \mathcal{F}_2=\{\emptyset,\{1,2\},\{3\},\Omega\}.
+    \]
+    Both $\mathcal{F}_1$ and $\mathcal{F}_2$ are $\sigma$-algebras on $\Omega$, but
+    \[
+      \mathcal{F}_1 \cup \mathcal{F}_2
+      = \{\emptyset,\{1\},\{2,3\},\{1,2\},\{3\},\Omega\}
+    \]
+    is not a $\sigma$-algebra: for example,
+    $\{1,2\} \cap \{2,3\} = \{2\} \notin \mathcal{F}_1 \cup \mathcal{F}_2$.
+    Hence the union of two $\sigma$-algebras need not be a $\sigma$-algebra.
+\end{enumerate}
+
+\item
+Let $\Fcal$ be the $\sigma$-algebra generated by an arbitrary nonempty
+collection of sets $\{E_\alpha : \alpha \in A\}$.  Prove that for each $E \in
+\Fcal$, there exists a countable subcollection $\{E_{\alpha_j}: j=1,2,\ldots\}$
+(depending on $E$) such that $E$ already belongs to the $\sigma$-algebra
+generated by this subcollection.
+\\
+Hint: Consider the class of all sets with the asserted property and
+show that it is a $\sigma$-algebra containing each $E_\alpha$.
+
+\subsection*{Solution}
+We follow the hint. Let $\mathcal{C}$ be the collection of all sets $E$ such that there exists a countable subcollection $\{E_{\alpha_j} : j=1,2,\ldots\}$ with $E$ belonging to the $\sigma$-algebra generated by this subcollection.
+
+Clearly, every $E_\alpha$ itself belongs to $\mathcal{C}$, since $E_\alpha$ is in the $\sigma$-algebra generated by $\{E_\alpha\}$.
+
+Now we check that $\mathcal{C}$ is a $\sigma$-algebra:
+
+\begin{itemize}
+  \item $\Omega,\emptyset \in \mathcal{C}$ provided that $\left\{ E_{\alpha} : \alpha \in A \right\} $ is non-empty, since $\emptyset, \Omega$ are present in every $\sigma$-algebra including those generated by countably many sets.
+
+  \item Closed under complements: if $E \in \mathcal{C}$, then there is a countable subcollection $B$ with $E \in \mathcal{F}_B$, where $\mathcal{F}_B$ is the $\sigma$-algebra generated by $B$. Since $\mathcal{F}_B$ is a $\sigma$-algebra, $E^c \in \mathcal{F}_B$, hence $E^c \in \mathcal{C}$.
+
+  \item Closed under countable unions: if $E_1,E_2,\ldots \in \mathcal{C}$, then for each $i$ there is a countable $B_i$ with $E_i \in \mathcal{F}_{B_i}$. The union $B = \bigcup_i B_i$ is countable, and $\mathcal{F}_B$ is a $\sigma$-algebra containing each $E_i$, hence also $\bigcup_i E_i$. Thus $\bigcup_i E_i \in \mathcal{C}$.
+\end{itemize}
+
+Therefore, $\mathcal{C}$ is a $\sigma$-algebra containing all $E_\alpha$. By definition, the $\sigma$-algebra generated by $\{E_\alpha : \alpha \in A\}$ is the smallest such, so
+\[
+\mathcal{F} \subset \mathcal{C}.
+\]
+Thus, for each $E \in \mathcal{F}$ there exists a countable subcollection $\{E_{\alpha_j}\}$ such that $E$ lies in the $\sigma$-algebra generated by that subcollection.
+
+
+
+
+\end{enumerate}
+
+\bigskip   \noindent
+{\bf Recommended problems.}
+Each assignment will include additional recommended
+problems, which are not to be handed in for marking.
+The following problems from Rosenthal are recommended but are not to be handed in:
+
+2.7.2, 2.7.4, 2.7.6.
+\\
+For solutions to even-numbered problems see: \url{http://www.probability.ca/jeff/grprobbook.html}.
+
+\bigskip \noindent
+Quote of the week: {\em
+The student of arithmetic who has mastered the first four rules of his art,
+and successfully striven with money sums and fractions, finds himself
+confronted by an unbroken expanse of questions known as problems.
+These are short stories of adventure and industry with the end omitted,
+and though betraying a strong family resemblance, are not without a certain
+element of romance.
+}
+
+\hspace*{\fill} Stephen Leacock
+
+
+\end{document}
