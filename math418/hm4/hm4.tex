@@ -30,18 +30,18 @@
   \textbf{Solution}
   
   If the angle sampled from the uniform distribution $\omega \in (-\pi / 2, \pi / 2)$, then we have that the point on the wall is given by $z = \tan(\omega) \times   (1 \text{m})$.
-  Thus, the random variable $Z(\omega) = \tan(\omega)$.
+  Thus, the random variable $X(\omega) = \tan(\omega)$.
   To compute the CDF, we notice that the uniform distribution over $(-\pi / 2, \pi / 2)$ is $\frac{1}{\pi} \lambda$: the lebesgue measure normalized on $(-\pi / 2, \pi / 2)$.
   We then compute:
   \begin{align*}
-      F_Z(z) = P(Z(\omega) \le  z) &= P(\omega \le  \tan^{-1}(z))  \\
+      F_X(z) = P(X(\omega) \le  z) &= P(\omega \le  \tan^{-1}(z))  \\
       &=\frac{1}{\pi} \lambda((-\pi / 2, \tan^{-1}(z))) \\
       &= \frac{1}{\pi} \tan^{-1}(z) + \frac{1}{2}
   .\end{align*}
 
   The probability density function, by FTC, is given by
   \[
-      f_Z(z) = F_Z'(z) = \frac{1}{\pi} \frac{1}{x^2 + 1}
+      f_X(z) = F_X'(z) = \frac{1}{\pi} \frac{1}{x^2 + 1}
   .\]
 
   \item Suppose that $X, Y$ are independent standard normal random variables.\footnote{The independence has the consequence that the joint density $g$ of $X, Y$ is the product of the densities. In other words, for a Borel subset $B$ of $\mathbb{R}^2$,
@@ -66,8 +66,7 @@
   When we differentiate, we use the Leibnitz integral rule:
   \begin{align*}
       F_Z(z) &= \int_{-\infty}^{0} \int_{yz}^{\infty} f_X(x) f_Y(y) dx dy + \int_{0}^{\infty}\int_{-\infty}^{yz} f_X(x)f_Y(y) dx dy \\
-     f_Z(z) = F'(z) &= \int_{-\infty}^{0} -y f_X(yz)f_Y(y) dy + \int_{0}^{\infty} f_X(yz) f_Y(y) dx dy \\
-     &= 5
+     f_Z(z) = F'(z) &= \int_{-\infty}^{0} -y f_X(yz)f_Y(y) dy + \int_{0}^{\infty} f_X(yz) f_Y(y) dx dy
   .\end{align*}
 
   Now, we substitue the pdf's for the normal distributions and compute each of these integrals:
@@ -121,6 +120,31 @@
   \item Suppose that $X$ is a random variable whose cumulative distribution function $F$ is continuous on
   $\mathbb{R}$. Let $Y = F(X)$. Prove that $Y$ has a uniform distribution, i.e., that $F_Y(x) = x$ for $x \in (0,1)$.
 
+  \textbf{Solution.}
+
+  We compute $F_{Y}(x)$.
+  Let $0 < x < 1$.
+  By definition, 
+  \[
+  F_Y(x) = P(Y \le  x) = P(F(X) \le  x)
+  .\] 
+  Now, consider set $\{ \omega : F(X(\omega)) \le x \} $.
+  Since $F$ is continuous, there exists some $y \in \R$ such that $F(y) = x$.
+  Also, since $F$ is nondecreasing, and $\lim_{y \to \infty} F(y) = 1$, and $x < 1$ the set of $y$ such that $F(y) = x$ is bounded above.
+  Now, let $y^{*} = \sup \{y \in \R : F(y) = x\}$.
+  By continuity of $F$, we have that $F(y^{*}) = x$.
+  In particular, if $X(\omega) > y^{*}$, then $F(X(\omega)) > x$, and since $F$ is nondecreasing we have that if $X(\omega) \le y^{*}$, then $F(X(\omega)) \le  x$.
+
+  Therefore,
+  \[
+  \{\omega : F(X(\omega)) \le  x\}  = \{\omega : X(\omega) \le  y^{*}\} 
+  .\] 
+  However,
+  \[
+  P(X \le  y^{*}) = F(y^{*}) = x
+  .\] 
+  Therefore, $F_Y(x) = x$, so $Y$ has a uniform distribution.
+
   \item Let $X_0, X_1, \ldots$ be i.i.d.\ continuous random variables
   with cumulative distribution function
   \[
@@ -144,6 +168,31 @@
     \]
     (Recall that $\log(1 - t) = -\sum_{n=1}^\infty \tfrac{t^n}{n}$ for $|t| < 1$; if $F = 1$ we interpret $(1-F)\log(1-F)$ as
     zero.)
+  \end{enumerate}
+  \textbf{Solution.}
+  \begin{enumerate}
+      \item We have that $\min \{n : X_n > X_0\} = n $ when $X_i \le  X_0$ where $1 \le  i \le  n-1$.
+          This can then be described by the integral:
+          \[
+          P(N > n) = \int_{-\infty}^{\infty}f(x) F(x)^{n} dx
+          ,\]
+          where $f(x)$ is the pdf of $X_0$.
+          We can immediately solve this with a substitution $u = F(x)$, since $F(-\infty) = 0, F(\infty) = 1$ and $\frac{du}{dx} = f(x)$ to get
+          \[
+          P(N > n) = \int_{0}^{1} u^{n} du = \frac{1}{n+1}
+          .\] 
+          Then, $F_N(n) = P(N \le  n) =  1 - \frac{1}{n+1}$.
+      \item In order to compute this probability, we condition on the value of $N$.
+          In particular, the conditional probability $P(X_N \le  x | N = n) = F^{n+1}$, since $X_0, \ldots, X_n \le  x$, and the ordering of these random variables sizes is already taken care of in $N = n$.
+          Then, we compute:
+          \begin{align*}
+              P(X_N \le x) &= \sum_{n = 1}^{\infty} P(X_N \le  x | N = n)P(N = n)\\
+              &= \sum_{n=1}^{\infty} F^{n+1}  \left( \frac{1}{n} - \frac{1}{n+1} \right)   \\
+              &= F \sum_{n=1}^{\infty} \frac{F^{n}}{n} + F - \sum_{n=1}^{\infty} \frac{F^{n}}{n}\\
+              &= F(- \log(1 - F)) + F + \log(1 - F) \\
+              &= F + (1- F)\log(1-F)
+          ,\end{align*}
+          as desired.
   \end{enumerate}
 \end{enumerate}
 

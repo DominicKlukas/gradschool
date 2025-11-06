@@ -1,0 +1,43 @@
+{
+  "release": {
+    "channel": "stable"
+  },
+  "sharedFolders": [
+    {
+      "path": "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones",
+      "guid": "af274819-644e-4552-98ea-2d198182722e",
+      "relay": "bde711ae-d210-4a63-9701-154d58c67d1b",
+      "sync": {
+        "images": true,
+        "audio": true,
+        "videos": true,
+        "pdfs": true,
+        "otherTypes": false
+      }
+    }
+  ],
+  "endpoints": {},
+  "enableDocumentStatus": false,
+  "enableNewLinkFormat": false,
+  "enableDeltaLogging": false,
+  "enableHTTPSync": false,
+  "enableSyncMenu": true,
+  "enableDocumentHistory": false,
+  "enableEditorTweens": false,
+  "enableSyncModal": false,
+  "enableAttachmentSync": true,
+  "enableNetworkLogging": false,
+  "enableCanvasSync": false,
+  "enableVerifyUploads": false,
+  "enableAutomaticDiffResolution": false,
+  "enableDiscordLogin": false,
+  "enableOIDCLogin": false,
+  "enableGitHubLogin": false,
+  "enableSelfManageHosts": false,
+  "debugging": false,
+  "login": {
+    "provider": "google"
+  },
+  "enableDocumentServer": true,
+  "enableMicrosoftLogin": true
+}

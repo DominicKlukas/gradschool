@@ -1,0 +1,289 @@
+\documentclass[hidelinks]{article}[12pt]
+
+\oddsidemargin 3mm
+\evensidemargin 3mm
+\topmargin -12mm
+\textheight 630pt
+\textwidth 450pt
+
+\input{../../preamble.tex}
+
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{amstext}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+\newcommand{\Fcal}{{\cal F}}
+\newcommand{\1}{\mathbbm{1}}
+
+
+\begin{document}
+
+
+%\pagestyle{empty}
+
+\noindent
+{\bf Math 418/544   Assignment 5} \hfill  October 10, 2025
+
+\bigskip \noindent
+Dr.\ J.\ Hermon
+
+\bigskip \noindent
+{\bf This assignment is due in Canvas at 11:59 p.m.\ on Friday, October 17. \\
+\emph{Late assignments are not accepted.}}
+
+
+Dominic Klukas
+
+SN 64348378
+
+\begin{enumerate}
+
+
+
+\item
+%Grimmett and Stirzaker 7.3.10.
+Let $X_1,X_2,\ldots$ be independent $N(0,1)$ (standard normal) random variables.  Prove that
+\[
+    P\Big(\limsup_{n\to\infty} \frac{|X_n|}{\sqrt{\log n}} = \sqrt{2}\Big) = 1.
+\]
+(You may use the fact that the cumulative distribution function $\Phi$ of
+the standard normal obeys $1-\Phi(x) \sim \frac{1}{x} \frac{1}{\sqrt{2\pi}}e^{-x^2/2}$
+as $x \to \infty$.)
+
+\textbf{Solution.}
+
+We observe from the definition of $\limsup$, that for any $\omega$, we have that $\limsup \frac{|X_n(\omega)|}{\sqrt{\log n}} = \sqrt{2}$ if for any $\epsilon > 0$
+\[
+\omega \in \{ \frac{|X_n|}{\sqrt{\log n}} > \sqrt{2} - \epsilon \text{ i.o.} \} \setminus \{\frac{|X_n|}{\sqrt{\log n}} > \sqrt{2} + \epsilon \text{ i.o.}\} 
+.\] 
+Namely,
+\[
+\{\limsup \frac{|X_n|}{\sqrt{\log n}} = \sqrt{2}\} = \bigcap_{m = 1}^{\infty} \{ \frac{|X_n|}{\sqrt{\log n}} > \sqrt{2} - \frac{1}{m} \text{ i.o.} \} \setminus \{\frac{|X_n|}{\sqrt{\log n}} > \sqrt{2} + \frac{1}{m} \text{ i.o.}\} 
+.\] 
+
+For $c > 0$, and large $n$ so that $c \sqrt{ \log n}$ is large enough to use the given approximation for $1 - \Phi(x)$, we have
+\begin{align*}
+    P\left(\frac{|X_n|}{\sqrt{\log n}} > c\right) = P\left( |X_n| > c \sqrt{\log n} \right) &= 2(1 - \Phi \left( c \sqrt{\log n} \right)) \\
+    &= \frac{2}{c \sqrt{\log n} \sqrt{2 \pi}} \exp \left( - c^2 \log n / 2 \right)  \\
+    &= \frac{2}{c \sqrt{ \log n} \sqrt{2 \pi}} \left( \frac{1}{n} \right)^{c^2 / 2} 
+.\end{align*}
+By Rudin chapter 3 theorems 3.28 and 3.29, we have that $\sum_{n = 1}^{\infty} P\left( \frac{|X_n|}{\sqrt{\log n}} > c \right)$ diverges when $c \le \sqrt{2}$ and converges when $c > \sqrt{2}$.
+
+Now, we apply the Borel Cantelli lemma.
+Then,
+\begin{align*}
+    c > \sqrt{2} \implies \sum_{n = 1}^{\infty} P \left( \frac{|X_n|}{\sqrt{\log n}} > c \right) < \infty &\implies P\left( \frac{|X_n|}{\sqrt{\log n}} > c \text{ i.o.} \right) = 0 \\
+    c \le \sqrt{2} \implies \sum_{n = 1}^{\infty} P \left( \frac{|X_n|}{\sqrt{\log n}} > c \right) = \infty &\implies P\left( \frac{|X_n|}{\sqrt{\log n}} > c \text{ i.o.} \right) = 1
+.\end{align*}
+By continuity from below, this implies
+\[
+P\left( \bigcap_{m = 1}^{\infty} \frac{|X_n|}{\sqrt{\log n}} > \sqrt{2} - \frac{1}{m} \text{ i.o.} \right)  = 1
+.\] 
+Thus,
+\[
+P(\limsup \frac{|X_n|}{\sqrt{\log n}} = \sqrt{2}) \ge  P\left( \bigcup_{m = 1}^{\infty} \frac{|X_n|}{\sqrt{\log n}} > \sqrt{2} - \frac{1}{m} \text{ i.o.}\right) - P \left(\bigcup_{m = 1}^{\infty} \frac{|X_n|}{\sqrt{\log n}} > \sqrt{2} + \frac{1}{m} \text{ i.o.} \right)  = 1 - 0
+.\] 
+
+\item
+%Simon Analysis p.645
+This problem shows that the conclusion of the second Borel--Cantelli Lemma holds under
+the assumption that the events are pairwise independent only.  It is due to Erd\H{o}s and
+R\'enyi, 1959.
+\\
+Suppose that the events $A_1,A_2,\ldots$ are pairwise independent, i.e., that
+$P(A_i \cap A_j)= P(A_i)P(A_j)$.  Let $S_n=\sum_{j=1}^n \1_{A_j}$ and
+$S_\infty =\sum_{j=1}^\infty \1_{A_j}$.
+\begin{enumerate}
+\item
+Prove that ${\rm Cov}(\1_{A_i},\1_{A_j}) = P(A_i \cap A_j) - P(A_i)P(A_j)$.
+\item
+Prove that
+\[
+    {\rm Var}(S_n) = \sum_{j=1}^n (P(A_j) - P(A_j)^2) \le \sum_{j=1}^n P(A_j).
+\]
+\item
+Prove (Chebyshev) that
+\[
+    P\big( S_n \le \frac 12 \sum_{j=1}^n P(A_j) \big) \le \frac{4}{\sum_{j=1}^n P(A_j)}.
+\]
+\item
+Prove that
+\[
+    P\big( S_\infty \le \frac 12 \sum_{j=1}^n P(A_j) \big) \le \frac{4}{\sum_{j=1}^n P(A_j)}.
+\]
+\item
+Prove that if $\sum_{j=1}^\infty P(A_j)=\infty$ then $P(S_\infty <\infty)=0$ and hence
+$P(A_n\; {\rm i.o.})=1$.
+\end{enumerate}
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item 
+        We have $E(\1_{A_i}) = P(A_i)$. By linearity of expectation:
+        \begin{align*}
+            {\rm Cov} (\1_{A_i}, \1_{A_j}) &= E((\1_{A_i} - P(A_i))(\1_{A_j} - P(A_j)))\\
+            &= E(\1_{A_i}\1_{A_j}) - P(A_i)P(A_j)
+        .\end{align*}
+        But then, $\1_{A_i} \1_{A_j} = \1_{A_i \cap A_j}$.
+        So, ${\rm Cov}(\1_{A_i}, \1_{A_j}) = P(A_i \cap A_j) - P(A_i)P(A_j)$.
+    \item We have:
+        \begin{align*}
+            {\rm Var}(S_n) = \sum_{j = 1}^{n} {\rm Var}(\1_{A_j}) + 2 \sum_{j < i} {\rm Cov}(\1_{A_i}, \1_{A_j})
+                           &= \sum_{j = 1}^{n} E(\1_{A_j}^2) - E(\1_{A_j})^2\\
+                           &= \sum_{j = 1}^{n} E(\1_{A_j}) - E(\1_{A_j})^2
+                           = \sum_{j = 1}^{n} P(A_j) - P(A_j)^2
+        .\end{align*}
+    \item 
+        \begin{align*}
+            P\left( S_n \le  \frac{1}{2} \sum_{j = 1}^{n} P(A_j) \right) = P \left( \frac{1}{2} \sum_{j=1}^{n} P(A_j) \le \sum_{j=1}^{n} P(A_j) - S_n \right) 
+            &= P \left( \frac{1}{2} \sum_{j=1}^{n} P(A_j) \le E(S_n) - S_n \right)  \\
+            &\le  P \left( \frac{1}{2} \sum_{j=1}^{n} P(A_j) \le |S_n - E(S_n)| \right) 
+        .\end{align*}
+        Finally, we apply Chebyshev:
+        \begin{align*}
+            P \left( \frac{1}{2} \sum_{j=1}^{n} P(A_j) \le  |S_n - E(S_n)| \right) \le  \frac{4}{\left( \sum_{j=1}^{n} P(A_j) \right)^2 } {\rm Var}(S_n) = \frac{4}{\sum_{j=1}^{n} P(A_j)}
+        .\end{align*}
+    \item We have that $S_{\infty} = S_n + \sum_{j = n+1}^{\infty} \1_{A_j}$, since $\1_{A_j} \ge  0$.
+        Therefore, $S_n \le  S_{\infty}$.
+        However, this implies that for any $c \in \R$, $P(S_{\infty} \le c) \le  P(S_n \le  c)$, since if $\omega \in \{S_{\infty} \le  c\} $ in other words $S_{\infty}(\omega) \le c$, then $S_n(\omega) \le  S_{\infty} (\omega) \le  c$ so that $\omega \in \{S_n \le  c\} $.
+        Therefore, 
+        \[
+        P\left( S_{\infty} \le  \frac{1}{2} \sum_{j=1}^{n} P(A_j) \right) \le  P\left( S_n \le  \frac{1}{2} \sum_{j=1}^{n} P(A_j) \right) \le \frac{4}{\sum_{j=1}^{n} P(A_j)}
+        .\] 
+    \item We show that $P(S_{\infty} \le  N) = 0$ for all $N \in \N$.
+        Since $\sum_{j=1}^{\infty} P(A_j) = \infty$, there exists some $n$ such that $ \frac{1}{2}\sum_{j = 1}^{n} P(A_j) \ge N$.
+        Likewise, for any $\epsilon > 0$, there exists some $n'$ such that $4 / \sum_{j=1}^{n'} P(A_j) < \epsilon$. Let $n'' = \max \{ n, n'\}$.
+        But then,
+        \[
+        P(S_{\infty} < N) \le P(S_{\infty} \le  \frac{1}{2}\sum_{j=1}^{n''}P(A_j)) \le \frac{4}{\sum_{j=1}^{n''} P(A_j)} < \epsilon
+        .\] 
+        Since $\epsilon$ was arbitrary, $P(S_{\infty} < N) = 0$.
+        By continuity from below, we have $P(S_{\infty} < \infty) = 0$.
+\end{enumerate}
+
+\item
+Let $X \ge 0$ be a nonnegative random variable with $EX^2<\infty$.
+\begin{enumerate}
+\item
+%Durrett p.15 #3.8
+Prove that
+\[
+    P(X>0) \ge \frac{(EX)^2}{EX^2}.
+\]
+Hint: Consider the random variable $X\1_{X>0}$.
+\item
+%Paley-Zygmund inequality
+Prove that, for $\theta \in [0,1]$,
+\[
+    P(X > \theta EX) \ge (1-\theta)^2 \frac{(EX)^2}{EX^2}.
+\]
+\end{enumerate}
+
+\textbf{Solution.}
+\begin{enumerate}
+    \item We consider the hint. In particular, $X \1_{X > 0} = X$. Applying the Cauchy Schwartz inequality,
+        \[
+        E(X) = E(X \1_{X > 0}) \le \sqrt{E(X^2)E(\1_{X > 0}^2)} = \sqrt{E(X^2) P(\1_{X > 0})}
+        .\] 
+        In conclusion, $P(X > 0) \ge  E(X)^2 / E(X^2)$.
+    \item We apply a very similar application of the C.S. inequality.
+        In particular, note that $E[X - E[\theta X]] \le  E (X - E[\theta X])^{+} = E X \1_{X \ge  \theta X}$.
+        Then:
+        \begin{align*}
+            (1 - \theta)E[X] = E[X - E[\theta X]] \le E X \1_{X \ge \theta E[X]} \le \sqrt{EX^2 P(X \geq  \theta E[X])}
+        .\end{align*}
+        Rearranging, we get: $P(X \geq \theta E[X]) \ge (1 - \theta)^2 E[X]^2 / EX^2$.
+\end{enumerate}
+
+\item
+%Durrett Theorem 7.2
+Let $X_1,X_2,\ldots$ be i.i.d.\ with $EX_i^+=\infty$ and $EX_i^-<\infty$.
+Let $S_n=X_1+\cdots +X_n$.  Prove that $n^{-1}S_n \to \infty$ a.s.
+\\
+Hint: Apply SLLN to $X_{i,N}=\min\{X_i,N\}$.
+
+\textbf{Solution.}
+
+First, we see that $E X_{i, N}^{-} = E X_{i}^{-} < \infty$, and $E X_{i, N}^{+} \le  E(N) \le  N$. Therefore, $E X_{i, N} < \infty$. Since $X_{i, N}$ are i.i.d., we can apply the SLLN to $X_{i, N}$. Let $\mu_N = E X_{i, N}$.
+Now, we have that $X_{i, N} \to X_{i}$ pointwise: indeed, for any $\omega \in \Omega$, we have that $X_{i}(\omega) < M$ for some $M \in \N$, and then $X_{i, N}(\omega)  = X_{i}(\omega)$ for all $N > M$.
+By the Monotone Convergence Theorem, we have that: $E X_{i, N}^{+} \to E X_i^{+}$ as $N \to \infty$.
+In particular, $\mu_N = E X_{i, N}^{+} - E X_{i, N}^{-} \to \infty$ as $N \to \infty$.
+
+Now, pointwise we have $X_i \ge  \min \{X_i, N\} $.
+Therefore, at each point, 
+\[
+S_n = \sum_{j = 1}^{n} X_j \ge  \sum_{j = 1}^{n} X_{j, N}
+.\] 
+In particular, $P(\lim_{n \to \infty} n^{-1}(\sum_{j=1}^{n} X_{j, N})  = \mu_N) = 1$ implies that $P(\lim_{n \to \infty} n^{-1}S_n \ge \mu_N) = 1$.
+But then, by continuity from above, since these sets are decreasing, and since $\mu_N \to \infty$ as $N \to \infty$, we have $P(\lim_{n \to \infty} n^{-1} S_n = \infty)$ or $n^{-1}S_n \to \infty$ a.s.
+
+\item
+Let $X$ and $Y$ be random variables with finite mean. Suppose that for any $A\in \Fcal$ we have $E[X\1_A] \le E[Y\1_A]$.  Prove that $X\le Y$ a.s.
+
+\textbf{Solution.}
+
+Suppose for the sake of contradiction that $P(X - Y > 0) > 0$.
+Then, there exists some $n$ such that $P\left(X - Y > \frac{1}{n}\right) > 0$, since otherwise we would have $P(X - Y > 0) = 0$ by continuity of probabilities.
+Then, there exists $\epsilon > 0$ such that $P\left( X - Y > \frac{1}{n} \right) \ge  \epsilon$.
+Let $A = \{X - Y > \frac{1}{n}\} $.
+But then 
+\[
+E[X \1_{A}] - E[Y \1_{A}] = E[X \1_{A}- Y \1_{A}] \ge \frac{1}{n} E[\1_{A}] = \frac{1}{n} P(A) \ge \frac{\epsilon}{n} > 0
+.\] 
+where in the first step we used the fact that $X - Y > \frac{1}{n}$ and the order preserving property of expectation.
+However, this contradicts that $E[X \1_{A}] \le  E[Y \1_{A}]$, since this i the case for any $A \in \mathcal{F}$.
+Therefore, it must be the case that $P(X - Y > 0) = 0$, in other words, $P(X \le  Y)$ a.s.
+
+\end{enumerate}
+
+ 
+
+\bigskip  \noindent
+{\bf Recommended problems.}
+The following problems from Rosenthal are recommended but are not to be handed in:
+
+4.5.4, 4.5.7, 6.3.2, 6.3.4, 6.3.6., 5.5.6, 5.5.9.
+\\
+For solutions to even-numbered problems see: \url{http://www.probability.ca/jeff/grprobbook.html}.
+
+\smallskip\noindent
+This problem (do not hand in)
+gives a probabilistic proof of Weierstrass's Theorem, due to Bernstein (1912):
+Let $f:[0,1]\to\R$ be a continuous function.
+For $x \in [0,1]$, let $S_n$ have a Bin($n,x$) distribution and set $X_n=n^{-1}S_n$.
+Prove that $q_n(x) = E f(X_n)$ is a polynomial in $x$
+and that $q_n$ converges uniformly to $f$ on $[0,1]$.
+\\
+Hint: Write $f(x)-q_n(x)$ as a sum over $m \in \{0,\ldots,n\}$, divide the sum over
+$m$ into $|\frac mn -x| \le \delta$ and $|\frac mn -x|>\delta$, and use the Chebyshev
+inequality to bound the latter part of the sum.
+
+
+
+\bigskip\noindent
+{\bf Two simulations.}  (There is nothing for you to produce concerning this.)
+The standard normal with density $f(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}$ has mean zero.
+The Cauchy distribution with density $f(x) = \frac{1}{\pi}\frac{1}{1+x^2}$ has undefined mean
+(this distribution arose in Assignment~4 \#1).
+
+\includegraphics[scale=0.32]{418-5-24_stdnormal.png}
+\includegraphics[scale=0.32]{418-5-24_Cauchy.png}
+
+
+
+
+\bigskip \noindent
+Quote of the week:
+\emph{It is the mark of a truly intelligent person to be moved by statistics.}
+
+\hspace*{\fill}
+George Bernard Shaw
+
+
+
+\end{document}

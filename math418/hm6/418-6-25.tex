@@ -1,0 +1,367 @@
+\documentclass[hidelinks]{article}[12pt]
+
+\oddsidemargin 3mm
+\evensidemargin 3mm
+\topmargin -12mm
+\textheight 630pt
+\textwidth 450pt
+
+\input{../../preamble.tex}
+
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{amstext}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{bbm}
+\usepackage{cancel}
+
+\newcommand{\Fcal}{{\cal F}}
+\newcommand{\1}{\mathbbm{1}}
+
+
+\begin{document}
+
+
+%\pagestyle{empty}
+
+\noindent
+{\bf Math 418/544   Assignment 6} \hfill
+
+\bigskip \noindent
+Dr.\ J.\ Hermon
+
+\bigskip \noindent
+\textbf{
+Due: Wednesday, October 29\\[2pt]
+\textit{Late assignments will not be accepted}
+Submit solutions for 5 out of the following 8 problems. The TA might only have time to grade 4 problems. Please indicate which 4 out of the 5 problems you submit you want graded (in case only 4 get graded).
+}
+
+Dominic Klukas
+
+SN 64348378
+
+I did problems 1-5. Please grade problems 1-4. Thank you!
+
+
+\begin{enumerate}
+    \item For $p \ge 1$, let $\|X\|_p := (\mathbb{E}[|X|^p])^{1/p}$ and $\|X\|_\infty := \inf\{M : \mathbb{P}(|X| > M) = 0\}$.
+    \begin{enumerate}
+        \item Prove that $\|XY\|_1 \le \|X\|_1 \|Y\|_\infty$.
+        \item Prove that $\|X\|_\infty = \lim_{p \to \infty} \|X\|_p$.
+    \end{enumerate}
+
+    \textbf{Solution}
+    \begin{enumerate}
+        \item Suppose that $\mathbb{P}(\|Y\|_{\infty} < |Y|) > 0$.
+            If $\mathbb{P}\left(\|Y\|_{\infty} + \frac{1}{n} < |Y| \right) = 0$ for all $n \in \N$, then continuity of probabilities from below would give us $\mathbb{P}\left( \|Y\|_{\infty} < |Y| \right) = 0 $, which is a contradiction.
+            Therefore, we need to have $\mathbb{P}\left( \|Y\|_{\infty} < |Y| \right) = 0 $.
+            This implies that $\|Y\|_{\infty} \ge  |Y|$ a.e., so that 
+            \[
+            \|XY\|_{1} \le  \mathbb{E}[|XY|] \le  \mathbb{E}[|X| \|Y\|_{\infty}] = \|Y\|_{\infty} \mathbb{E}[|X|] = \|Y\|_{\infty} \|X\|_{1}
+            .\] 
+        \item First, we show that $\lim_{p \to \infty} \|X\|_p \le  \|X\|_\infty$.
+            Since $\|X\|_\infty \ge  |X|$ a.e., it follows $(\|X\|_\infty)^{p} \ge  |X|^{p}$ a.e.
+            Therefore,
+            \[
+                 \mathbb{E}[|X|^{p}] \le  \mathbb{E}[(\|X\|_{\infty})^{p}] = (\|X\|_{\infty})^{p} \implies \|X\|_{p} = \mathbb{E}[|X|^{p}]^{1 / p} \le  \|X\|_{\infty}
+            .\] 
+            Since $p$ was arbitrary, we have that $\lim_{p \to \infty} \|X\|_{p} \le  \|X\|_{\infty}$.
+
+
+            Now, we show that $\|X\|_{\infty} \le  \lim_{p \to \infty} \|X\|_p$.
+            Let $\epsilon > 0$.
+            Then, there exists some $M$ such that $M > \|X\|_{\infty} - \epsilon$ and $\mathbb{P}(|X| > M) > \delta$ for some $\delta > 0$.
+            Let $B = \{\omega : |X| > M\} $.
+            Then,
+            \begin{align*}
+                \|X\|_{p} = \mathbb{E}[|X|^{p}]^{ 1 / p} \ge \mathbb{E} [|X|^{p} \1_{\omega \in B}]^{1 / p} \ge  \mathbb{E}[M^{p} \1_{\omega \in B}]^{1 / p} \ge  M \delta^{1 / p} = M \exp\left( \frac{1}{p} \log \delta \right) 
+            .\end{align*}
+            Since the exponential function is continuous at $0$, as $p \to \infty$, we know that $\exp \left(  \frac{1}{p} \log \delta \right) \to 1 $ and so $\lim_{p \to \infty}\|X\|_p \ge  M = \|X\|_{\infty} - \epsilon$.
+            Since this applies for all $\epsilon > 0$, we have that $\lim_{p \to \infty} \|X\|_{p} \ge  \|X\|_{\infty}$.
+
+
+            We conclude, that $\|X\|_{\infty} = \lim_{p \to \infty} \|X\|_{p}$.
+    \end{enumerate}
+
+    \item Let $X_0 = (1,0)$ and define $X_n \in \mathbb{R}^2$ inductively by declaring that $X_{n+1}$ is chosen at random from the ball of radius $|X_n|$ centered at the origin; i.e. $X_{n+1}/|X_n|$ is uniformly distributed on the unit ball and independent of $X_1,\ldots,X_n$. Prove that $n^{-1} \log |X_n| \to c$ almost surely and compute $c$.
+
+    \textbf{Solution.}
+    We have that $X_{n+1} / |X_n|$ is uniformly distributed on the unit ball and independent of $X_1, \ldots, X_n$.
+    Therefore, $X_1 / |X_0|, \ldots, X_{n+1} / |X_{n}|$ are i.i.d.
+    Since functions of independent random variables are independent, it follows that $\log ( |X_1| / |X_0|), \ldots, \log ( |X_{n+1}| / |X_{n}|)$ are i.i.d.
+    Therefore, we can apply the strong law of large numbers to these variables.
+    To do so, we must compute their mean.
+    From the Calculus, in polar co-ordinates, we compute:
+    \begin{align*}
+        \frac{1}{\pi} \int_{0}^{2\pi} \int_{0}^{1} \log(r) r dr &= 2 \frac{1}{2} \cancelto{0}{\log(r)r^{2} \bigg|_{0}^{1}} - \int_{0}^{1} r dr\\
+    = - \frac{1}{2}
+    .\end{align*}
+    Both limits of $\log(r)r^2$ are zero: at $r=0$ beacuse of l'Hopital's rule, at $r=1$ since $\log(1)=0$.
+
+    Therefore, $\mathbb{E}[\log ( |X_{n+1} / X_{n}|)] = -1 / 2$.
+    Applying the S.L.L.N, we get $n^{-1} \sum_{k = 1}^{n} \log ( |X_{n}| / |X_{n-1}|) = \mathbb{E}[ \log ( |X_{n+1}| / |X_n|)] = - 1 / 2$ a.s.
+    However, we can see that this is a telescoping sum:
+    \begin{align*}
+        n^{-1} \sum_{k=1}^{n} \log( |X_n| / |X_{n-1}|) = n^{-1} \sum_{k=1}^{n} \log(|X_n|) - \log(|X_{n-1}|) &= \frac{1}{n} \left( \log(|X_n|) - \log(|X_0|) \right) \\
+        &= \frac{1}{n} \log(|X_n|) - \frac{1}{n} \cancelto{0}{\log(1)}
+    .\end{align*}
+    Therefore, $n^{-1} \log |X_n| \to - \frac{1}{ 2}$ a.s.
+
+    \item Each year you may invest in:
+    \begin{itemize}
+        \item Bonds costing \$1 that are worth $a$ at year’s end.
+        \item Stocks worth a random amount $V \ge 0$.
+    \end{itemize}
+    Investing a fixed proportion $p$ in bonds yields $W_{n+1} = (ap + (1-p)V_n)W_n$.  
+    Suppose $V_1,V_2,\dots$ are i.i.d.\ with $\mathbb{P}(V_n \in [\alpha,\beta]) = 1$ for some $0<\alpha\le\beta<\infty$.
+    \begin{enumerate}
+        \item Show there is a constant $c(p)$ such that $n^{-1}\log W_n \to c(p)$ a.s.
+        \item Show $c(p)$ is concave.
+        \item Examine $c'(0)$ and $c'(1)$ to determine conditions on $V$ guaranteeing the optimal $p$ lies in $(0,1)$.
+        \item Suppose $\mathbb{P}(V=1)=\mathbb{P}(V=4)=1/2$. Find the optimal $p$ as a function of $a$.
+    \end{enumerate}
+
+
+    \textbf{Solution.}
+    \begin{enumerate}
+        \item Let $c(p) = \mathbbm{E}[ \log( W_{n+1} / W_n)] = \mathbb{E}[ \log (ap + (1-p) V)]$.
+            Since $\{V_n\}_n$ are i.i.d. functions of $V_n$ are also i.i.d. Therefore, we can apply the S.L.L.N., so that
+            \[
+            \lim_{n \to \infty}  n^{-1} \sum_{k=1}^{n} \log ( W_{k+1} / W_k)  = \mathbb{E}[ \log (ap + (1-p) V)] \text{ a.e.}
+            .\] 
+            Just like in question 2, this is a telescoping sum, so we get 
+            \begin{align*}
+                n^{-1} \sum_{k=1}^{n} \log( W_{k+1} / W_k) &= n^{-1} \log(W_{n+1})  - n^{-1} \log(W_0)\\
+                &= \frac{n^{-1}}{(n+1)^{-1}}(n+1)^{-1} \log(W_{n+1}) - n^{-1} \log(W_0)\\
+                &\to (n+1)^{-1} \log(W_{n+1})
+            .\end{align*}
+            However, $\mathbb{E}[\log(W_0)]$ is a constant w.r.t. $n$, so the last term goes to zero as $n \to \infty$.
+            Therefore,
+            \[
+                \lim_{n \to \infty} n^{-1} \log(W_n) = \mathbb{E}[ \log(ap + (1-p)V)] \text{a.e}
+            .\] 
+        \item Fix $\omega$. Then, for $p(\lambda) = \lambda p_2 + (1 - \lambda) p_1 $, with $\lambda \in [0, 1]$ and $p_1 < p_2$, we have
+            \[
+            ap(\lambda) + (1 - p(\lambda))V = \lambda (ap_2 + (1- p_2)V) + (1-\lambda)(ap_1 + (1-p_1) V)
+            .\] 
+            Since $\log$ is concave, we have:
+            \[
+            \log(\lambda(ap + (1-p)V) + (1-\lambda)(ap + (1-p)V)) \ge \lambda \log(ap_2 + (1-p_2)V) + (1-\lambda) \log(ap_1 + (1-p_1)V)
+            .\] 
+            But, since $\omega$ was arbitrary, and $\mathbb{E}$ is monotone, we have:
+            \begin{align*}
+                c(p(\lambda)) = \mathbb{E} [\log(a p(\lambda) + (1-p(\lambda))V)] &\ge  \lambda \mathbb{E}[\log(ap_2 + (1-p_2)V)] + (1-\lambda) \mathbb{E}[\log(ap_1 + (1-p_1)V)]\\
+                &=  \lambda c(p_2) + (1-\lambda) c(p_1)
+            .\end{align*}
+            Therefore, $c$ is concave.
+        \item Concavity tells us, that a sufficient condition for $p$ lying in $(0, 1)$, is that $c'(0) > 0 > c'(1)$.
+            Elementary calculus of concave functions then tells us $c(p) \le  c(0)$ for all $p < 0$, and $c(p) \le  c(1)$ for all $p > 1$.
+            Then, $c(p)$ will attain its maximum in $(0, 1)$.
+            We compute:
+            \[
+            c'(p) = \mathbb{E} \left[ \frac{a - V}{ap - (1-p)V} \right] \implies c'(0) = \mathbb{E}\left[ \frac{a}{V} - 1 \right] , c'(1) = \mathbb{E}\left[1 - \frac{V}{a}\right]
+            .\] 
+            So then, our requirements on $V$ are that $\mathbb{E} [a / V] > 1$ and $\mathbb{E} [V / a] > 1$.
+            
+        \item We first compute $c(p)$.
+            We have:
+            \begin{align*}
+                c(p) = \mathbb{E}[\log(ap + (1-p)V)] = \frac{1}{2}\log(ap + (1-p)) + \frac{1}{2} \log(ap + 4(1-p))
+            .\end{align*}
+            We compute:
+            \begin{align*}
+                c'(p)  = \frac{a-1}{2 ((a-1)p + 1)} + \frac{a-4}{2 ((a-4)p + 4)} 
+            .\end{align*}
+            Since concave, the max happens when $c'(p) = 0$.
+            We compute:
+            \begin{align*}
+                (4-a)((a-1)p+1) &= (a-1)((a-4)p + 4)\\
+                4(1-a) + (4-a) &= 2(a-1)(a-4)p\\
+                p &= \frac{2}{4 - a} + \frac{1}{2(1-a)}
+            .\end{align*}
+            Therefore, the optimum of $c(p)$ occurs at $p^{*} = \frac{2}{4-a} + \frac{1}{2(1-a)}$.
+            We plug it into our expression for $c(p)$:
+
+            \begin{align*}
+                c(p^{*})  &= \frac{1}{2} \log\left( \frac{2a}{4-a} + \frac{a}{2(1-a)} + \left(  1 - \frac{2}{4 - a} - \frac{1}{2(1-a)} \right)  \right)\\
+                          &\quad + \frac{1}{2} \log \left( \frac{2a}{4 - a} + \frac{a}{2(1-a)} + 4\left( 1 -  \frac{2}{4 - a} - \frac{1}{2(1-a)} \right)  \right)\\
+                          &= \frac{1}{2} \log \left( \frac{9a^2}{4(a-1)(4-a)} \right)
+            .\end{align*}
+            I used a symbolic calculator for the last part because I was too lazy to do the algebra.
+            Next, we check the derivative at the edges to see when this optimimum holds.
+            $c'(0) = \frac{5a - 8}{8}$ which is greater than 0 when $a > 8 / 5$. When this doesn't hold, then the optimum is $p^{*} = 0$.
+            $c'(1) = \frac{2a - 5}{2a}$ which is smaller than 0 when $a < 5 / 2$. When this doesn't holld, the optimum is $p^{*} =1 $.
+
+
+    \end{enumerate}
+
+    \item 
+    \begin{enumerate}
+        \item Give an example of random sequences $\{Y_n\}$ and $\{N_n\}$ with $Y_n \to 0$ in probability and $N_n \to \infty$ a.s.\ but $Y_{N_n} \to 1$ a.s.  
+        \textit{Hint:} Use the example from lecture $Y_n = \{x\} := x - \lfloor x \rfloor$ for $x \in [S_n, S_{n+1}]$, where $S_n = \sum_{k=0}^n 1/k$.
+        \item Suppose instead that $Y_n \to Y$ a.s.\ and $N_n \to \infty$ a.s. Prove that $Y_{N_n} \to Y$ a.s.
+    \end{enumerate}
+
+    \textbf{Solution.}
+    \begin{enumerate}
+        \item Define $\{Y_n\}_{n}$ as the sequence of intervals $\{[0, 1], [0, \frac{1}{2}], [\frac{1}{2}, 1], [0, \frac{1}{3}], [\frac{1}{3}, \frac{2}{3}], [\frac{2}{3}, 1], [0, \frac{1}{4}]\ldots \} $.
+            
+            Using a bit of calculus, we can actually compute what the $n$-th interval will be. There is one interval length 1, two length $\frac{1}{2}$, three length $\frac{1}{3}$, etc. Therefore, the first interval of length $\frac{1}{m}$ will have $\sum_{k = 1}^{m-1}k = \frac{m(m-1)}{2}$ intervals before it.
+            Conversely, if $n = \frac{m(m-1)}{2} + 1$, that is, the first interval of length $1 / m$, then we solve for $m$ in terms of $n$, by solving a quadratic, to get $m = \frac{\sqrt{8(n-1) + 1} - 1}{2}$.
+            In particular, if we are at the $j$-th interval of width $\frac{1}{m}$, we proceed to compute $j = n - \left\lfloor \frac{\sqrt{8(n-1) + 1} - 1}{2} \right\rfloor$.
+            Define $n(m, j) = \frac{m(m-1)}{2} + j $.
+
+
+            Now, we comute $N_{m}$. We define $N_m$ pointwise, for each $\omega \in [0, 1]$.
+            Let $\omega \in [0, 1]$.
+            Since each group of intervals $\{[0, \frac{1}{m}], [\frac{1}{m}, \frac{2}{m}], \ldots, [\frac{m-1}{m}, 1]\} $ forms a partition of $[0, 1]$, there exists one $j \in [0, m-1]$ such that $\omega \in [\frac{j}{m}, \frac{j+1}{m}]$.
+            Call this $j(\omega)$.
+            Let $N_{m}(\omega) = n(m, j(\omega))$. Clealry, this is increasing in $m$ (since it is a quadratic with leading coefficient 1).
+            Then, by construction, we have that for all $m \in \N$, $Y_{N_{m}(\omega)}(\omega) = 1$, for any $\omega \in [0, 1]$.
+            Thus, $Y_{N_{n}} \to 1$.
+        \item Let $B = \{\omega | Y_{n}(\omega) \to Y\} $. Then, $P(B) = 1$.
+            Let $C = \{\omega | N_{n} \to \infty\} $.
+            The, $P(C) = 1$, so that $P(B \cap C) \ge P(B) + P(C) - P(B \cap C) = 1 + 1 - 1 = 1$.
+            Let $ \omega \in B \cap C$.
+            Let $\epsilon > 0$.
+            Since $\omega \in B$, there exists some $N_1$ such that for all $n > N_1$, $|Y_n - Y| < \epsilon$.
+            But since $\omega \in C$, there exists some $N_2$ such that for all $n > N_2$, $N_n > N_1$.
+            Therefore, for all $n > N_2$, we have that $|Y_{N_n(\omega)}(\omega) - Y| < \epsilon$.
+            Since $\epsilon > 0$ was arbitrary, we conclude that $Y_{N_n(\omega)}(\omega) \to Y(\omega)$.
+            Since $\omega \in B \cap C$ was arbitrary, we conclude that on $B \cap C$, $Y_{N_n(\omega)}(\omega) \to Y(\omega)$.
+            But since $P(B \cap C) = 1$, this means that $Y_{N_n} \to Y$ a.e.
+    \end{enumerate}
+
+    \item 
+    \begin{enumerate}
+        \item Show that $X_n \to X$ in probability if and only if every subsequence $(X_{m_k})$ has a further subsequence $(X_{n_k})$ with $X_{n_k} \to X$ a.s.
+        \item Suppose $X_n \to X$ in probability and $f:\mathbb{R}\to\mathbb{R}$ is continuous. Show that $f(X_n)\to f(X)$ in probability, and if $f$ is bounded, $\mathbb{E}[f(X_n)]\to \mathbb{E}[f(X)]$.
+    \end{enumerate}
+
+    \textbf{Solution.}
+    \begin{enumerate}
+        \item ($\rightarrow$) Suppose $X_{n} \to X$ in probability.
+            Let $X_{n_k}$ by any subsequence of $X_n$.
+            In paticular, this implies that $X_{n_k} \to X$ in probability.
+            Then, for all $\frac{1}{m}$, there exists some $N_m$ such that for all $n_k > N_m$, $P(|X_{n_k}- X| > 1 / m ) < \frac{1}{2^{m}}$.
+            Construct a new sequence, $X_{n_m}$ as follows: $n_m < n_{m+1}$, and $n_m > N_m$.
+            Let $A_m = \{\omega : | X_{n_m}(\omega) - X(\omega) | > \frac{1}{m}\} $.
+            In particular, $P(\cup_{m = n} A_{m}) \le \sum_{m=n}^{\infty} P(A_m) = \sum_{m=n}^{\infty} \frac{1}{2^{m}} = \frac{1}{2^{n-1}} $.
+            Let $B = \cap_{n = 1}^{\infty} \cup_{m = n} A_m$.
+            By continuity of probabilities, we have that $P(B) = \lim_{n  \to \infty} P(\cup_{m = n} A_m) = \lim_{n \to \infty} \frac{1}{2^{n-1}}  = 0$.
+            Thus, $P(B^{c}) = 1$.
+            Let $\omega \in B^{c}$.
+            Let $\epsilon > 0$.
+            Then, there exists some $M$ such that for all $m > M$, $\epsilon > \frac{1}{m}$.
+            Since $\omega \in B^{c}$, this implies that $\omega \in \cup_{n = 1}^{\infty} \cap_{m = n} A_m^{c}$.
+            Thus, there exists some $n$ such that $\omega \in A_{m}^{c}$ for all $m > n$.
+            Then, by the definition of $A_m$, we have that $|X_{n_m}(\omega) - X(\omega)| < 1 / m < \epsilon$ for all $m > \max(n, M)$.
+            But then, since $\epsilon > 0$ was arbitrary, this means that $X_{n_m} \to X$ everywhere in $B$, which is a.e.
+            Therefore, a subsequence of $X_{n_k}$ exists that converges to $X$.
+
+
+            ($\leftarrow$) Let $\{X_n\} $ be a seqence of random variables such that every subsequence $\{X_{n_k}\}$ of $\{X_n\}$ has a subsetqence that converges to $X$ a.e.
+            Suppose that $X_n$ does not converge to $X$ in probability.
+            In particular, this implies that there exists some $\epsilon > 0$ such that $ \alpha = \liminf_{n \to \infty} P(|X_n - X| > \epsilon) \neq \limsup_{n \to \infty} P(|X_n - X| > \epsilon) = \beta$.
+            From math 320, we have that there exists some subsequence $\{X_{n_k}\}$ such that $\lim_{k \to \infty} P(|X_{n_k} - X| > \epsilon) =  \alpha$, and another subsequence $\{X_{n_l}\}$ such that $\lim_{l \to \infty} P(|X_{n_l} - X| > \epsilon) = \beta$.
+            However, by the hypothesis, we have that $X_{n_l} \to X $ a.e., and $X_{n_k} \to X$ a.e.
+            We proved in class (it is Theorem 5.2.3 in the text) that if a sequence converges a.e. then it converges in probability. Therefore, $\lim_{l \to \infty} P(|X_{n_l} - X| > \epsilon) = 0 = \lim_{k \to \infty} P(|X_{n_k} - X| > \epsilon) = 0$, which contradicts that $\alpha < \beta$.
+            Therefore, the assumption that $X_{n}$ does not converge to $X$ in probability must be false, so $X_{n} \to X$ in probability.
+        \item We seek to prove that $f(X_n) \to f(X)$ in probability.
+            Fix $\epsilon > 0$.
+            Now, for each $n \in N$, define $A_n = \{x \in \R : f(N_{1 / n}(x)) \subset N_{\epsilon}(f(x))\} $
+            Since $f$ is continuous everywhere, we have that $A_{n} \subset  A_{n+1}$, and $\cup_{n = 1}^{\infty} A_n = \R$.
+            In particular, $\lim_{n \to \infty} P(X \in A_n) = 1$.
+
+            Let $\epsilon^{*} > 0$.
+            Then, there exists some $n$ such that $P(X \in A_n) > 1 - \epsilon^{*} / 2$.
+            Next, there is some $M \in \N$ such that for all $m > M$, $P(|X_m - X| < 1 / n) > 1 - \epsilon^{*}/2$.
+            However, if $\omega \in \{X \in A_n\}$, and $\omega \in \{|X_n - X| < 1 / n\}$, then by the definition of $A_n$, this implies $|f(X_n(\omega)) - f(X(\omega))| < \epsilon$.
+            In particular, this implies that for $m > M$,
+            \begin{align*}
+                & P(|f(X_m) - f(X)| < \epsilon)\\
+                &\ge  P(\{X \in A_n\}\cap \{|X_m - X| > 1 / n\} )\\
+                                              &= P(X \in A_n) + P(|X_m - X| > 1 / n) - P(\{X \in A_n\}\cup \{|X_m - X| > 1 / n\} )\\
+                &> 1 - \epsilon^{*} / 2 + 1 - \epsilon^{*} / 2 - 1 = 1 - \epsilon^{*}
+            .\end{align*}
+            In other words, there exists $M$ such that for all $m > M$, $P(|f(X_n) - f(X)| \le  \epsilon ) > 1 - \epsilon^{*} $.
+            Since $\epsilon^{*} > 0$ was arbitrary, this implies that $ \lim_{n \to \infty} P(|f(X_n) - f(X)| > \epsilon) = 0$.
+            Since $\epsilon > 0$ was arbitrary, this implies that $f(X_n) \to f(X)$ in probability.
+
+            Now, suppose $f$ is bounded.
+            In particular, there exists $M \in \R$ such that $|f| < M$.
+            Let $\epsilon > 0$.
+            Then, since $f(X_n) \to f(X) $ in probability, $ \lim_{n \to \infty}P(|f(X_n) - f(X)| < \epsilon) = 0$
+            Let $B_n = \{|f(X_n) - f(X)| < \epsilon\}$.
+            Since $f$ is bounded, if $\omega \in B_{n}^{c}$, then we have $|f(X_n(\omega)) - f(X)| \le 2M$.
+
+            We can then see that:
+            \begin{align*}
+                E[f(X_n)^{+}] &= E[f(X_n)^{+} \1_{B_n^{c}}] + E[f(X_n)^{+} \1_{B_n^{c}}]\\
+                              &< 2M P(B_n^{c}) + E[(f(X)^{+} + \epsilon) \1_{B_n}]\\
+                              &\le 2MP(B_n^{c}) + E[f(X)^{+}] + \epsilon
+            .\end{align*}
+            Similarly, we can compute $E[f(X_n)^{+}] \ge  E[f(X)^{+}] - \epsilon - 2MP(B_n^{c})$.
+            But then, we can choose $N$ such that for all $n > N$, $P(B_n^{c}) < \epsilon^{*}$.
+            So, if we take the limit, we have: $ E[f(X)^{+}]  - \epsilon \le  \lim_{n \to \infty}  E[f(X_n)^{+}] \le E[f(X)^{+}] + \epsilon $.
+            However, since $\epsilon > 0$ was arbitrary, we have equality.
+            Doing the same for the negative component, and adding the results, we have $\lim_{n \to \infty} E[f(X_n)] = E[f(X)]$.
+    \end{enumerate}
+
+    \item (\textbf{Renewal Theory})  
+    Jobs arrive continuously at a busy server. The $i$th job’s completion time is $X_i$, with $X_i$ i.i.d., positive, and $\mathbb{E}[X_i] = \mu < \infty$.  
+    Let $T_n = X_1 + \dots + X_n$ and $N_t = \sup\{n : T_n \le t\}$.  
+    Prove that
+    \[
+        \lim_{t \to \infty} \frac{N_t}{t} = \frac{1}{\mu} \quad \text{a.s.}
+    \]
+    \textit{Hint:} Use $T_{N_t} \le t < T_{N_t+1}$ and recall the a.s.\ limit of $T_n/n$.
+
+    \item (\textbf{Hölder’s Inequality}) For simplicity, you may take $k=2$.
+    \begin{enumerate}
+        \item Let $a_1,\dots,a_k>0$ and $p_1,\dots,p_k \in (1,\infty)$ satisfy $\sum 1/p_j = 1$.  
+        Using convexity of $x\mapsto -\log x$, show
+        \[
+            \prod_{j=1}^k a_j \le \sum_{j=1}^k \frac{a_j^{p_j}}{p_j}.
+        \]
+        \item Deduce that for random variables $X_1,\dots,X_k$,
+        \[
+            \Big\|\prod_{j=1}^k X_j\Big\|_1 \le \prod_{j=1}^k \|X_j\|_{p_j}.
+        \]
+        \item Let $p,q\in(1,\infty)$ with $1/p + 1/q = 1$. Show
+        \[
+            \|X\|_p = \max\{\mathbb{E}[XY] : \|Y\|_q \le 1\}.
+        \]
+    \end{enumerate}
+
+    \item (\textbf{Completeness of $L^2$})  
+    Show that if $(X_n)$ is Cauchy in $L^2$, then $\exists X\in L^2$ with $\|X_n - X\|_2 \to 0$.
+    \begin{enumerate}
+        \item Show it suffices to find an a.s.\ and $L^2$ limit along a subsequence.
+        Bt\item Use the “$2^{-k}$ subsequence trick” and Borel–Cantelli to find such a subsequence.
+        \item Verify the a.s.\ limit is also the $L^2$ limit and lies in $L^2$ (use Dominated Convergence).
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textbf{Recommended Problems:} Rosenthal 5.5.13, 6.3.2, 6.3.4, 7.4.4.\\
+\textit{Solutions to even-numbered problems:} \url{http://www.probability.ca/jeff/grprobbook.html}
+
+\vspace{1em}
+\noindent\textbf{More Recommended Problems:}
+\begin{enumerate}[label=\Alph*.]
+    \item Use Jensen’s inequality to prove that $\|X\|_p \le \|X\|_q$ for $1 \le p \le q \le \infty$.
+    \item Let $X \sim \text{Poisson}(\lambda)$. Compute its moment generating function and use it to find $\mathbb{E}[X]$ and $\mathrm{Var}(X)$.
+\end{enumerate}
+
+\vspace{1em}
+\begin{quote}
+\textit{When she was rid of the pretense of paper and pen, phrase-making and biography, she turned her attention in a more legitimate direction, though, strangely enough, she would rather have confessed her wildest dreams of hurricane and prairie than the fact that, upstairs, alone in her room, she rose early in the morning or sat up late at night to work at mathematics...}
+
+\hfill --- \textbf{Virginia Woolf, \textit{Night and Day}}
+\end{quote}
+
+\end{document}

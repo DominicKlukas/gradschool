@@ -5,6 +5,7 @@
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{parskip}
+\usepackage{subcaption}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
 
@@ -18,8 +19,7 @@
 \begin{document}
 \begin{center}
 {\Large \textbf{\assignmenttitle}}\\
-\coursename\\[4pt]
-\textbf{Instructor: \instructorname}\\
+\coursename\\[4pt] \textbf{Instructor: \instructorname}\\
 \textbf{Due: \duedate}
 \end{center}
 
@@ -93,6 +93,78 @@ Points for each part are indicated. The total number of achievable points is 100
 
 \end{enumerate}
 
+% ===================== Problem 3: figures =====================
+\section*{Problem 3}
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{Question3c_t100.png}
+    \caption{$t=100$}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{Question3c_t1000.png}
+    \caption{$t=1000$}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{Question3c_t10000.png}
+    \caption{$t=10000$}
+  \end{subfigure}
+  \caption{Q3: One-armed bandit confidence intervals over time (uniform policy).}
+  \label{fig:q3}
+\end{figure}
+
+% ===================== Problem 5: figures =====================
+\section*{Problem 5}
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{Question4b_t100.png}
+    \caption{$t=100$}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{Question4b_t1000.png}
+    \caption{$t=1000$}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{Question4b_t10000.png}
+    \caption{$t=10000$}
+  \end{subfigure}
+  \caption{Q5: \textbf{UCB1} on the 9-armed Bernoulli environment (note: assignment text typo refers to “uniform random” here; figure shows UCB1).}
+  \label{fig:q5}
+\end{figure}
+
+% ---- Space for your written answer to 5(c) ----
+\paragraph{Answer to 5(c): Exploration vs.\ exploitation in UCB1.}
+The UCB chooses the arm which maximizes the value of the calculated mean plus the confidence interval.
+This balnces the exploration and exploitation precisely because, if an arm has high variance it has an advantage, but then as the policy exploits this advantage, the arm's confidence interval shrinks, so if the mean plus confidence interval of this arm still beats the other arms this will require the mean to increase and be higher than the means of the arms with larger confidence intervals.
+The value (mean + confidence interval) is precisely the top of the error bar.
+This is why the policy appears to balance the tops of the error bars, because it chooses the arm with the highest top-of-error-bar, and choosing this arm shrinks the confidence interval thereby lowering it.
+This is why we can see that all of the tops of the error bars go down uniformly as we progress through the time horizon.
+
+% ===================== Problem 6: figure =====================
+\section*{Problem 6}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Question6e.png}
+  \caption{Q6(e): Cumulative regret comparison for all algorithms (horizon $T=10{,}000$).}
+  \label{fig:q6}
+\end{figure}
+
+% ---- Space for your written answer to 6(f) ----
+\paragraph{Answer to 6(f): Interpreting the regret curves.}
+We discussed this in class.
+\begin{itemize}
+    \item Uniform: the linear shape is as a result of the policy randomly choosing arms throughout the entire horizon, so it's expected rate of income stays the same throughout the horizon. It doesn't learn or gain any information from previous trials.
+    \item Uniform Exploration curve: the way I coded the algorithm, it explores each arm 500 times before moving onto its 500 trials on the next arm.
+        Since the order in which the policy explores the arms starts with the $p=0.1$ arm and works it's way up to $p=0.9$, we can see that the rate of regret decreases as the policy successively selects the more fruitful arms, which explains the curve.
+        After the exploration phase is over, at $t = 5000$, the policy has correctly identified the best arm and exploits it for the rest of the time period.
+    \item Successive elimination: we can see the kinks in the shape of the graph, where the policy "drops" the poorest performing arms. At the start, it shares the same slope with the uniform policy when it is still pulling all of the arms, until it drops it's first arm at around $t = 500$ or so.
+    \item Epsilon-Greedy: although the rate of increase goes down, it continues to have an increasing linear shape due to the random sampling with probability $\epsilon = 0.3$.
+    \item UCB and Thompson both perform significantly better than the other policies.
+\end{itemize}
 % \section*{Problem 6}
 % \section*{Problem 7}
 
