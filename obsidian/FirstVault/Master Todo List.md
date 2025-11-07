@@ -20,8 +20,8 @@
 ## Daily Tasks
 ### Completed
 ### Today
-- [ ] Figure out how to use E(2)-Equivariant Steerable CNNs
-- [ ] Read and understand PPO implementation in it's entirety, learn how to save and load variables, read the logging files online.
+- [ ] Figure out what I need from Tim Huh
+- [ ] Do research tomorrow morning. Figure out more clearly which papers are relevant, and what the applications are, and where symmetry breaking has been explored in the past.
 
 ---
 ## Backlog / Someday

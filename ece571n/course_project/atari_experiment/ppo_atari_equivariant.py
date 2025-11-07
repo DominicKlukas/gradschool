@@ -15,7 +15,7 @@ import tyro
 from torch.distributions.categorical import Categorical
 from torch.utils.tensorboard import SummaryWriter
 
-from ece571n.course_project.atari_experiment.escnn.nn.init import deltaorthonormal_init
+from escnn.nn.init import deltaorthonormal_init
 from escnn import gspaces
 from escnn import nn as enn
 
@@ -126,7 +126,7 @@ class Agent(nn.Module):
     def __init__(self, envs):
         super().__init__()
         r2_act = gspaces.flip2dOnR2(np.pi/2)
-        input_type = enn.FieldType(r2_act, 4*[r2_act.trivial_repr])
+        self.input_type = enn.FieldType(r2_act, 4*[r2_act.trivial_repr])
         layer1_type = enn.FieldType(r2_act, 16*[r2_act.regular_repr])
         layer2_type = enn.FieldType(r2_act, 32*[r2_act.regular_repr])
         layer3_type = enn.FieldType(r2_act, 32*[r2_act.regular_repr])
@@ -136,8 +136,8 @@ class Agent(nn.Module):
         critic1_type = enn.FieldType(r2_act, 256*[r2_act.trivial_repr])
         critic_out_type = enn.FieldType(r2_act, [r2_act.trivial_repr])
         self.network = nn.Sequential(
+            enn.R2Conv(self.input_type, layer1_type, kernel_size=8, stride=4, initialize=True),
             # Input: (4, 84, 84)
-            enn.R2Conv(input_type, layer1_type, kernel_size=8, stride=4, initialize=True),
             enn.ReLU(layer1_type),
             # Layer 1: (32, 20, 20)
             enn.R2Conv(layer1_type, layer2_type, kernel_size=4, stride=2, initialize=True),
@@ -150,37 +150,35 @@ class Agent(nn.Module):
             enn.ReLU(layer4_type),
             # Layer 4: (512, 1, 1)
 
-            """
             # Original CNN Design
-            layer_init(nn.Conv2d(4, 32, 8, stride=4)),
-            nn.ReLU(),
-            layer_init(nn.Conv2d(32, 64, 4, stride=2)),
-            nn.ReLU(),
-            layer_init(nn.Conv2d(64, 64, 3, stride=1)),
-            nn.ReLU(),
-            nn.Flatten(),
-            layer_init(nn.Linear(64 * 7 * 7, 512)),
-            nn.ReLU(),
-            """
+            #layer_init(nn.Conv2d(4, 32, 8, stride=4)),
+            #nn.ReLU(),
+            #layer_init(nn.Conv2d(32, 64, 4, stride=2)),
+            #nn.ReLU(),
+            #layer_init(nn.Conv2d(64, 64, 3, stride=1)),
+            #nn.ReLU(),
+            #nn.Flatten(),
+            #layer_init(nn.Linear(64 * 7 * 7, 512)),
+            #nn.ReLU(),
         )
         self.actor = enn.R2Conv(layer4_type, action_space, kernel_size=1, stride=1, initialize=True)
         self.critic = nn.Sequential(
-                enn.GroupPooling(layer4_type)
-                enn.R2Conv(critic1_type, critic_out_type, kernel_size=1, stride=1, initialize=True)
+                enn.GroupPooling(layer4_type),
+                enn.R2Conv(critic1_type, critic_out_type, kernel_size=1, stride=1, initialize=True),
         )
         #self.actor = layer_init(nn.Linear(512, envs.single_action_space.n), std=0.01)
-        self.critic = layer_init(nn.Linear(512, 1), std=1)
+        #self.critic = layer_init(nn.Linear(512, 1), std=1)
 
     def get_value(self, x):
-        return self.critic(self.network(x / 255.0))
+        return self.critic(self.network(self.input_type(x / 255.0))).tensor.squeeze()
 
     def get_action_and_value(self, x, action=None):
-        hidden = self.network(x / 255.0)
-        logits = self.actor(hidden)
+        hidden = self.network(self.input_type(x/255.0))
+        logits = self.actor(hidden).tensor.squeeze()
         probs = Categorical(logits=logits)
         if action is None:
             action = probs.sample()
-        return action, probs.log_prob(action), probs.entropy(), self.critic(hidden)
+        return action, probs.log_prob(action), probs.entropy(), self.critic(hidden).tensor.squeeze()
 
 
 if __name__ == "__main__":

@@ -54,7 +54,7 @@ micromamba create -p /project/def-cneary/klukasd/mamba/envs/equirl_310 python=3.
 micromamba activate /project/6107222/klukasd/mamba/envs/equirl_310
 micromamba install -c conda-forge -y attrdict3 GitPython numpy pybullet scikit-image scipy tqdm dill more-itertools opencv scikit-learn pytorch torchvision matplotlib-base
 ```
-
+Note: I am no longer using micromamba/
 ### Notes
 - Package install failures on compute nodes likely due to low RAM → request >3 GB next time:
 ```bash
@@ -248,3 +248,4 @@ python atari_experiment/ppo_atari.py
 010
 https://www.kaggle.com/code/auxeno/ppo-on-atari-rl
 Matched the settings on this website as good as I could
+
