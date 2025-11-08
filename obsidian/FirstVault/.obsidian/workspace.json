@@ -27,6 +27,20 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "technical_library/Papers/2023_Zhao_DifferentiablePlanningWithEquivariance.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2023_Zhao_DifferentiablePlanningWithEquivariance"
+            }
+          },
+          {
+            "id": "62c314bea0aa109c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "Courses/EECE 571 Sequential Decision Making/Course Project/Project Notes.md",
                 "mode": "source",
                 "source": false
@@ -34,9 +48,37 @@
               "icon": "lucide-file",
               "title": "Project Notes"
             }
+          },
+          {
+            "id": "6c2b088c556a274c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Idea.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Idea"
+            }
+          },
+          {
+            "id": "c03a6c2f95ddfbe2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "technical_library/Papers/2021_Zhou_LearnSymmetries.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2021_Zhou_LearnSymmetries"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -93,7 +135,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 532.5
   },
   "right": {
     "id": "bf8874fa44f11e6d",
@@ -187,40 +229,40 @@
       "system3-relay:Relay": false
     }
   },
-  "active": "045f2d841aa29ae3",
+  "active": "6c2b088c556a274c",
   "lastOpenFiles": [
-    "Courses/EECE 571 Sequential Decision Making/EECE 571N Sequential Decision Making.md",
-    "Master Todo List.md",
-    "Welcome.md",
-    "Courses/EECE 571 Sequential Decision Making/Course Project/Project Notes.md",
-    "Courses/EECE 571 COCO/EECE 571 Computation Control.md",
+    "technical_library/Papers/2021_Zhou_LearnSymmetries.md",
     "Idea.md",
-    "technical_library/Papers/2023_Wang_EquivariantLatentSymmetry.md",
+    "technical_library/Papers/2022_Liu_CRLWithGroupSymmetries.md",
     "Dataview.md",
+    "technical_library/Papers/2023_Zhao_DifferentiablePlanningWithEquivariance.md",
+    "Courses/EECE 571 Sequential Decision Making/Course Project/Project Notes.md",
+    "technical_library/Papers/2021_Finzi_PracticalEquivariantMLPAlgorithm.md",
+    "technical_library/Papers/2025_Wang_PracticalEquivariantDiffusionPolicy.md",
+    "technical_library/Papers/2025_Neary_VLAPSModelBasedSearch.md",
+    "technical_library/Papers/2025_Park_ApproxEquivRL.md",
+    "technical_library/Papers/2025_Seo_SE3EquivRobotLearningTutorialSurvey.md",
+    "Projects/Physics Aware Learning.md",
+    "technical_library/Papers/2025_Hamid_ProbabilisticInferenceMDPSymmetryExploitation.md",
+    "technical_library/Papers/2024_Huang_FourTran.md",
+    "technical_library/Papers/2021_Bronstein_GeoDLGGGGG.md",
+    "Master Todo List.md",
+    "technical_library/Papers/2023_Liu_ContinualRLWithEquivariance.md",
+    "technical_library/Papers/2017_Gupta_InvariantFeatureSpaceTransferLearning.md",
+    "Courses/EECE 571 Sequential Decision Making/EECE 571N Sequential Decision Making.md",
+    "Welcome.md",
+    "Courses/EECE 571 COCO/EECE 571 Computation Control.md",
+    "technical_library/Papers/2023_Wang_EquivariantLatentSymmetry.md",
     "technical_library/Papers/2019_Weiler_E2EquivSteerableCNNs.md",
     "technical_library/Papers/2025_Jiang_PhysTwin.md",
-    "technical_library/Papers/2025_Neary_VLAPSModelBasedSearch.md",
-    "technical_library/Papers/2025_Seo_SE3EquivRobotLearningTutorialSurvey.md",
     "technical_library/Textbooks/Numerical Optimization.md",
     "technical_library/Textbooks/Markov Decision Processes, Puterman.md",
-    "technical_library/Textbooks/Abstract Algebra, Dummit and Foote.md",
-    "technical_library/Textbooks/Principles of Model Checking.md",
-    "technical_library/Textbooks/Deep Learning, Goodfellow.md",
-    "technical_library/Textbooks/Convex Optimization, Boyd.md",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/attachments",
-    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Relevant Resources.md",
-    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Project Instructions.md",
-    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Project Description.md",
     "Images/Screenshot2025-10-23_17-53-47.png",
     "Images/Screenshot2025-10-23_17-53-55.png",
-    "technical_library/Papers/2025_Wang_PracticalEquivariantDiffusionPolicy.md",
-    "technical_library/Papers/2018_Hafner_LearnLatentDynamicsforPlanning.md",
     "Images/Screenshot2025-10-07_15-08-09.png",
     "Images",
     "Images/Pasted image 20251018125658.png",
-    "technical_library/Papers/2024_Duong_PortHamilODENetworkLieGroupsRobotControl.md",
-    "technical_library/Papers/2025_Assran_VJEPA2.md",
-    "technical_library/Papers/2022_LeCun_JEPAMotivationAPathTowardsAutoMI.md",
     "Projects/Research Grant Applications",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones",
     "Courses/EECE 571 COCO/Project",

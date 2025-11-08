@@ -11,29 +11,53 @@
 
 
 ## Papers Read
+### Relevant to RL Symmetries
+- Meta Learning Symmetries by Reparameterization
+	- Let $W$ be the linear, fully connected weight matrix of an MLP. Then, we can flatten $W$ into an $nm$ vector. Now, we can have this flattened $W$ be a linear combination of $nm$ vectors, and write it as $U \in \mathbb{R}^{nm \times k}$, parameterizing it with another vector, $v$. In particular, the idea is that $U$ will be learned such that each column is an equivariance preserving layer, so $v$ is a linear combination of different such columns. Then, when we train our network, we take turns, learning $v$, and learning $U$, so that the right equivariance is learned.
 - A Practical Guide for Incorporating Symmetry in Diffusion Policy
+	- Compares different ways to bake symmetry into a robotic diffusion policy.
 - The surprising effectiveness of equivariant models in domains with latent symmetry
+	- They propose three techniques to augment diffusion models without making them fully equivariant:
+		- Just replace the CNN with an equivariant CNN
+		- Compute the relative trajectories, applying the inverse of the SE3 transformation that gets you to your initial state
+		- Create an equivariant function from a non-equivariant function, in the case of a finite group, by taking the average over all the group transformed outputs.
 - Symmetry Breaking and Equivariant Neural Networks
 	- This deals with something called relaxed equivariance, where if you have a stabilizer of a certain element in the group, in the group you are mapping to you are fine so long as you are in the co-set of the stabilizer corresponding to the group element you are multiplying $g$ by. Essentially, symmetry equivariant up to a transformation.
+- Continual Vision-based Reinforcement Learning with Group Symmetries
+	- Here, they cite papers (24-27) which define homomorphisms of mdps to smaller mdps, so that you solve the smaller mdp and in doing so solve the bigger one. Group equivariance is a form of such a symmetry.
+		- A previous paper done by the same people trains and keeps a set of experts. With a latent variable, determines which expert is most likely to correspond to the current task, or whether a new actor has to be trained.
+	- This paper does a similar thing. It uses equivariant PPO architectures for the experts. It uses a group invariant task grouper as well, computing the difference between the given task and tasks seen before to choose an expert or choose to create a new expert.
+- A Practical Method for Constructing Equivariant Multilayer Perceptrons for Arbitrary Matrix Groups
+	- They derive the equations required for any network to be equivariant, and show that the derived equations are generalizations of the methods used by all the other equivariant neural network papers.
+
+### Semi-relevant to RL Symmetries
+- Integrating Symmetry into Differentiable Planning with Steerable Convolutions
+	- This is for planning algorithms: they look at a gridworld problem they have never seen before, and have to come up with a plan for it.
+	- They show that theoretically speaking equivariant networks are better and also perform better empirically.
+### Not Relevant to RL Symmetries
+- Learning Invariant Feature Spaces to Transfer Skills with Reinforcement Learning
+	- We have two different MDPs for two different robots. But we learn a function that maps the states of both of the spaces to a new space, such that similar states are mapped together. We do so by training two "autoencoders" $f$ and $g$ and then training a loss function that minimizes the distance between the two.
+- Combining Local Symmetry Exploitation and Reinforcement Learning for Optimised Probabilistic Inference -- A Work In Progress
+	- (Very roughly) When doing probabilistic inference, you aim to find the relationships between random variables in a joint distribution. You can "factor" the distribution into independent parts. But the order in which you do this is very important, and affects the computational cost. You can formulate this problem as an MDP, and by grouping together symmetries (variables which can be exchanged? sub-graphs that look the same? (I suppose variables are leaves of the graphs)) you can share computations and solve the problem more efficiently.
+- Equivariant Reinforcement Learning for Quadrotor UAV
+	- We transform a state into another state space with lower dimension using a group operation, solve the problem in the simpler state space, and then use the inverse group operation to get back to our original state.
+- Symmetry Detection in Trajectory Data for More Meaningful Reinforcement Learning Representations
+	- They start with candidate transformations, transform their original trajectories, then use a discriminator network to see if it can learn the difference between the transformed and original trajectories. If the original trajectories were sampled from a symmetric distribution, the two datasets (transformed and original) will be the same.
 ## Papers to read
 - Advanced deep-reinforcement-learning methods for flow control: group-invariant and positional-encoding networks improve learning speed and quality
 - Reinforcement Learning with Lie Group Orientations for Robotics
-- Continual Vision-based Reinforcement Learning with Group Symmetries
 - MDP Homomorphic Networks: Group Symmetries in Reinforcement Learning
-- SiT: Symmetry-Invariant Transformers for Generalisation in Reinforcement Learning
+- SiT: Symmetry-Invariant Transformers for Generalization in Reinforcement Learning
 - Representation and Invariance in Reinforcement Learning
 - Invariant Policy Optimization: Towards Stronger Generalization in Reinforcement Learning
-- Learning Invariant Feature Spaces to Transfer Skills with Reinforcement Learning
-- Combining Local Symmetry Exploitation and Reinforcement Learning for Optimised Probabilistic Inference -- A Work In Progress
 - Symmetries-enhanced Multi-Agent Reinforcement Learning
 - Exploiting Approximate Symmetry for Efficient Multi-Agent Reinforcement Learning
 - Can Euclidean Symmetry be Leveraged in Reinforcement Learning and Planning?
-- Symmetry Detection in Trajectory Data for More Meaningful Reinforcement Learning Representations
 - Koopman Q-learning: Offline Reinforcement Learning via Symmetries of Dynamics
 - Port-Hamiltonian Neural ODE Networks on Lie Groups For Robot Dynamics Learning and Control
 - Clebsch-Gordan Transformer: Fast and Global Equivariant Attention
 - Group Equivariant Convolutional Networks
-- Equivariant Reinforcement Learning for Quadrotor UAV
+- Sample Efficient Grasp Learning Using Equivariant Models
 - Group Equivariant Deep Reinforcement Learning
 	- They implement snake!
 	- They use E2? Perhaps use D4 + translation instead?
