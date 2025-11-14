@@ -2,9 +2,7 @@
 	- Perhaps once you have identified a symmetry in the task, you can train an equivariant neural network using a non equivariant neural network.
 - JEPA: The information required by the lower level network might be fundamentally different from the information required for planning. Perhaps use both information from the actual state, and the first level JEPA for the next level.
 
-
 - Robots need a significant amount of data to learn from their environment.
-
 
 - Symmetry breaking: the manipulator's actions are symmetric in 3 space in theory, but the problem is that often the end effector itself constrains the symmetries.
 	- Combine an equivariant system with a modifier that maps it onto its action space.
@@ -51,8 +49,11 @@
 - Representation and Invariance in Reinforcement Learning
 - Invariant Policy Optimization: Towards Stronger Generalization in Reinforcement Learning
 - Symmetries-enhanced Multi-Agent Reinforcement Learning
+	- This is a theoretical paper. They show that if the dynamics and rewards of a multi agent RL problem with very many agents are the same up to some bound,
 - Exploiting Approximate Symmetry for Efficient Multi-Agent Reinforcement Learning
+	- For each of your agents, you learn an embedding into a space, where you are using an equivariant network, to make up for the fact that not every agent is exactly the same.
 - Can Euclidean Symmetry be Leveraged in Reinforcement Learning and Planning?
+	- Generalizes the SO2 paper to E(d), but essentially the same.
 - Koopman Q-learning: Offline Reinforcement Learning via Symmetries of Dynamics
 - Port-Hamiltonian Neural ODE Networks on Lie Groups For Robot Dynamics Learning and Control
 - Clebsch-Gordan Transformer: Fast and Global Equivariant Attention

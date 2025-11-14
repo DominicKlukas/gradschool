@@ -25,7 +25,7 @@ JEPA is trained, first, with videos. (I am guessing... will see later, that it i
 - Classify objects and actions in the videos (Attentive Probe Training)
 - Action-Conditioned Post-Training (Planning and Robot Manipulation)
 
-- V-JEPA 2 is the energy model discussed in the paper, which can tell how likely it is that a video y is the completion of a video x. (Self-supervised model). Recall that it does so by training an embedding space for x and y, and training a function that compares the two that takes in some latent variable (which encodes higher level decisions). The way it makes that comparison is by making a prediction of the embedded variable $s_{y}$ given the embedded variable $s_{x}$.
+- V-JEPA 2 is the energy model discussed in the paper [[2022_LeCun_JEPAMotivationAPathTowardsAutoMI]] , which can tell how likely it is that a video y is the completion of a video x. (Self-supervised model). Recall that it does so by training an embedding space for x and y, and training a function that compares the two that takes in some latent variable (which encodes higher level decisions). The way it makes that comparison is by making a prediction of the embedded variable $s_{y}$ given the embedded variable $s_{x}$.
 ## 2. Pretraining Phase
 V-JEPA 2 is trained as follows:
 $$

@@ -249,3 +249,9 @@ python atari_experiment/ppo_atari.py
 https://www.kaggle.com/code/auxeno/ppo-on-atari-rl
 Matched the settings on this website as good as I could
 
+
+## Novermber 12 Meeting
+1. PPO satisfies this equivariance property
+	1. The value function has to be group equivariant
+	2. Our construction of a PPO policy and value function, given a shared backbone, satisfies the conditions for group equivariance
+	3. Why wouldn't they use equivariant PPO

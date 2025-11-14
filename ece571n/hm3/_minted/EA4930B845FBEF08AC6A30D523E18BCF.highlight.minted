@@ -1,0 +1,36 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{Q\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]} \PYG{c+c1}{\PYGZsh{} to store a copy of Q at the start of each episode}
+    \PYG{n}{N\PYGZus{}visit\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]} \PYG{c+c1}{\PYGZsh{} to store a copy of N\PYGZus{}visit at the start of each episode}
+    \PYG{n}{Q} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{p}{(}\PYG{n}{env}\PYG{o}{.}\PYG{n}{nS}\PYG{p}{,} \PYG{n}{env}\PYG{o}{.}\PYG{n}{nA}\PYG{p}{)}\PYG{p}{,} \PYG{n}{dtype}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{float64}\PYG{p}{)}
+    \PYG{n}{N\PYGZus{}visit} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{env}\PYG{o}{.}\PYG{n}{nS}\PYG{p}{,} \PYG{n}{dtype}\PYG{o}{=}\PYG{n}{np}\PYG{o}{.}\PYG{n}{int32}\PYG{p}{)}
+
+    \PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{policy}\PYG{p}{(}\PYG{n}{Q\PYGZus{}p}\PYG{p}{,} \PYG{n}{s}\PYG{p}{,} \PYG{n}{eps}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{nA} \PYG{o}{=} \PYG{n}{Q\PYGZus{}p}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+        \PYG{k}{if} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{random}\PYG{p}{(}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{n}{eps}\PYG{p}{:}
+            \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{randint}\PYG{p}{(}\PYG{n}{nA}\PYG{p}{)}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{argmax}\PYG{p}{(}\PYG{n}{Q\PYGZus{}p}\PYG{p}{[}\PYG{n}{s}\PYG{p}{]}\PYG{p}{)}
+    \PYG{n}{length} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{k}{for} \PYG{n}{\PYGZus{}} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{num\PYGZus{}episodes}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{Q\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{Q}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{N\PYGZus{}visit\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{N\PYGZus{}visit}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{env}\PYG{o}{.}\PYG{n}{reset}\PYG{p}{(}\PYG{p}{)}
+        \PYG{n}{done} \PYG{o}{=} \PYG{k+kc}{False}
+        \PYG{n}{state} \PYG{o}{=} \PYG{n}{env}\PYG{o}{.}\PYG{n}{state}
+        \PYG{n}{states} \PYG{o}{=} \PYG{p}{[}\PYG{n}{state}\PYG{p}{]}
+        \PYG{k}{if} \PYG{n}{\PYGZus{}} \PYG{o}{\PYGZpc{}}\PYG{l+m+mi}{1000} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{We are at }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{\PYGZus{}}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{ with average episode length }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{length}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{flush}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+            \PYG{n}{length} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{n}{length\PYGZus{}ep} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{k}{while} \PYG{o+ow}{not} \PYG{n}{done}\PYG{p}{:}
+            \PYG{n}{length\PYGZus{}ep} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}
+            \PYG{n}{N\PYGZus{}visit}\PYG{p}{[}\PYG{n}{env}\PYG{o}{.}\PYG{n}{state}\PYG{p}{]} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}
+            \PYG{n}{action} \PYG{o}{=} \PYG{n}{policy}\PYG{p}{(}\PYG{n}{Q}\PYG{p}{,} \PYG{n}{env}\PYG{o}{.}\PYG{n}{state}\PYG{p}{,} \PYG{n}{epsilon}\PYG{p}{)}
+            \PYG{n}{next\PYGZus{}state}\PYG{p}{,} \PYG{n}{reward}\PYG{p}{,} \PYG{n}{done}\PYG{p}{,} \PYG{n}{info} \PYG{o}{=} \PYG{n}{env}\PYG{o}{.}\PYG{n}{step}\PYG{p}{(}\PYG{n}{action}\PYG{p}{)}
+            \PYG{n}{next\PYGZus{}action} \PYG{o}{=} \PYG{n}{policy}\PYG{p}{(}\PYG{n}{Q}\PYG{p}{,} \PYG{n}{next\PYGZus{}state}\PYG{p}{,} \PYG{n}{epsilon}\PYG{p}{)}
+            \PYG{n}{Q}\PYG{p}{[}\PYG{n}{state}\PYG{p}{,} \PYG{n}{action}\PYG{p}{]} \PYG{o}{+}\PYG{o}{=} \PYG{n}{alpha}\PYG{o}{*}\PYG{p}{(}\PYG{n}{reward} \PYG{o}{+} \PYG{n}{gamma}\PYG{o}{*}\PYG{n}{Q}\PYG{p}{[}\PYG{n}{next\PYGZus{}state}\PYG{p}{,} \PYG{n}{next\PYGZus{}action}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{n}{Q}\PYG{p}{[}\PYG{n}{state}\PYG{p}{,} \PYG{n}{action}\PYG{p}{]}\PYG{p}{)}
+            \PYG{n}{states} \PYG{o}{+}\PYG{o}{=} \PYG{p}{[}\PYG{n}{env}\PYG{o}{.}\PYG{n}{state}\PYG{p}{]}
+            \PYG{n}{state}\PYG{o}{=} \PYG{n}{env}\PYG{o}{.}\PYG{n}{state}
+        \PYG{n}{length} \PYG{o}{+}\PYG{o}{=} \PYG{p}{(}\PYG{n}{length\PYGZus{}ep} \PYG{o}{\PYGZhy{}} \PYG{n}{length}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{\PYGZus{}} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n}{\PYGZus{}}\PYG{o}{/}\PYG{l+m+mi}{1000}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mi}{1000} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{Q\PYGZus{}list}\PYG{p}{,} \PYG{n}{N\PYGZus{}visit\PYGZus{}list}
+\end{MintedVerbatim}

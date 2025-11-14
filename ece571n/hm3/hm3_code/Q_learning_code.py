@@ -74,7 +74,7 @@ if __name__ == "__main__":
         init=(2, 0),
         goal=(0, 8),
         sink=(5, 8),
-        wall=[(1, 2), (2, 2), (3,2), (4,5), (0, 7), (1,7), (2,7)],
+        wall=[(1, 2), (2, 2), (3,2), (4,5), (1,7), (2,7)],#, (0,7)],
         reward_goal=+1.0,
         reward_sink=-1.0,
         step_cost=-0.1,
@@ -86,16 +86,28 @@ if __name__ == "__main__":
     Q_optimal, V_optimal, policy_optimal = get_optimal_Q_V_and_policy(env.mdp, max_iter=10000, tol=1e-6)
     
     # Sanity check: visualize the MDP, optimal value function, and optimal policy
-    env.mdp.plot_grid()
-    env.mdp.plot_values(V_optimal, annotate=True)
-    env.mdp.plot_policy(policy_optimal)
+#    env.mdp.plot_grid()
+#    env.mdp.plot_values(V_optimal, annotate=True)
+#    env.mdp.plot_policy(policy_optimal)
 
     # Q-Learning experiment
 
     alpha_list = [0.01, 0.05, 0.15] # different learning rates to try
     num_episodes = 10000
 
+    alpha = 0.15
+    Q_list, N_visit_list = q_learning(env,num_episodes,alpha,gamma,epsilon)
+    V_list = [np.max(q, axis=1) for q in Q_list]
+    print(np.array(V_list).shape,flush=True)
+    print(np.array(N_visit_list).shape,flush=True)
+    V_mc_final = V_list[-1]
+
+
+    env.mdp.plot_values(np.abs(V_mc_final - V_optimal), annotate=True)
+    env.mdp.plot_values(N_visit_list[-1], annotate=True)
+
     # TODO: Implement answers to homework problems.
+    """
     def RMSE_calculator(V_n, V_optimal):
         return np.sqrt(np.mean((V_n - V_optimal)**2))
 
@@ -107,5 +119,12 @@ if __name__ == "__main__":
         V_list = [np.max(q, axis=1) for q in Q_list]
         rmse = np.array([RMSE_calculator(v, V_optimal) for v in V_list])
         plt.plot(n, rmse, label=f"alpha={alpha}")
+    plt.xlabel('Episode Number', fontsize=20)
+    plt.ylabel('RMSE at Episode', fontsize=20)
+    plt.title('Q learning RMSE V_n^a vs V optimal, for alpha={0.01, 0.05, 0.15}', fontsize=24)
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend(fontsize=22)
+    plt.tight_layout()
     plt.legend()
     plt.show()
+    """

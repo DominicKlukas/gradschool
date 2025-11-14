@@ -58,6 +58,8 @@ class GridworldEnv(gym.Env):
     def reset(self, seed=None, options: dict = None):
         """
         Reset the environment to the initial state.
+        Arguments:
+                options: "state", integer in [0, nS), determines the starting state
         Returns:
           obs: the observation corresponding to the reset initial state 
             (in this case just return the initial state index itself)
@@ -84,11 +86,15 @@ class GridworldEnv(gym.Env):
           info: additional info (empty dict here)
         """
         # TODO: Implement step method (hint, make use of self.mdp.p(state, action))
+        # Get the transitions for the state action pair
         transitions = self.mdp.P(self.state, action)
+
+        # Choose the transition
         probabilities = np.array([t.prob for t in transitions])
         probabilities = probabilities/np.sum(probabilities)
-        assert isinstance(transitions, list)
         chosen_transition = np.random.choice(transitions, p=probabilities)
+
+        # Get the results
         next_state = chosen_transition.next_state
         self.state = next_state
         reward = chosen_transition.reward

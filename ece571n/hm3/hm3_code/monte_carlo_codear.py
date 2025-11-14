@@ -51,53 +51,81 @@ def mc_prediction_first_visit(
     """
     # TODO: Implement mc_prediction_first_visit function
     num_eps_per_state = int(num_episodes / env.nS)
-    N_list = np.zeros(env.nS)
+    N_list = []
     V_list = []
+    N_s_list = np.zeros(env.nS)
     for s in range(env.nS):
+        V_s_list = []
         V_s = 0
         for i in range(num_eps_per_state):
             env.reset(options={"state": s})
             states, actions, rewards = generate_episode(env, policy)
             for st in states:
-                N_list[st] += 1 # This implies that we are interested in the total number of visits over all the Monte-Carlo runs
+                N_s_list[st] += 1 # This implies that we are interested in the 
+                        # total number of visits over all the Monte-Carlo runs
             discounts = gamma ** np.arange(len(rewards))
             G_i = np.sum(discounts * rewards)
             V_s += (G_i-V_s) / (i + 1)
-        V_list += [V_s]
-    V_list = np.array(V_list)
+            V_s_list += [V_s]
+        V_list.append(V_s_list)
+        N_list.append(N_s_list.copy())
+
+    # Transform shape to (num_eps_per_state,nS)
+    V_list = np.array(V_list).T
+    N_list = np.array(N_list)
     return V_list, N_list
+
+def plot_RMSE(V_list):
+
+    num_episodes_per_state = len(V_list)
+    RMSE = []
+    for i in range(num_episodes_per_state):
+        RMSE += [np.linalg.norm(V_list[i] - V_optimal)]
+    plt.figure(figsize=(6, 4))
+    plt.plot(range(num_episodes_per_state), RMSE, label='RMSE', color='blue')
+    plt.xlabel('Episode Number')
+    plt.ylabel('RMSE at Episodes')
+    plt.title('Root Mean Squared Error, V_mc vs V*')
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend()
+    plt.tight_layout()
+    plt.plot(RMSE)
+    plt.show()
 
 if __name__ == "__main__":
 
     gamma = 0.9
 
-    # Construct the MDP instance
+    # Construct the MDP instance    
     env = GridworldEnv(
-            height=4,
-            width=5,
-            init=(3, 0),
-            goal=(0, 4),
-            sink=(3, 4),
-            wall=(1, 2),
-            reward_goal=+1.0,
-            reward_sink=-1.0,
-            step_cost=-0.1,
-            slip_p=0.05,  # 5% chance to slip,
-            discount=gamma,
-        )
-    
+        height=6,
+        width=9,
+        init=(2, 0),
+        goal=(0, 8),
+        sink=(5, 8),
+        wall=[(1, 2), (2, 2), (3,2), (4,5), (0,7), (1,7), (2,7)],
+        reward_goal=+1.0,
+        reward_sink=-1.0,
+        step_cost=-0.1,
+        slip_p=0.05,  # 5% chance to slip,
+        discount=gamma,
+    )
+
     # Compute optimal Q, V, and policy via Q-iteration for comparison with your RL-based results.
     Q_optimal, V_optimal, policy_optimal = get_optimal_Q_V_and_policy(env.mdp, max_iter=10000, tol=1e-6)
     
     # Sanity check: visualize the MDP, optimal value function, and optimal policy
-    env.mdp.plot_grid()
-    env.mdp.plot_values(V_optimal, annotate=True)
-    env.mdp.plot_policy(policy_optimal)
+    #env.mdp.plot_grid()
+    #env.mdp.plot_values(V_optimal, annotate=True)
+    #env.mdp.plot_policy(policy_optimal)
 
     ############ Monte-Carlo Prediction experiment ###########  
     # TODO: Implement the code to answer the homework questions.
-    V_mc, N_mc = mc_prediction_first_visit(env, policy_optimal, 10000, gamma)
-    RMSE = np.sqrt(np.mean((V_mc - V_optimal)**2))
-    print(RMSE, flush=True)
-    env.mdp.plot_values(np.abs(V_mc - V_optimal), annotate=True)
-    env.mdp.plot_values(N_mc, annotate=True)
+    num_episodes = 10000
+    V_list, N_list = mc_prediction_first_visit(env, policy_optimal, num_episodes, gamma)
+
+    V_mc_final = V_list[-1]
+
+    env.mdp.plot_values(np.abs(V_mc_final - V_optimal), annotate=True)
+    env.mdp.plot_values(N_list[-1], annotate=True)
+    plot_RMSE(V_list)

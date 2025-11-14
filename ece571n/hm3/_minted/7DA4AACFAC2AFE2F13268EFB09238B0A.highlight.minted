@@ -1,0 +1,26 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{n}{num\PYGZus{}eps\PYGZus{}per\PYGZus{}state} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{num\PYGZus{}episodes} \PYG{o}{/} \PYG{n}{env}\PYG{o}{.}\PYG{n}{nS}\PYG{p}{)}
+    \PYG{n}{N\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{n}{V\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{n}{N\PYGZus{}s\PYGZus{}list} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{env}\PYG{o}{.}\PYG{n}{nS}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{s} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{env}\PYG{o}{.}\PYG{n}{nS}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{V\PYGZus{}s\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+        \PYG{n}{V\PYGZus{}s} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{num\PYGZus{}eps\PYGZus{}per\PYGZus{}state}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{env}\PYG{o}{.}\PYG{n}{reset}\PYG{p}{(}\PYG{n}{options}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{state}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{s}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+            \PYG{n}{states}\PYG{p}{,} \PYG{n}{actions}\PYG{p}{,} \PYG{n}{rewards} \PYG{o}{=} \PYG{n}{generate\PYGZus{}episode}\PYG{p}{(}\PYG{n}{env}\PYG{p}{,} \PYG{n}{policy}\PYG{p}{)}
+            \PYG{k}{for} \PYG{n}{st} \PYG{o+ow}{in} \PYG{n}{states}\PYG{p}{:}
+                \PYG{n}{N\PYGZus{}s\PYGZus{}list}\PYG{p}{[}\PYG{n}{st}\PYG{p}{]} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1} \PYG{c+c1}{\PYGZsh{} This implies that we are interested in the}
+                        \PYG{c+c1}{\PYGZsh{} total number of visits over all the Monte\PYGZhy{}Carlo runs}
+            \PYG{n}{discounts} \PYG{o}{=} \PYG{n}{gamma} \PYG{o}{*}\PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arange}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{rewards}\PYG{p}{)}\PYG{p}{)}
+            \PYG{n}{G\PYGZus{}i} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{discounts} \PYG{o}{*} \PYG{n}{rewards}\PYG{p}{)}
+            \PYG{n}{V\PYGZus{}s} \PYG{o}{+}\PYG{o}{=} \PYG{p}{(}\PYG{n}{G\PYGZus{}i}\PYG{o}{\PYGZhy{}}\PYG{n}{V\PYGZus{}s}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)}
+            \PYG{n}{V\PYGZus{}s\PYGZus{}list} \PYG{o}{+}\PYG{o}{=} \PYG{p}{[}\PYG{n}{V\PYGZus{}s}\PYG{p}{]}
+        \PYG{n}{V\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{V\PYGZus{}s\PYGZus{}list}\PYG{p}{)}
+        \PYG{n}{N\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{N\PYGZus{}s\PYGZus{}list}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} Transform shape to (num\PYGZus{}eps\PYGZus{}per\PYGZus{}state,nS)}
+    \PYG{n}{V\PYGZus{}list} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{V\PYGZus{}list}\PYG{p}{)}\PYG{o}{.}\PYG{n}{T}
+    \PYG{n}{N\PYGZus{}list} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{N\PYGZus{}list}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{V\PYGZus{}list}\PYG{p}{,} \PYG{n}{N\PYGZus{}list}
+\end{MintedVerbatim}

@@ -91,7 +91,7 @@ if __name__ == "__main__":
         reward_goal=+1.0,
         reward_sink=-1.0,
         step_cost=-0.1,
-        slip_p=0.05,  # 5% chance to slip,
+        slip_p=0.3,  # 5% chance to slip,
         discount=gamma,
     )
     
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     # Dyna-Q experiment
     n_list = [0, 5,50] # different n_planning_steps to try
     alpha = 0.15
-    num_episodes = 500
+    num_episodes = 10000
 
 
     # TODO: Implement answers to homework problems.
@@ -121,5 +121,11 @@ if __name__ == "__main__":
         V_list = [np.max(q, axis=1) for q in Q_list]
         rmse = np.array([RMSE_calculator(v, V_optimal) for v in V_list])
         plt.plot(n, rmse, label=f"n_plan={n_planning}")
+    plt.xlabel('Episode Number', fontsize=20)
+    plt.ylabel('RMSE at Episode', fontsize=20)
+    plt.title('Dyna-Q RMSE V_n vs V optimal, for n_plan={0, 5, 50}', fontsize=24)
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend(fontsize=22)
+    plt.tight_layout()
     plt.legend()
     plt.show()

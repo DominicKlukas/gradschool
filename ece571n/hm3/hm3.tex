@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{parskip}
 \usepackage{subcaption}
+\usepackage{minted}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
 
@@ -54,7 +55,7 @@ On policy learning both involve improving a policy's decisions with respect to t
 For the two examples, the traditional Monte-Carlo general policy improvement aglorithm is on policy, and the Monte-Carlo policy improvement algorithm that uses importance sampling is an example of an off-policy algorithm. I will go through my understanding of how they work below:
 
 Traditional monte-carlo method: for each state $s \in S$ and action $a \in A(s)$, runs rollouts directly on the policy, and uses them to approximate $Q(s, a)$.
-Then, the policy updates with $\pi_{\text{next}}(s) = \argmax_{a} Q(s, a)$, and then runs rollouts again to improve this next policy.
+Then, the policy updates with $\pi_{\text{next}}(s) = \text{argmax}_{a} Q(s, a)$, and then runs rollouts again to improve this next policy.
 
 The off-policy version of the Monte Carlo uses importance sampling. It modifies the estimation of the expectation of trajectories to match the probability that the learning policy, rather than the policy that the trajectory was actually sampled from.
 Essentially, the rollouts estimate the quantity $Q_{\pi}(s, a) = \sum_{\tau} G_t Pr(\tau | (s_0, a_0)=(s, a), \pi)$.
@@ -90,6 +91,67 @@ as inputs, as well as the initial state, goal location, sink location(s), wall p
 ity, discount factor $\gamma$, and reward function parameters. Figure 1 illustrates an example gridworld
 environment that we will be using in several of the following questions.
 
+\textbf{Solution}
+Initialization:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+            # TODO: Define action and observation spaces and expose nS and nA
+        self.state = self.mdp.init
+        self.nS = self.mdp.nS
+        self.nA = self.mdp.nA
+\end{minted}
+Reset function. Added an option to set the starting state.
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    def reset(self, seed=None, options: dict = None):
+        """
+        Reset the environment to the initial state.
+        Arguments:
+                options: "state", integer in [0, nS), 
+                the index of the desired starting state
+        Returns:
+          obs: the observation corresponding to the reset initial state 
+            (in this case just return the initial state index itself)
+          info: additional info (empty dict in this case)
+        """
+        if options is not None:
+            self.state = options["state"]
+        else:
+            self.state = self.mdp.init
+
+        observation = self.state
+        info = {}
+        return observation, info
+\end{minted}
+
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    def step(self, action):
+        """
+        Take an action in the environment.
+        Arguments:
+            action: the action to take (integer in [0, nA-1])
+        Returns:
+          next_state: the next state after taking the action
+          reward: the reward received
+          done: whether the episode has ended
+          info: additional info (empty dict here)
+        """
+        # TODO: Implement step method (hint, make use of self.mdp.p(state, action))
+        # Get the transitions for the state action pair
+        transitions = self.mdp.P(self.state, action)
+
+        # Choose the transition
+        probabilities = np.array([t.prob for t in transitions])
+        probabilities = probabilities/np.sum(probabilities)
+        chosen_transition = np.random.choice(transitions, p=probabilities)
+
+        # Get the results
+        next_state = chosen_transition.next_state
+        self.state = next_state
+        reward = chosen_transition.reward
+        done = chosen_transition.done
+        info = {}
+        return next_state, reward, done, info
+\end{minted}
+
 \item [4.] [20] \textbf{Monte Carlo estimation of $V^\pi(s)$.} Using the gridworld environment from the previous ques-
 tion, implement the “First-Visit Monte Carlo Prediction" algorithm that we saw in class. Use
 the starter code file available at : \url{https://github.com/cyrusneary/UBC_EECE571N_fall_2025/
@@ -120,6 +182,101 @@ the gridworld, are already available at the bottom of the provided starter code 
     the generation/plotting of results.
 \end{enumerate}
 
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item Note: the problem called for 10,000 episodes. In order to compute the value at each state, I divided the 10,000 episodes by the number of states, and so the value of the first-visit monte carlo estimation at each state is the average of $10,000 / n$ rollouts.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.5\textwidth]{4a_RMSE.png}
+            \caption{Root Mean Squared Error (RMSE) over episodes for the Monte-Carlo algorithm.}
+            \label{fig:rmse}
+        \end{figure}
+    \item 
+        \begin{figure}[H]
+            \centering
+            % First subplot
+            \begin{subfigure}[b]{0.48\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{4b_visits.png}
+                \caption{Number of Visits at Each State for 10{,}000 Episodes}
+                \label{fig:visits}
+            \end{subfigure}
+            \hfill
+            % Second subplot
+            \begin{subfigure}[b]{0.48\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{4b_values.png}
+                \caption{$L_1$ Error of $V_{MC}$ after 10{,}000 Episodes}
+                \label{fig:l1error}
+            \end{subfigure}
+
+            \caption{State visit counts of Monte Carlo algorithm, and value estimation error after 10{,}000 episodes.}
+            \label{fig:4b_comparison}
+        \end{figure}
+    \item 
+        After generating a few different plots, the error is highest in a seemingly random distribution of states. The states that get visited the most are the states that are in the path of the optimal policy for the greatest number of initial of starting states.
+        However, since we are implementing the first-visit monte carlo prediction, every state gets the same number of samples: $\left\lfloor 10,000 / 19 \right\rfloor = 526$; even if some states get visited more from trajectories that start from other states or when the initial state gets revisited, this does \emph{not} count as the start of another "run" to increase the samples considered for these oft visited states any more than the states that are visited often.
+    \item 
+        Monte-Carlo algorithm code:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    num_eps_per_state = int(num_episodes / env.nS)
+    N_list = []
+    V_list = []
+    N_s_list = np.zeros(env.nS)
+    for s in range(env.nS):
+        V_s_list = []
+        V_s = 0
+        for i in range(num_eps_per_state):
+            env.reset(options={"state": s})
+            states, actions, rewards = generate_episode(env, policy)
+            for st in states:
+                N_s_list[st] += 1 # This implies that we are interested in the 
+                        # total number of visits over all the Monte-Carlo runs
+            discounts = gamma ** np.arange(len(rewards))
+            G_i = np.sum(discounts * rewards)
+            V_s += (G_i-V_s) / (i + 1)
+            V_s_list += [V_s]
+        V_list.append(V_s_list)
+        N_list.append(N_s_list.copy())
+
+    # Transform shape to (num_eps_per_state,nS)
+    V_list = np.array(V_list).T
+    N_list = np.array(N_list)
+    return V_list, N_list
+\end{minted}
+Code to graph the RMSE plot:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+def plot_RMSE(V_list):
+    RMSE = []
+    for i in range(num_episodes_per_state):
+        RMSE += [np.linalg.norm(V_list[i] - V_optimal)]
+    plt.figure(figsize=(6, 4))
+    plt.plot(range(num_episodes_per_state), RMSE, label='RMSE', color='blue')
+    plt.xlabel('Episode Number')
+    plt.ylabel('Root Mean Squared Error, V_mc vs V*')
+    plt.title('RMSE at Episode')
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend()
+    plt.tight_layout()
+    plt.plot(RMSE)
+    plt.show()
+\end{minted}
+
+Code to call the Monte-Carlo algorithm and graph the plots:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    num_episodes = 10000
+    V_list, N_list = mc_prediction_first_visit(env, policy_optimal, num_episodes, gamma)
+
+    V_mc_final = V_list[-1]
+
+    env.mdp.plot_values(np.abs(V_mc_final - V_optimal), annotate=True)
+    env.mdp.plot_values(N_list[-1], annotate=True)
+    plot_RMSE(V_list)
+\end{minted}
+
+\end{enumerate}
+
 \item [5.] [20] \textbf{SARSA, On-Policy Control.} Using the same gridworld environment as the previous ques-
 tions, implement the "SARSA: On-Policy Control" algorithm that we saw in class. Use the starter
 code file available at: \url{https://github.com/cyrusneary/UBC_EECE571N_fall_2025/blob/main/
@@ -143,6 +300,86 @@ Try each of the following learning rates: $\alpha = 0.01$, $\alpha = 0.05$, $\al
 
     \item [(c)] Include snippets of your Python code implementing the SARSA algorithm, and the genera-
     tion/plotting of results.
+\end{enumerate}
+
+\textbf{Solution.}
+\begin{enumerate}
+    \item 
+
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=1\textwidth]{5_a.png}
+            \caption{Root Mean Squared Error (RMSE) over episodes for the SARSA algorithm value function.}
+            \label{fig:rmse_5}
+        \end{figure}
+    \item The bigger the learning rate, the more quickly the RSME reduces, but the noisier the signal is. Close to the end, $\alpha = 0.05$ has lower average RMSE over the last 1000 episodes than $\alpha = 0.15$, because it has lower noise, so having too big of a learning rate can be deterimental to performance.
+    \item 
+
+Code implementing the SARSA algorithm:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    Q_list = [] # to store a copy of Q at the start of each episode
+    N_visit_list = [] # to store a copy of N_visit at the start of each episode
+    Q = np.zeros((env.nS, env.nA), dtype=np.float64)
+    N_visit = np.zeros(env.nS, dtype=np.int32)
+
+    def policy(Q_p, s, eps):
+        nA = Q_p.shape[1]
+        if np.random.random() < eps:
+            return np.random.randint(nA)
+        else:
+            return np.argmax(Q_p[s])
+    length = 0
+    for _ in range(num_episodes):
+        Q_list.append(Q.copy())
+        N_visit_list.append(N_visit.copy())
+        env.reset() 
+        done = False
+        state = env.state
+        states = [state]
+        if _ %1000 == 0:
+            print(f"We are at {_} with average episode length {length}", flush=True)
+            length = 0
+        length_ep = 0
+        while not done:
+            length_ep += 1
+            N_visit[env.state] += 1
+            action = policy(Q, env.state, epsilon)
+            next_state, reward, done, info = env.step(action)
+            next_action = policy(Q, next_state, epsilon)
+            Q[state, action] += alpha*(reward + gamma*Q[next_state, next_action] - Q[state, action])
+            states += [env.state]
+            state= env.state
+        length += (length_ep - length)/(_ - (_/1000)*1000 + 1)
+    return Q_list, N_visit_list
+\end{minted}
+Code to run the experiment/plot results:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    # SARSA experiment
+    alpha_list = [0.01, 0.05, 0.15] # different learning rates to try
+    num_episodes = 10000
+
+    # TODO: Implement answers to homework questions.
+    def RMSE_calculator(V_n, V_optimal):
+        return np.sqrt(np.mean((V_n - V_optimal)**2))
+
+
+    rmse_list = []
+    n = np.arange(1, num_episodes+1)
+    for alpha in alpha_list:
+        Q_list, N_visit_list = sarsa(env,num_episodes,alpha,gamma,epsilon)
+        V_list = [np.max(q, axis=1) for q in Q_list]
+        rmse = np.array([RMSE_calculator(v, V_optimal) for v in V_list])
+        plt.plot(n, rmse, label=f"alpha={alpha}")
+    plt.xlabel('Episode Number', fontsize=20)
+    plt.ylabel('RMSE at Episode', fontsize=20)
+    plt.title('RMSE V_n^alpha vs V optimal, for alpha={0.01, 0.05, 0.15}', fontsize=24)
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend(fontsize=22)
+    plt.tight_layout()
+    plt.show()
+\end{minted}
+
+
 \end{enumerate}
 
 \item [6.] [20] \textbf{Q-Learning.} Implement the tabular Q-learning algorithm we discussed in class. Use the starter code
@@ -179,6 +416,122 @@ Try each of the following learning rates: $\alpha = 0.01$, $\alpha = 0.05$, $\al
     tion/plotting of results.
 \end{enumerate}
 
+
+\textbf{Solution.}
+\begin{enumerate}
+    \item 
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=1\textwidth]{6_a.png}
+            \caption{Root Mean Squared Error (RMSE) over episodes for the Q learning algorithm.}
+            \label{fig:rmse_6}
+        \end{figure}
+    \item 
+        \begin{figure}[H]
+            \centering
+            % First subplot
+            \begin{subfigure}[b]{0.48\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{6_b_1.png}
+                \caption{$L_1$ Error of $V_{MC}$ after 10{,}000 Episodes}
+                \label{fig:visits}
+            \end{subfigure}
+            \hfill
+            % Second subplot
+            \begin{subfigure}[b]{0.48\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{6_b_2.png}
+                \caption{Number of Visits at Each State for 10{,}000 Episodes}
+                \label{fig:l1error}
+            \end{subfigure}
+
+            \caption{State visit counts of the Q-learning algorithm, and value estimation error after 10{,}000 episodes. $\alpha=0.15$.}
+            \label{fig:4b_comparison}
+        \end{figure}
+    \item 
+        \begin{figure}[H]
+            \centering
+            % First subplot
+            \begin{subfigure}[b]{0.48\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{6_c_1.png}
+                \caption{$L_1$ Error of $V_{MC}$ after 10{,}000 Episodes}
+                \label{fig:visits}
+            \end{subfigure}
+            \hfill
+            % Second subplot
+            \begin{subfigure}[b]{0.48\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{6_c_2.png}
+                \caption{Number of Visits at Each State for 10{,}000 Episodes}
+                \label{fig:l1error}
+            \end{subfigure}
+
+            \caption{State visit counts of the Q-learning algorithm, and value estimation error after 10{,}000 episodes. Wall at $(0, 7)$ removed. $\alpha=0.15$.}
+            \label{fig:4b_comparison}
+        \end{figure}
+
+    \item 
+The plots differ because removing the wall at (0, 7) in part c) changes the optimal path, allowing a shorter route to the goal. As a result, the algorithm spends most of its time near this new optimal path. In both cases, states close to the optimal path are visited most frequently, while states farther away—especially those near obstacles—show higher value-estimation error. Removing the wall changes the visitation pattern and reduces errors along the new path, demonstrating that the algorithm’s exploration is heavily guided by the discovered optimal route rather than uniform state coverage. Indeed, in part b), the state (0,6) is rarely visited precisly because it is far from the optimal path, but once the optimal path passes through (0, 6), it becomes very frequently visited.
+\item 
+Q-learning algorithm:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    Q_list = [] # to store a copy of Q at the start of each episode
+    N_visit_list = [] # to store a copy of N_visit at the start of each episode
+
+    Q = np.zeros((env.nS, env.nA), dtype=np.float64) # action-value function estimate
+    N_visit = np.zeros(env.nS, dtype=np.int32) # state visit counts
+
+    def policy(Q_p, s, eps):
+        nA = Q_p.shape[1]
+        if np.random.random() < eps:
+            return np.random.randint(nA)
+        else:
+            return np.argmax(Q_p[s])
+    length = 0
+    for _ in range(num_episodes):
+        Q_list.append(Q.copy())
+        N_visit_list.append(N_visit.copy())
+        env.reset() 
+        done = False
+        state = env.state
+        states = [state]
+        if _ %1000 == 0:
+            print(f"We are at {_} with average episode length {length}", flush=True)
+            length = 0
+        length_ep = 0
+        while not done:
+            N_visit[env.state] += 1
+            action = policy(Q, env.state, epsilon)
+            next_state, reward, done, info = env.step(action)
+            Q[state, action] += alpha*(reward + gamma*np.max(Q[next_state, :]) - Q[state, action])
+            states += [env.state]
+            state= env.state
+
+            #For Logging
+            length_ep += 1
+        length += (length_ep - length)/(_ - (_/1000)*1000 + 1)
+    return Q_list, N_visit_list
+
+\end{minted}
+The RMSE plotting code is virtually identical to SARSA RMSE plotting code.
+Plotting code, for grid maps:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    num_episodes = 10000
+    alpha = 0.15
+    Q_list, N_visit_list = q_learning(env,num_episodes,alpha,gamma,epsilon)
+    V_list = [np.max(q, axis=1) for q in Q_list]
+    print(np.array(V_list).shape,flush=True)
+    print(np.array(N_visit_list).shape,flush=True)
+    V_mc_final = V_list[-1]
+
+
+    env.mdp.plot_values(np.abs(V_mc_final - V_optimal), annotate=True)
+    env.mdp.plot_values(N_visit_list[-1], annotate=True)
+\end{minted}
+\end{enumerate}
+
+
 \item [7.] [20] \textbf{Model-Based RL: Dyna-Q.} Implement the Dyna-Q algorithm that we discussed in class. Use the
 starter code available at: \url{https://github.com/cyrusneary/UBC_EECE571N_fall_2025/blob/
 main/Homework-starter-code/HW3/dyna_q_code.py}.
@@ -202,7 +555,105 @@ steps to take per environment step: nplan = 0, nplan = 5, nplan = 50.
     \item [(d)] Include snippets of your Python code implementing the SARSA algorithm, and the genera-
     tion/plotting of results.
 \end{enumerate}
+
+\begin{enumerate}
+    \item 
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=1\textwidth]{7_a.png}
+            \caption{Root Mean Squared Error (RMSE) over episodes for the Dyna-Q algorithm given different planning models. $p=0.05$.}
+            \label{fig:rmse_7}
+        \end{figure}
+    \item 
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=1\textwidth]{7_b.png}
+            \caption{Root Mean Squared Error (RMSE) over episodes for the Dyna-Q algorithm given different planning models. $p=0.3$.}
+            \label{fig:rmse_7_b}
+        \end{figure}
+    \item $n_{\text{plan}}$ 
+        improves the algorithm performance drastically if it's model of the environment is accurate. We can see that when $p=0.05$, in part a), we have that for both $n_{\text{plan}}=5$ and $n_{\text{plan}}=50$, the algorithm learns the optimal values instantly. However, eventually, the algorithm updates it's model with too many slip probabilities, and so seriously miscalculates its error values. The bigger nplan is, and the bigger $p$ is, the more susceptible this algorithm is to such errors.
+    \item 
+        Dyna-Q algorithm code:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    Q_list = []
+
+    Q = np.zeros((env.nS, env.nA), dtype=np.float64)
+
+    model = {}   # (s,a) -> list of (r, s_next, done)
+    seen_keys = []
+
+    def policy(Q_p, s, eps):
+        nA = Q_p.shape[1]
+        if np.random.random() < eps:
+            return np.random.randint(nA)
+        else:
+            return np.argmax(Q_p[s])
+    length = 0
+    for _ in range(num_episodes):
+        Q_list.append(Q.copy())
+        env.reset() 
+        done = False
+        state = env.state
+        
+        # logging code
+        if _ %1000 == 0:
+            print(f"We are at {_} with average episode length {length/1000}", flush=True)
+            length = 0
+        length_ep = 0
+
+        while not done:
+            action = policy(Q, env.state, epsilon)
+            next_state, reward, done, info = env.step(action)
+            Q[state, action] += alpha*(reward + gamma*np.max(Q[next_state, :]) - Q[state, action])
+
+            if (state, action) not in model:
+                seen_keys.append((state,action))
+            model[(state, action)] = (reward, next_state, done)
+
+            state = env.state
+            for i in range(n_planning_steps):
+                key = random.choice(seen_keys)
+                state_p, action_p = key
+                reward_p, next_state_p, irrelevant = model[key]
+                Q[state_p, action_p] += alpha*(reward_p + gamma*np.max(Q[next_state_p, :]) - Q[state_p, action_p])
+
+            # Logging Code
+            length_ep += 1
+        length += length_ep
+
+    return Q_list
+\end{minted}
+Code for plotting:
+\begin{minted}[fontsize=\small, linenos, frame=lines]{python}
+    # Dyna-Q experiment
+    n_list = [0, 5,50] # different n_planning_steps to try
+    alpha = 0.15
+    num_episodes = 10000
+
+
+    # TODO: Implement answers to homework problems.
+    def RMSE_calculator(V_n, V_optimal):
+        return np.sqrt(np.mean((V_n - V_optimal)**2))
+
+
+    rmse_list = []
+    n = np.arange(1, num_episodes+1)
+    for n_planning in n_list:
+        Q_list = dyna_q(env, num_episodes, alpha, n_planning, gamma, epsilon)
+        V_list = [np.max(q, axis=1) for q in Q_list]
+        rmse = np.array([RMSE_calculator(v, V_optimal) for v in V_list])
+        plt.plot(n, rmse, label=f"n_plan={n_planning}")
+    plt.xlabel('Episode Number', fontsize=20)
+    plt.ylabel('RMSE at Episode', fontsize=20)
+    plt.title('Dyna-Q RMSE V_n vs V optimal, for n_plan={0, 5, 50}', fontsize=24)
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend(fontsize=22)
+    plt.tight_layout()
+    plt.legend()
+    plt.show()
+\end{minted}
 \end{enumerate}
 
-
+\end{enumerate}
 \end{document}

@@ -8,7 +8,7 @@ pretty_cite:
 link: https://doi.org/10.48550/arXiv.2007.02933
 topics: Equivariance, DL, Symmetry Breaking
 reading_lists:
-projects: SDM Course Project
+projects: SDM Course Project, Equivariant Learning
 type:
 to_read: true
 stars:

@@ -1,0 +1,29 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{step}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{action}\PYG{p}{)}\PYG{p}{:}
+\PYG{+w}{        }\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{        Take an action in the environment.}
+\PYG{l+s+sd}{        Arguments:}
+\PYG{l+s+sd}{            action: the action to take (integer in [0, nA\PYGZhy{}1])}
+\PYG{l+s+sd}{        Returns:}
+\PYG{l+s+sd}{          next\PYGZus{}state: the next state after taking the action}
+\PYG{l+s+sd}{          reward: the reward received}
+\PYG{l+s+sd}{          done: whether the episode has ended}
+\PYG{l+s+sd}{          info: additional info (empty dict here)}
+\PYG{l+s+sd}{        \PYGZdq{}\PYGZdq{}\PYGZdq{}}
+        \PYG{c+c1}{\PYGZsh{} TODO: Implement step method (hint, make use of self.mdp.p(state, action))}
+        \PYG{c+c1}{\PYGZsh{} Get the transitions for the state action pair}
+        \PYG{n}{transitions} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mdp}\PYG{o}{.}\PYG{n}{P}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{state}\PYG{p}{,} \PYG{n}{action}\PYG{p}{)}
+
+        \PYG{c+c1}{\PYGZsh{} Choose the transition}
+        \PYG{n}{probabilities} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{p}{[}\PYG{n}{t}\PYG{o}{.}\PYG{n}{prob} \PYG{k}{for} \PYG{n}{t} \PYG{o+ow}{in} \PYG{n}{transitions}\PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{probabilities} \PYG{o}{=} \PYG{n}{probabilities}\PYG{o}{/}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{probabilities}\PYG{p}{)}
+        \PYG{n}{chosen\PYGZus{}transition} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n}{transitions}\PYG{p}{,} \PYG{n}{p}\PYG{o}{=}\PYG{n}{probabilities}\PYG{p}{)}
+
+        \PYG{c+c1}{\PYGZsh{} Get the results}
+        \PYG{n}{next\PYGZus{}state} \PYG{o}{=} \PYG{n}{chosen\PYGZus{}transition}\PYG{o}{.}\PYG{n}{next\PYGZus{}state}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{state} \PYG{o}{=} \PYG{n}{next\PYGZus{}state}
+        \PYG{n}{reward} \PYG{o}{=} \PYG{n}{chosen\PYGZus{}transition}\PYG{o}{.}\PYG{n}{reward}
+        \PYG{n}{done} \PYG{o}{=} \PYG{n}{chosen\PYGZus{}transition}\PYG{o}{.}\PYG{n}{done}
+        \PYG{n}{info} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{next\PYGZus{}state}\PYG{p}{,} \PYG{n}{reward}\PYG{p}{,} \PYG{n}{done}\PYG{p}{,} \PYG{n}{info}
+\end{MintedVerbatim}

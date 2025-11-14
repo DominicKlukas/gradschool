@@ -39,8 +39,8 @@ This paper suggests architectures and paradigms that address each of these point
 	- Short term memory stores helpful information, for the world model
 	- Perception: boils down the state of a world from the input data.
 - This architecture mirrors how people learn/the human brain works.
-They talk about two modes in which this architecture can act: in the first, the actions are unaffected by the world model/cost, and simply act deterministically from the perception/short term memory.
-Mode 2 is when you optimize the actions in the world model, using the cost critic to predict future state's cost functions.
+They talk about **two modes** in which this architecture can act: in the first, the **actions** are unaffected by the world model/cost, and simply act **deterministically from the perception/short term memory.**
+Mode 2 is when you **optimize the actions in the world model**, using the **cost critic to predict future state's cost functions.**
 You can mix them: optimize the action using mode 2 and then eventually fix the parameters and use mode 1.
 - The rewards are linear combinations of functions, with weights determined by configurator, the trainable part being the critic and the immutable part being the intrinsic cost.
 - They then argue that learning by objectives is best: it holds regardless of whether the environment changes, and minimizes hard-wired design.
@@ -52,7 +52,7 @@ You can mix them: optimize the action using mode 2 and then eventually fix the p
 - We want our world model to give a probability distribution over multiple possible next states, not just a single state.
 - We want different time scaled and levels of abstraction, mimicking the way that humans learn.
 - We want to take actions in our training set that will result in as diverse as possible a training set.
-- SSL, or self supervised learning is essentially patter prediction.
+- SSL, or self supervised learning is essentially pattern prediction.
 	- Example: Video completion prediction: what is the probability video y is the second half of video x.
 	- Energy based methods: train a scalar function that compares x and y, and is lower if it is more likely that they are connected.
 	- Our latent space should have the property that, given a state x and a future state y, y can be easily predicted from x. A latent space should contain all the information necessary to make this inference.

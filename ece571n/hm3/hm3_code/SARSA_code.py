@@ -58,7 +58,6 @@ def sarsa(
             states += [env.state]
             state= env.state
         length += (length_ep - length)/(_ - (_/1000)*1000 + 1)
-
     return Q_list, N_visit_list
 
 if __name__ == "__main__":
@@ -103,12 +102,12 @@ if __name__ == "__main__":
     Q_optimal, V_optimal, policy_optimal = get_optimal_Q_V_and_policy(env.mdp, max_iter=10000, tol=1e-6)
     
     # Sanity check: visualize the MDP, optimal value function, and optimal policy
-    env.mdp.plot_grid()
-    env.mdp.plot_values(V_optimal, annotate=True)
-    env.mdp.plot_policy(policy_optimal)
+    #env.mdp.plot_grid()
+    #env.mdp.plot_values(V_optimal, annotate=True)
+    #env.mdp.plot_policy(policy_optimal)
 
     # SARSA experiment
-    alpha_list = [0.01, 0.05, 0.10, 0.15, 0.20] # different learning rates to try
+    alpha_list = [0.01, 0.05, 0.15] # different learning rates to try
     num_episodes = 10000
 
     # TODO: Implement answers to homework questions.
@@ -123,5 +122,10 @@ if __name__ == "__main__":
         V_list = [np.max(q, axis=1) for q in Q_list]
         rmse = np.array([RMSE_calculator(v, V_optimal) for v in V_list])
         plt.plot(n, rmse, label=f"alpha={alpha}")
-    plt.legend()
+    plt.xlabel('Episode Number', fontsize=20)
+    plt.ylabel('RMSE at Episode', fontsize=20)
+    plt.title('RMSE V_n^alpha vs V optimal, for alpha={0.01, 0.05, 0.15}', fontsize=24)
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend(fontsize=22)
+    plt.tight_layout()
     plt.show()

@@ -1,0 +1,21 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+    \PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{reset}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{seed}\PYG{o}{=}\PYG{k+kc}{None}\PYG{p}{,} \PYG{n}{options}\PYG{p}{:} \PYG{n+nb}{dict} \PYG{o}{=} \PYG{k+kc}{None}\PYG{p}{)}\PYG{p}{:}
+\PYG{+w}{        }\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{        Reset the environment to the initial state.}
+\PYG{l+s+sd}{        Arguments:}
+\PYG{l+s+sd}{                options: \PYGZdq{}state\PYGZdq{}, integer in [0, nS),}
+\PYG{l+s+sd}{                the index of the desired starting state}
+\PYG{l+s+sd}{        Returns:}
+\PYG{l+s+sd}{          obs: the observation corresponding to the reset initial state}
+\PYG{l+s+sd}{            (in this case just return the initial state index itself)}
+\PYG{l+s+sd}{          info: additional info (empty dict in this case)}
+\PYG{l+s+sd}{        \PYGZdq{}\PYGZdq{}\PYGZdq{}}
+        \PYG{k}{if} \PYG{n}{options} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{k+kc}{None}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{state} \PYG{o}{=} \PYG{n}{options}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{state}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{state} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{mdp}\PYG{o}{.}\PYG{n}{init}
+
+        \PYG{n}{observation} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{state}
+        \PYG{n}{info} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{observation}\PYG{p}{,} \PYG{n}{info}
+\end{MintedVerbatim}
