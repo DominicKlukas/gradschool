@@ -138,3 +138,6 @@ Here, they add in another function, $w(h)$ which breaks the group symmetry. This
 Next, we consider PEnGUiN [[2025_McClellan_PEnGUiNPartialEquivariantNetwork]], where we learn an MLP based on our location that takes the linear combination of two networks, one that is equivariant, and one non-equivariant.
 # Symmetry in the Kinematics of Robots
 This paper considers the physical symmetries present in a robot [[2025_Apraez_MorphologicalSymmetriesInRobotics]].
+
+
+Complete list of references

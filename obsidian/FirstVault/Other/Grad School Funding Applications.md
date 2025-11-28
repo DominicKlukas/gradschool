@@ -57,3 +57,10 @@ guidelines and format standards outlined in the ‘General Presentation’ secti
 - Describe contributions to research and development - articles published or accepted in peer-reviewed journals
 - Describe most significant contributions to research and development
 - Applicant's statement - outline research experience + relevant activities
+
+
+# Questions about NSERC application
+
+- Application Title?
+- End of program study
+- Months of full time study

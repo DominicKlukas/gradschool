@@ -7,3 +7,5 @@ A group ring is a formal sum of a the elements of a group with coefficients bein
 - Commutative ring iff $G$ is commutative
 - Any finite group has zero divisors! Consider any generated cyclic group. Then, $r = 1+ g + \dots + g^{n-1}$ is an element that has $r = rg$, and so $0 = (1 - g)r$, which is a zero divisor!!
 We also define representation of a group, and hammer down some notation for $GL(V)$ and $GL_{n}(F)$.
+
+Each $FG$-module on a vector space $V$ gives us a representation $\varphi : G \to GL(V)$, and vice versa.

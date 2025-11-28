@@ -4,137 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "5d403c67816d4fa4",
+        "id": "a2fc2462e2140160",
         "type": "tabs",
         "children": [
           {
-            "id": "a07390ce4deed14f",
+            "id": "9e39bf9f1a57feac",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "technical_library/Papers/2022_DAlonzo_SymmetryDetection.md",
+                "file": "Other/Grad School Funding Applications.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2022_DAlonzo_SymmetryDetection"
-            }
-          },
-          {
-            "id": "bba1acc486fabad7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "technical_library/Papers/2021_Zhou_MetaLearningSymmetries.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2021_Zhou_MetaLearningSymmetries"
-            }
-          },
-          {
-            "id": "0786053389fb879c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Idea.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Idea"
-            }
-          },
-          {
-            "id": "ce1c3cd6f19a7cb7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Projects/Equivariant Learning.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Equivariant Learning"
-            }
-          },
-          {
-            "id": "a015d56bf5c32448",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2023_Wang_SymmetryBreakingTheory.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2023_Wang_SymmetryBreakingTheory"
-            }
-          },
-          {
-            "id": "74bf1d1078d5ceb1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2023_Wang_DiscoveringSymmetryBreakingRelaxedGroupConvolution.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2023_Wang_DiscoveringSymmetryBreakingRelaxedGroupConvolution"
-            }
-          },
-          {
-            "id": "4793493a19f1e37b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Wang_2021_EquivariantQLearningSpatialActionSpaces.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Wang_2021_EquivariantQLearningSpatialActionSpaces"
-            }
-          },
-          {
-            "id": "a3fe009ea8a9be87",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2022_Wang_ApproxEquivNNSymmetricDynamics.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2022_Wang_ApproxEquivNNSymmetricDynamics"
-            }
-          },
-          {
-            "id": "c8400b8d92a1871e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2021_Wang_EquivariantDeepDynamics.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2021_Wang_EquivariantDeepDynamics"
+              "title": "Grad School Funding Applications"
             }
           }
-        ],
-        "currentTab": 8
+        ]
       }
     ],
     "direction": "vertical"
@@ -191,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 532.5,
-    "collapsed": true
+    "width": 532.5
   },
   "right": {
     "id": "bf8874fa44f11e6d",
@@ -286,36 +172,36 @@
       "system3-relay:Relay": false
     }
   },
-  "active": "c8400b8d92a1871e",
+  "active": "9e39bf9f1a57feac",
   "lastOpenFiles": [
-    "2021_Wang_EquivariantDeepDynamics.md",
-    "2022_Wang_ApproxEquivNNSymmetricDynamics.md",
-    "Wang_2021_EquivariantQLearningSpatialActionSpaces.md",
-    "2023_Wang_DiscoveringSymmetryBreakingRelaxedGroupConvolution.md",
-    "Projects/Equivariant Learning.md",
-    "technical_library/Papers/2025_Park_ApproxEquivRL.md",
-    "2023_Wang_SymmetryBreakingTheory.md",
+    "Courses/EECE 571 Sequential Decision Making/Course Project/Project Notes.md",
+    "Other/Grad School Funding Applications.md",
+    "technical_library/Papers/Wang_2021_EquivariantQLearningSpatialActionSpaces.md",
+    "Tidbits.md",
+    "Master Todo List.md",
     "Idea.md",
-    "technical_library/Papers/2024_Yang_LatentSpaceSymmetryDiscovery.md",
-    "2025_Apraez_MorphologicalSymmetriesInRobotics.md",
-    "technical_library/Papers/2022_LeCun_JEPAMotivationAPathTowardsAutoMI.md",
-    "technical_library/Papers/2025_Assran_VJEPA2.md",
-    "technical_library/Papers/2022_Park_LearningSymmetryEmbeddingsEquivariantWorldModels.md",
     "Dataview.md",
-    "2020_Mondal_GroupEquivariantDRLAtari.md",
-    "technical_library/Papers/2023_Wang_EquivariantExtrinsicLatentSymmetry.md",
-    "technical_library/Papers/2023_Karjol_SymmetryDiscoveryFramework.md",
-    "2024_Kaba_SymmetryBreakingEquivariantNeuralNetworks.md",
-    "2025_McClellan_PEnGUiNPartialEquivariantNetwork.md",
-    "technical_library/Papers/2022_Liu_CRLWithGroupSymmetries.md",
-    "2025_DLSymmetryLearningTheory.md",
-    "technical_library/Papers/2023_Zhao_DifferentiablePlanningWithEquivariance.md",
-    "technical_library/Papers/2025_Wang_PracticalEquivariantDiffusionPolicy.md",
+    "Images/Screenshot2025-11-13_11-12-21.png",
     "technical_library/Papers/2022_DAlonzo_SymmetryDetection.md",
-    "2023_Zhao_EuclidanSymmetryRLAndPlanning.md",
+    "technical_library/Papers/2023_Wang_DiscoveringSymmetryBreakingRelaxedGroupConvolution.md",
+    "technical_library/Papers/2016_Cohen_GroupEquivariantConvolutionalNetworks.md",
+    "technical_library/Papers/2022_Wang_ApproxEquivNNSymmetricDynamics.md",
+    "technical_library/Papers/2006_Lehmann_TestingStatisticalHypothesis.md",
+    "technical_library/Papers/2025_Park_ApproxEquivRL.md",
+    "technical_library/Papers/2025_Seo_SE3EquivRobotLearningTutorialSurvey.md",
+    "technical_library/Papers/2022_Lagrave_EquivNNPDES.md",
     "technical_library/Papers/2021_Zhou_MetaLearningSymmetries.md",
-    "Screenshot2025-11-13_11-12-21.png",
-    "Pasted image 20251112155835.png",
+    "technical_library/Papers/2025_McClellan_PEnGUiNPartialEquivariantNetwork.md",
+    "Projects/Equivariant Learning.md",
+    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Relevant Resources.md",
+    "Other/Psalms Study on Lament.md",
+    "Other/Psalms Bible Study.md",
+    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Project Instructions.md",
+    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Project Description.md",
+    "technical_library/Textbooks/Abstract Algebra, Dummit and Foote.md",
+    "technical_library/Papers/2023_Wang_SymmetryBreakingTheory.md",
+    "technical_library/Papers/2021_Wang_EquivariantDeepDynamics.md",
+    "Images/Pasted image 20251112155835.png",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/attachments",
     "Images/Screenshot2025-10-23_17-53-47.png",
     "Images/Screenshot2025-10-23_17-53-55.png",

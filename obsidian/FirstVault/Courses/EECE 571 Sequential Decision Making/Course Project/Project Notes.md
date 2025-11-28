@@ -255,3 +255,7 @@ Matched the settings on this website as good as I could
 	1. The value function has to be group equivariant
 	2. Our construction of a PPO policy and value function, given a shared backbone, satisfies the conditions for group equivariance
 	3. Why wouldn't they use equivariant PPO
+
+## Mujoco Code
+- On CleanRL RPO is what is being used... so will try and use this algorithm instead. Apparently it is strictly better.
+- module load mujoco

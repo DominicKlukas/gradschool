@@ -7,7 +7,6 @@
 - Symmetry breaking: the manipulator's actions are symmetric in 3 space in theory, but the problem is that often the end effector itself constrains the symmetries.
 	- Combine an equivariant system with a modifier that maps it onto its action space.
 
-
 ## Papers Read
 ### Relevant to RL Symmetries
 - Meta Learning Symmetries by Reparameterization

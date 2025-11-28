@@ -81,3 +81,19 @@ Some terms I would like to hammer down
 	- In order to compute $s$, we have to integrate along the curve to figure out how far along it we are, which leads to deviations.
 	- Finally, Frenet frames in general have the problem that when your curve is a strait line, then you have zero curvature and so you can't really comptue $\vec{N}$ or $\vec{B}$: you get a singularity.
 
+
+
+    def __init__(
+        self,
+        freq: int,
+        sim_config: ConfigDict,
+        track: ConfigDict,
+        sensor_range: float = 0.5,
+        control_mode: Literal["state", "attitude"] = "state",
+        disturbances: ConfigDict | None = None,
+        randomizations: ConfigDict | None = None,
+        seed: int = 1337,
+        max_episode_steps: int = 1500,
+        device: Literal["cpu", "gpu"] = "cpu",
+    ):
+4

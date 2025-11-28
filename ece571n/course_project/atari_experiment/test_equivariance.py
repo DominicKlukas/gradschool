@@ -6,6 +6,18 @@ import matplotlib.pyplot as plt
 from escnn import gspaces
 from escnn import nn
 
+r2_act = gspaces.flipRot2dOnR2(N=4)
+
+feat_type_in = nn.FieldType(r2_act, [r2_act.irrep(1, 1)])
+
+input = torch.tensor([1, 1]).view(1, 2, 1, 1)
+input = feat_type_in(input)
+for g in r2_act.testing_elements:
+    print(g, flush=True)
+    print(input.transform(g).tensor, flush=True)
+
+
+"""
 obs_np = np.load("np_obs.npy")
 obs_stacked = np.load("obs.npy")
 obs_stacked = torch.from_numpy(obs_stacked)
@@ -50,5 +62,4 @@ def on_key(event):
 
 fig.canvas.mpl_connect('key_press_event', on_key)
 plt.show()
-
-
+"""
