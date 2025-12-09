@@ -121,3 +121,13 @@ $$
 \min_{p} q_{\mu}(p) = f_{k} + \nabla f_{k}^{T} p + \frac{1}{2} p^{T} \nabla_{x x}^{2} \mathcal{L} p + \mu \sum_{i \in \mathcal{E}} \lvert  c_{i}(x_{k}) + \nabla c_{i}(x_{k})^{T} p \rvert  + \mu \sum_{i \in \mathcal{I}} \lvert  c_{i}(x_{k}) + \nabla c_{i}(x_{k})^{T} p \rvert^{-}
 $$
 We subject this to $\lvert  \lvert  p \rvert \rvert_{\infty} \leq \Delta_{k}$. We can also reformulate this in the elastic-mode formulation. Then, we apply the same algorithm as the relaxed method to determine if steps should be accepted or not, with the merit function being $\phi_{1}(x; \mu) = f(x) + \mu \sum_{i \in \mathcal{E}} |c_{i}(x)| + \mu \sum_{i \in \mathcal{I}} [c_{i}(x)]^{-}$.
+
+
+
+Denote $\vec{r}_{\text{block}} = \vec{x}_{\text{block}} - \vec{x}_{\text{EE}}$, and $\vec{r}_{\text{goal}} = \vec{x}_{\text{goal}} - \vec{x}_{\text{EE}}$.
+
+$(\vec{v}_{\text{EE}}, \vec{r}_{\text{block}}, \vec{r}_{\text{goal}}, \vec{\lambda})$
+
+$$
+\rho(g) \cdot (\vec{v}_{\text{EE}}, \vec{r}_{\text{block}}, \vec{r}_{\text{goal}}, \vec{\lambda}) = (\rho(g)\cdot (v_{\text{EE}, x}, v_{\text{EE}, y})^{\top}, v_{\text{EE}, z}, \rho(g)\cdot (r_{\text{block}, x}, v_{\text{block}, y})^{\top}, r_{\text{block}, z}, \rho(g)\cdot (r_{\text{goal}, x}, r_{\text{goal}, y})^{\top}, r_{\text{goal}, z},  )
+$$

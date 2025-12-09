@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Other/Grad School Funding Applications.md",
+                "file": "Master Todo List.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Grad School Funding Applications"
+              "title": "Master Todo List"
             }
           }
         ]
@@ -174,7 +174,9 @@
   },
   "active": "9e39bf9f1a57feac",
   "lastOpenFiles": [
+    "Courses/EECE 571 Sequential Decision Making/Course Project/Presentation Flow.md",
     "Courses/EECE 571 Sequential Decision Making/Course Project/Project Notes.md",
+    "technical_library/Textbooks/Numerical Optimization.md",
     "Other/Grad School Funding Applications.md",
     "technical_library/Papers/Wang_2021_EquivariantQLearningSpatialActionSpaces.md",
     "Tidbits.md",
@@ -199,8 +201,6 @@
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Project Instructions.md",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Project Description.md",
     "technical_library/Textbooks/Abstract Algebra, Dummit and Foote.md",
-    "technical_library/Papers/2023_Wang_SymmetryBreakingTheory.md",
-    "technical_library/Papers/2021_Wang_EquivariantDeepDynamics.md",
     "Images/Pasted image 20251112155835.png",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/attachments",
     "Images/Screenshot2025-10-23_17-53-47.png",

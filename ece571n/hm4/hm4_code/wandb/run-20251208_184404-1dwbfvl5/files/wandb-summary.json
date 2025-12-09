@@ -1,0 +1,1 @@
+{"global_step":499900,"losses/qf1_loss":6.5091405,"charts/episodic_length":1000,"losses/qf2_values":171.55516,"charts/episodic_return":3049.443,"charts/SPS":112,"losses/qf1_values":171.38513,"losses/qf2_loss":8.704711,"_timestamp":1.7652526724279592e+09,"losses/qf_loss":7.606926,"losses/actor_loss":-174.057,"_step":34240,"_runtime":4427,"_wandb":{"runtime":4427}}

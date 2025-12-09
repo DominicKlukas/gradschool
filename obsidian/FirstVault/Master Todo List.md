@@ -20,8 +20,8 @@
 ## Daily Tasks
 ### Completed
 ### Today
-- [ ] Figure out what I need from Tim Huh
-- [ ] Do research tomorrow morning. Figure out more clearly which papers are relevant, and what the applications are, and where symmetry breaking has been explored in the past.
+- [x] Figure out what I need from Tim Huh
+- [x] Do research tomorrow morning. Figure out more clearly which papers are relevant, and what the applications are, and where symmetry breaking has been explored in the past.
 
 ---
 ## Backlog / Someday
@@ -29,9 +29,10 @@
 - [ ] Read chapter 12.4 - 12.9 of convex optimization to really understand KKT conditions
 - [ ] Understand Hamiltonian Mechanics reasonably well
 - [ ] Understand CNNs/RNNs/Autoencoders/Other DL fundamentals
-- [ ] Diffusion Models/Flow Matching
+- [x] Diffusion Models/Flow Matching
 - [ ] Continue reading the paper on constrained RL
 - [ ] Read a chapter on Kalman filtering: Probabilisitc Robotics, for example.
+- [ ] First four chapters of the textbook on Nonlinear-Systems
 
 ## Things to look up
 - [ ] Read up on Nyquist Stability Criterion, and closed loop transfer functions

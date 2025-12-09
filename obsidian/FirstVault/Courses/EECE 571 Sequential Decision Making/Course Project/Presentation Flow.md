@@ -1,0 +1,36 @@
+Requirements
+- Motivation and problem statement
+	- RL for Robotics
+		- Complicated! Dynamics is complicated, state space is massive, etc.
+		- Incredibly data heavy
+	- A brief description of related work and background
+		- Different solutions
+			- Collecting the data
+			- Doing domain shifts
+			- Data augmentation
+			- Real-to-sim
+- The proposed method for the project
+	- We will look at a specific class of problems, that have something called symmetries.
+		- Consider the duck example from Desmond and Serena’s presentation yesterday
+			- Rotated space and action spaces
+	- In our project, we will be looking at special functions that “bake in” symmetries into the Neural Networks.
+		- Cite the main papers that show the results
+		- Equivariant Neural Networks
+			- “Tell it what a rotation looks like in the state space”
+			- “Tell it how it should rotate when the state space is rotated”
+			- Use cool math to figure out how to tie the parameters together
+- A description of your experiments and main results
+	- Motivating examples
+		- Snake: and graph
+	- Bulletarm
+		- Symmetry of images around a center location
+		- Data Augmentation (augmentation buffer)
+	- State space
+		- Translation symmetry, as well as rotation and translation symmetry
+			- GIF of task
+			- Diagram to show the symmetry
+			- Graph to show the results, comparing SAC Equiv to Vanilla SAC
+- Additional discussion, limitations, and future work
+	- Symmetry Breaking
+		- Forthcoming in the final report
+		- Explain the situation

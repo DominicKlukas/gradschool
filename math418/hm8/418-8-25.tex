@@ -1,0 +1,478 @@
+\documentclass[hidelinks]{article}[12pt]
+
+\oddsidemargin 3mm
+\evensidemargin 3mm
+\topmargin -12mm
+\textheight 660pt
+\textwidth 450pt
+
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{amstext}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{bbm}
+
+\input{../../preamble.tex}
+
+\newcommand{\Fcal}{{\cal F}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\deq}{\stackrel{d}{=}}
+\newcommand{\dto}{\stackrel{d}{\to}}
+\newcommand{\pto}{\stackrel{\mathrm{p}}{\to}}
+\newcommand{\asto}{\stackrel{\mathrm{a.s.}}{\to}}
+
+\begin{document}
+
+
+%\pagestyle{empty}
+
+\noindent
+{\bf Math 418/544   Assignment 8} \hfill  November 25, 2024
+
+\bigskip \noindent
+Dr.\ J.\ Hermon
+
+
+Dominic Klukas
+Student Number: 64348378
+
+\bigskip \noindent
+{\bf This assignment is due in Canvas at 23:59 on Friday, Dec 5th. \\
+\emph{Late assignments are not accepted.}
+\\
+Submit a solution to 5 out of the 10 questions.}
+
+We solve problems 1, 2, 3, 8, 10
+
+\begin{enumerate}
+	
+	\item  Let $g:[0,\infty) \to [0,\infty)$ be such that $\lim_{x \to \infty}\frac{g(x)}{x}=\infty$. Let $(X_j:j \in J)$ be a collection of random variables satisfying that $\sup_{j \in J}\mathbb{E}[g(|X_j|)]<\infty$. Show that  $(X_j:j \in J)$ is uniformly integrable.
+	
+	\textbf{Hint:} $|x| \1_{|x|>M} \le g(|x|)\delta_g(M)$ for all $M>0$ for some appropriate $\delta_g:(0,\infty) \to (0,\infty)$.
+
+
+    \textbf{Solution.}
+    Let $\epsilon > 0$.
+    Then, $C = \sup_{j \in J} \mathbb{E}[g(|X_j|)]$, so $C < \infty$.
+    Let $L = C / \epsilon$.
+    Since $\lim_{x \to \infty} \frac{g(x)}{x} = \infty$, we have that there exists some $M \in \R$ such that for all $x > M$, $g(x) / x > L$.
+    However, this implies
+    \[
+        |x| \1_{|x| > M} < \frac{1}{L} g(|x|) \1_{|x| > M} \leq \frac{1}{L} g(|x|)
+    ,\]
+    where the last inequality follows because $g \geq 0$.
+    Then, for all $j \in J$, we have
+    \[
+        \mathbb{E}[|X_j| \1_{|X_j| > M}] < \frac{1}{L} \mathbb{E}[g(|X_j|)] \leq \frac{C}{L} < \epsilon
+    ,\]
+    so that $\sup_{j \in J} \mathbb{E}[|X_j| \1_{|X_j| > M}] < \epsilon$.
+    Since $\epsilon > 0$ was arbitrary, it follows that 
+    \[
+    \lim_{M \to \infty} \sup_{j \in J} \mathbb{E}[|X_j| \1_{|x| > M}] < \epsilon
+    ,\] so that $(X_j : j \in J)$ is uniformly integrable.
+
+
+\item For $n \in \mathbb{N}$ let $\sigma_n$ be a random permutation of $[n]:=\{1,2,\ldots,n\}$ picked uniformly at random (i.e., its distribution is the uniform distribution on the set of all $n!$ permutation of $[n]$). Let $X_n:=|\{j \in [n]:\sigma_n(j)=j\}|$ be the number of fixed points of $\sigma_n$. Use the method of moments to show that $X_n \Rightarrow \mathrm{Pois}(1)$ (justify why it applies; you may look up online the MGF of the Poisson distribution). 
+\\ You may rely without a proof on the fact that if $Y_n \sim \mathrm{Bin}(n,\frac{1}{n})$ and $Y \sim \mathrm{Pois}(1)$ then $\lim_{n \to \infty}\mathbb{E}[Y_n^k]=\mathbb{E}[Y^k]$ for all $k \in \mathbb{Z}_+$.
+
+
+\textbf{Hint:} Use indicator decompositions of $X_n$ and of $Y_n$. Expand $X_n^k$ and of $Y_n^k$ to a sum of monomials. Use the fact that $x^{\ell}=x$ for $x \in \{0,1\}$ and $\ell \ge 1$.
+
+\textbf{Solution.}
+
+We compute the moments of $X_n$ and $Y_n$, and then show that they both converge to the same value.
+As we are given that the moments of $Y_n$ converge to the moments of $Y$, it follows that the moments of $X_n$ converge to the moments of $Y$. 
+
+
+Consider the $k$-th moment.
+First, we take the hint.
+Notice that $X_n = \sum_{j = 1}^n I_j$, where $I_j = \1_{\{\sigma_n(j) = j\}}$.
+Then, for $X_n$, by linearity of expectation we have:
+\begin{align*}
+    \mathbb{E}[X_n^k] &= \mathbb{E}\left[ \left( \sum_{j=1}^{n} I_j \right)^k \right]  \\
+                      &= \sum_{\substack{(j_1, \ldots, j_k)\\ j_i \in \{1, \ldots, n\} }} \mathbb{E}\left[ \prod_{i=1}^{k} I_{j_i}  \right] \label{eq:sum} \\
+\end{align*}
+Here, we have every combination of $j_1, \ldots, j_k$ such that $j_i \in \{1, \ldots, n\} $.
+Now, since $I_j\cdot I_j = I_j$, we have that for any sequence containing distince $j_1, \ldots, j_r$, we will then have
+\[
+I_{j_1}^{n_1} \cdot \ldots \cdot I_{j_r}^{n_r} = I_{j_1} \cdot \ldots \cdot I_{j_r}, \sum_{i = 1}^{r} n_i = k
+.\] 
+Also, we compute:
+\[
+    \mathbb{E}[I_{j_1} \cdot \ldots \cdot I_{j_r}] = \frac{(n-r)!}{n!}
+,\]
+since if we have $r$ elements fixed, there are $(n-r)!$ permutations that permute the remaining elements.
+If we fix some distinct set $j_1, \ldots, j_r$, we see that there is some unique number $n(r, k)$, the number of terms which are a product of $k$ of these $I_j$, if the product contains $r$ distinct factors $I_{j_1}, \ldots, I_{j_r}$.
+Next, if there are $n$ total terms in the sum $X_n$, then we can see that there will be $n(n-1)\cdot\ldots \cdot (n-r+1) = \frac{n!}{(n-r)!}$ different choices for $r$ distinct factors $I_j$.
+Then, we group the terms in the sum \eqref{eq:sum} based on how many distinct 
+\begin{align*}
+    \sum_{\substack{(j_1, \ldots, j_k)\\ j_i \in \{1, \ldots, n\} }} \mathbb{E}\left[ \prod_{i=1}^{k} I_{j_i}  \right] &= \sum_{r = 1}^k n(r,k) \sum_{j_1 < \ldots < j_r} \mathbb{E}[I_{j_1} \cdot \ldots \cdot I_{j_r}]\\
+                                                                                                                       &= \sum_{r=1}^k n(r, k) \sum_{j_1 < \ldots < j_r} \frac{(n-r)!}{n!}\\
+                                                                                                                       &= \sum_{r=1}^k n(r, k) \frac{n!}{(n-r)!} \frac{(n-r)!}{n!} = \sum_{r=1}^{k} n(r, k)
+.\end{align*}
+Notice, that this is independent of $n$, so we have that $\lim_{n \to \infty} \mathbb{E}[X_n^k] = \sum_{r=1}^{k}n(r, k)$.
+
+Now, we do a similar computation for the Binomial random variable $B(n, 1 / n)$ random variable.
+We have that $B(n, 1 / n) = \sum_{j = 1}^n B_j$, where $B_j(1 / n)$ is the bernoilli random variable with probability $1 / n$ of success.
+Then, we have $B_j(1 / n)^n_j = B_j(1 / n)$, and so for $j_1, \ldots, j_r$ distinct, we have by independence of these bernoilli trials, that
+\[
+    \mathbb{E}[B_{j_1}(1 / n)^{n_{j_1}} \cdot \ldots \cdot B_{j_r}(1 / n)^{n_{j_r}} ] = \mathbb{E}[B_{j_1}] \cdot \ldots \cdot \mathbb{E}[B_{j_r}(1 / n)] = (1 / n)^{r}
+.\] 
+Then, a similar computation as for the $X_n$ moment calculation gives us
+
+\[
+\mathbb{E}[Y_{n}^{k}] = \sum_{r=1}^{k} n(r, k) \sum_{j_1 < \ldots < j_r} \left( \frac{1}{n} \right)^{r} = \sum_{r=1}^{k} n(r, k) \frac{n!}{(n-r)!} \frac{1}{n^r}
+.\] 
+But then as $n \to \infty$, we have that $\frac{n!}{(n-r)!} \to n^r$, so $E[Y_n^k] \to \sum_{r=1}^{k} n(r, k) = E[X_n^k]$.
+
+Now, since the MGF of the poisson (1) distribution is $\exp(e^t - 1)$, we have that for any $s_0 > 0$, $\exp(e^s - 1)$ is finite for all $|s| < s_0$.
+Then, by theorem 11.4.3, the Poisson distribution is determined by its moments.
+Therefore, if a sequence of random variables is such that its moments converge to the moments of the Poisson distribution, then the random variables converge to the Poisson distribution in distribution.
+Since we are given that $\mathbb{E}[Y_n^k] \to \mathbb{E}[\text{Pois}(1)^k]$, and $\mathbb{E}[X_n^k] \to \lim_{n \to \infty} \mathbb{E}[Y_n^{k}]$, we have that $\mathbb{E}[X_n^{k}] \to \mathbb{E}[\text{Pois}(1)^{k}]$, so $X_n$ converges to $\text{Pois}(1)$ in distribution.
+
+\item
+\begin{enumerate}
+\item
+Suppose that the sequence of probability measures $(\mu_n)_{n=1}^{\infty}$ is tight.
+Show that their characteristic functions are uniformly equicontinuous, i.e., for all $\varepsilon >0$
+there exists $\delta >0$ such that if $|h|<\delta$
+then for all $n$ and all $t \in \mathbb{R}$ 
+\[|\phi_n(t+h)-\phi_n(t)| < \infty \, ,\]
+where $\phi_n$ is the  characteristic function of $\mu_n$.
+
+\textbf{Hint:} You may rely on the inequality $|1-e^{-iy}| \le \min\{2,|y|\}$ for all $y \in \mathbb{R}$. Deduce from it that for all $x,h \in \mathbb{R}$,  $|1-e^{-ihx}| \le |h|^{1/2}+2\1_{|x|>|h|^{-1/2}}  $.
+\item
+Suppose that $\mu_n \Rightarrow \mu$. Denote the  characteristic function of $\mu$ by $\phi$ and of $\mu_n$ by $\phi_n$.  Use (a) to conclude that $\phi_n(t) \to \phi(t)$
+uniformly on compact sets, i.e., for all $M>0$ and $\varepsilon >0$ there exists $N=N(\varepsilon,M)$ such that for all $n \ge N$ we have that $|\phi_n(t) - \phi(t)|<\varepsilon$ for all $t \in [-M,M]$.
+\item
+Give an example to show that the convergence in (b) need not be uniform on the entire
+real line.
+\end{enumerate}
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item We compute:
+        \begin{align*}
+            \left| \phi_{n}(t + h) - \phi_{n}(t) \right|  &= \left| \int \exp(i(t + h)x) - \exp(it x) \mu_n(dx) \right| \\
+            &\leq \int \left| \exp(i(t + h)x) (1 - \exp(-ihx)) \right| \mu_n(dx) = \int \left| 1 - \exp(-ihx) \right| \mu_n (dx)
+        .\end{align*}
+        Now, we are given that $|1 - e^{ihx}| \leq \min \{2, |hx|\} $.
+        Then, consider that for $|x| < \frac{1}{|h|^{1 / 2}}$, we have that $|h x| < |h|^{ 1 /2}$.
+        But then, we have:
+        \[
+        \min \{|hx|, 2\}  \leq |h|^{1 / 2} \1_{|x| < \frac{1}{|h|^{1 / 2}}} + \1_{|x| \ge \frac{1}{|h|^{1 / 2}}}  \leq |h|^{ 1 / 2} + \1_{|x| \geq \frac{1}{|h|^{1 / 2}}}
+        .\] 
+        We can then split this integral apart:
+        \begin{align*}
+            \int |1 - \exp(-ihx)| \mu_n (dx) &\leq \int |h|^{1 / 2} \mu_n (dx) + \int \1_{|x| \geq \frac{1}{|h|^{1 / 2}}}  \mu_n(dx)
+        .\end{align*}
+        Let $\epsilon > 0$.
+        Now, since $(\mu_n)_{n=1}^{\infty}$ is tight, we have that there exists some $R$ such that $\int \1_{|x| \geq R} \mu_n(dx) < \epsilon / 2$.
+        Then, let $\delta < \min\{ (\epsilon / 2)^2, \frac{1}{R^2} \}$.
+        For all $|h| < \delta$, we then have
+        \[
+        \int |h|^{1 / 2} \mu_n (dx) + \int \1_{|x| \geq \frac{1}{|h|^{1 / 2}}}  \mu_n(dx) < \epsilon / 2 + \int \1_{|x| \geq R} \mu_n(dx)  \leq \epsilon
+        .\]
+        Therefore, the characteristic functions are uniformly euquicontinuous, since $t, \epsilon$ and we have produced $\delta$ as required.
+    \item Let $\epsilon > 0$.
+        Since equicontinuous, there exists some $\delta$ such that for all $t \in [-M, M]$, and all $n$, $|\phi_n(t + h) - \phi_n(t)| < \epsilon / 3$ for all $|h| < \delta$.
+
+        Since $[-M, M]$ is compact, and $\phi(t)$ is continuous,we have that $\phi(t)$ is uniformly continuous on $[-M, M]$ (this is a basic result from Math 321).
+        Therefore, there exists some $\delta'$ such that $|\phi(t + h) - \phi(t)| < \epsilon / 3$ for all $|h| < \delta$.
+
+        Now, since $\phi_n(t) \to \phi(t)$ pointwise, we have that each each $t$ there exists some $L$ such that for all $n > L$, $|\phi_n(t) - \phi(t) | < \epsilon / 3$.
+        Call this number $L(t)$.
+        Let $\delta'' = \min \{\delta, \delta'\} $.
+        Then, consider the set of open sets $\{N(t,\delta'' )\}, t \in [-M, M] $.
+        This is clearly an open cover of $[-M, M]$, since it contains the balls centered at each $t \in [-M, M]$.
+        Since $[-M, M]$ is compact, there is a finite open subcover $\{N(t_1, \delta''), \ldots, N(t_s, \delta'')\}$.
+        Let $L = \max \{ L(t_1), \ldots, L(t_s)\}$.
+        In particular, for all $n > L$, $|\phi_n(t_i) - \phi(t_i)| < \epsilon / 3$ for any $1 \leq i \leq s$.
+
+        Putting it all together, let $t \in [-M, M]$. Let $n > L$.
+        Then, there exists some $1 \leq i \leq s$ such that $t \in N(t_{i}, \delta'')$.
+
+        Since $|t_i - t| < \delta$, uniform equicontinuity of $\phi_n$ means that we have
+        \[
+        |\phi_{n}(t_i) - \phi_n(t)| < \epsilon / 3
+        .\] 
+        Since $ n > L$, we have 
+        \[
+        |\phi_n(t_i) - \phi(t_i)| < \epsilon / 3
+        .\] 
+        Finally, since $|t_i - t| < \delta'$, we have
+        \[
+        |\phi(t) - \phi(t_i)| < \epsilon / 3
+        .\] 
+        By triangle inequality,
+        \[
+        |\phi_n(t) - \phi(t)| = |\phi_{n}(t) - \phi_n(t_i) + \phi_n(t_i) - \phi(t_i) + \phi(t_i) - \phi(t) | \leq \epsilon / 3 + \epsilon / 3 + \epsilon / 3 = \epsilon
+        .\] 
+        Therefore, $\phi_n \to \phi$ uniformly on compact sets.
+    \item For an example where converge in (b) need not be uniform on the entire real line, we need to find a distributtion $\mu_n \implies \mu$ such that $(\mu_n)_{n=1}^{\infty}$ is tight, but $\phi_n \to \phi$ doesn't converge uniformly on the entire real line.
+
+        Let $\mu_n$ be the normal distribution, with mean $0$ and standard deviation $\frac{1}{n}$.
+        First, we show that these distributions are tight.
+        For $\mu_1$, we have that the CDF is given by $\Phi(x)$, since $\mu_1$ is the standard normal distribution.
+        Let $\epsilon > 0$.
+        Since $\lim_{x \to - \infty}\Phi(x) = 0$, there must be some $R$ such that $\Phi(-R) < \epsilon / 2$, and so $1 - \Phi(R) < \epsilon / 2$.
+        But then, for all $n > 1$, the CDF of $\mu_n$ is given by $\Phi( x / (1 / n)) = \Phi(n x)$.
+        But then, we have that $\Phi(n (-R)) < \Phi(-R) < \epsilon / 2$, and similarly, $1 - \Phi(nR) < \Phi(R) < \epsilon / 2$.
+
+        Therefore, for all $n$, we have that there exists $R$ such that $\int_{|x| > R} \mu_n(dx) < \epsilon$, so $(\mu_n)$ is tight.
+
+        Next, we observe that the probability desnity function of $\mu_n$ is given by $f_n(x) = \frac{n}{\sqrt{2\pi}} \exp(-n^2x^2 / 2)$.
+        We computed the characterisitc function of the normal distribution in class: $\phi_n(t) = \exp(- t^2 / 2n^2)$
+        We can see that, as $n \to \infty$, $\phi_n(t) = 1$.
+        However, this clearly does not converge uniformly, since for any $n$, by taking $t \to \infty$, we can find some $t'$ sufficiently large so that $|1 - \exp(-(t')^2 / 2n^2)| > \frac{1}{2}$.
+        Therefore, $\phi_n(t) \to 1$, but not uniformly.
+\end{enumerate}
+
+
+\item \textbf{Parts (i)--(v) of this question are unmarked} (you can skip them and rely on them):
+\\ Let $\lambda>0$. Consider for all $n$ a sequence $(p_{n,m}: 1 \le m \le N_n )$ of real numbers in $[0,1]$ satisfying that (1) $\sum_{m=1}^{N_n}p_{n,m}=\lambda$ and (2) $\lim_{n \to \infty}p_*(n)=0$, where $p_*(n):=\max_{ 1 \le m \le N_n}p_{n,m}$. 
+
+
+
+(i) Show that $\lim_{n \to \infty} \sum_{m=1}^{N_n}p_{n,m}^2 \le \lim_{n \to \infty} p_*(n) \sum_{m=1}^{N_n}p_{n,m}=0$.  \\ 
+
+(ii) Suppose that $(q_{n,m}: 1 \le m \le N_n) $ satisfy that  for some $C>0$  we have that $|q_{n,m}-p_{n,m}| \le Cp_{n,m}^2$ for all $n \ge 1$ and all $m \in [N_n]:=\{1,2,\ldots,N_n\}$. Show that  $\lim_{n \to \infty}\sum_{m=1}^{N_n}q_{n,m}=\lambda$ and that $\lim_{n \to \infty}q_*(n)=0$, where $q_*(n):=\max_{ 1 \le m \le N_n}q_{n,m}$.
+
+(iii)  Let $q_{n,m}$ be the solution to  $\mathbb{P}[\mathrm{Pois}(q_{n,m})=1]=q_{n,m}e^{-q_{n,m}}=p_{n,m}$.\footnote{Since $p_*(n) \to 0$, w.l.o.g.\ we may assume that $p_*(n) \le e^{-1}$ for all $n$, and this ensures that such a solution $q_{n,m}$ exists and that it lies in $(0,1]$.} Show that for some $C>0$ we have for all $n \ge 1$ and all $m \in [N_n]$ that $|q_{n,m}-p_{n,m}| \le Cp_{n,m}^2$ and $\mathbb{P}[\mathrm{Pois}(q_{n,m}) \ge 2]=1-e^{-q_{n,m}}-q_{n,m}e^{-q_{n,m}}  \le Cp_{n,m}^2$.
+
+(iv) Suppose that $\lambda_n>0$ and $\lim_{n \to \infty} \lambda_n = \lambda$. Show that $\mathrm{Pois}(\lambda_n) \Rightarrow \mathrm{Pois}(\lambda)$.  
+
+(v) Let $q_{n,m}$ be as in (iii). For any fixed $n \ge 1$, let $(Y_{n,m}: m \in [N_n])$ be independent Poisson random variables, where $Y_{n,m} \sim \mathrm{Pois}(q_{n,m})$ for all $n \ge 1$ and all $m \in [N_n]$. Show that $Y(n):=\sum_{m=1}^{N_n}Y_{n,m} \Rightarrow \mathrm{Pois}(\lambda)$. 
+
+(vi) Show that \[\lim_{n \to \infty}\mathbb{P}\left[\sum_{m=1}^{N_n}Y_{n,m}\1_{Y_{n,m}  \ge 2} \neq 0 \right]=\lim_{n \to \infty}\mathbb{P}[Y_{n,m} \ge 2 \text{ for some }m \in [N_n]]=0 \, .\] Deduce that $Z(n) :=- \sum_{m=1}^{N_n}Y_{n,m}\1_{Y_{n,m} > 1}=-\sum_{m=1}^{N_n}Y_{n,m}\1_{Y_{n,m} \ge 2} \to 0$ in distribution, as $n \to \infty$. Use this and part (vi) to deduce that \[Y(n)+Z(n)=\sum_{m=1}^{N_n}Y_{n,m}\1_{Y_{n,m} \le  1}=\sum_{m=1}^{N_n}\1_{Y_{n,m} =  1} \Rightarrow \mathrm{Pois}(\lambda) \, .\] 
+
+
+(vii) For all (fixed) $n \ge 1$ let $(X_{n,m}: 1 \le m \le N_n)$ be independent Bernoulli random variables with $\mathbb{P}[X_{n,m}=1]=p_{n,m}=1-\mathbb{P}[X_{n,m}=0]$ for all $n$ and all $m \in [N_n]:=\{1,2,\ldots,N_n\}$. Deduce from part (vi) that $X(n):=\sum_{m=1}^{N_n}X_{n,m} \to \mathrm{Pois}(\lambda)$ in distribution as $n \to \infty$.
+
+
+
+
+\item
+The distribution of a random variable $X$ is called \emph{infinitely divisible} if,
+for all $n \in \mathbb{N}$, there exists a sequence of independent and identically
+distributed random variables $Y_1^{(n)},Y_2^{(n)},\ldots,Y_n^{(n)}$ such that
+$X$ and $Y_1^{(n)} + Y_2^{(n)} + \cdots + Y_n^{(n)}$ have the same
+distribution.\footnote{Examples of infinitely divisible distributions include:
+	normal, Cauchy, Gamma, Poisson, geometric.}
+
+Prove that the characteristic function $\phi$ of an infinitely divisible
+distribution is nonzero for all real $t$, i.e., that $\phi(t) \neq 0$ for all $t\in \mathbb{R}$.
+\\
+\textbf{Hint:} Let $\phi_n$ be the characteristic function of $Y_i^{(n)}$.
+Let $\psi_n(t) = |\phi_n(t)|^2$ and $\psi(t) = |\phi(t)|^2$.
+\\ Step 1:  Explain why
+these are also characteristic functions. 
+\\ Step 2: Express $\psi_n(t)$ in terms of $\psi(t)$ and $n$ and deduce from this expression that $\lim_{n \to \infty} \psi_n(t)=g(t)$ for all $t \in \mathbb{R}$ for some $g:\mathbb{R} \to \{0,1\}$, where $g(t)$ has an expression involving $\psi(t)$ for all $t \in \mathbb{R}$. Step 3: Use that expression to show that $g$ is continuous at 0.
+\\ Step 4: Apply a corollary of the continuity theorem from lecture to deduce a useful fact about $g$. 
+\\
+For intuition sake, observe that it is natural to expect that $Y_1^{(n)} \to 0$ in distribution as $n \to \infty$.
+
+\item Let $X$ be a random variable.
+
+(i) Show that  $\mathbb{E}[e^{sX}+e^{-sX}]=2 \sum_{k=0}^{\infty}\frac{s^{2k} \mathbb{E}[X^{2k}] }{(2k)!}$ for all $s \in [0,\infty)$. In particular, $\mathbb{E}[e^{sX}+e^{-sX}]<\infty$ if and only if $\sum_{k=0}^{\infty}\frac{s^{2k} \mathbb{E}[X^{2k}] }{(2k)!}<\infty$.
+
+
+(ii) Recall that by Stirling's approximation  $\lim_{k \to \infty}\frac{\sqrt{2 \pi k}\left(k/e \right)^k}{k!}=1$. Use part (i) and Stirling's approximation to show that there exists $s>0$ such that $M_X(t)<\infty$ for all $t \in [-s,s]$ if and only if $\sup_{ k \in \mathbb{N} }  \frac{  \left(\mathbb{E}[X^{2k}] \right)^{\frac{1}{2k}}   }{2k}<\infty$, where $\mathbb{N}:=\{1,2,3,\ldots\}$.  
+(ii) Recall that by Stirling's approximation  $\lim_{k \to \infty}\frac{\sqrt{2 \pi k}\left(k/e \right)^k}{k!}=1$. Use part (i) and Stirling's approximation to show that there exists $s>0$ such that $M_X(t)<\infty$ for all $t \in [-s,s]$ if and only if $\sup_{ k \in \mathbb{N} }  \frac{  \left(\mathbb{E}[X^{2k}] \right)^{\frac{1}{2k}}   }{2k}<\infty$, where $\mathbb{N}:=\{1,2,3,\ldots\}$. 
+
+
+
+
+\item Let $d \ge 2$. For notational ease, you may assume $d=2$. The moment generating function $M_X:\mathbb{R}^d \to (0,\infty]$ of a random $d$-tuple $X=(X(1),X(2),\ldots,X(d))$ is defined to be $M_X(t)=\mathbb{E}\left[e^{t \cdot X} \right]$, where $t=(t(1),t(2),\ldots,t(d))$ and $t \cdot X=\sum_{j=1}^d t(j)X(j)$ is the standard inner product of $t$ and $X$. Recall that $X=(X(1),X(2),\ldots,X(d))\deq Y=(Y(1),Y(2),\ldots,Y(d))$ if and only if $t \cdot X \deq t \cdot Y$ for all $t \in \mathbb{R}^d$ and that $X_n=(X_n(1),X_n(2),\ldots,X_n(d)) \Rightarrow X$ if and only if $t \cdot X_n \Rightarrow t \cdot X$ for all $t \in \mathbb{R}^d$. 
+
+Fix some norm $\| \cdot \|$ on $\mathbb{R}^d$.	Throughout all parts of the question suppose that:
+\\ (*) There exists $\delta>0$ such that $M_X(t)<\infty$ for all $t \in \mathbb{R}^d$ such that $\|t\| \le \delta$.
+
+\medskip
+
+You are encouraged to think about how condition (*) and the statement of part (c) below simplify in the special case that $X(1),X(2),\ldots,X(d)$ are independent.
+
+\begin{enumerate}
+	\item
+	Suppose that there exists $\delta'>0$ such that $M_X(t)=M_Z(t)$ for all $t \in \mathbb{R}^d$ such that $\|t\| \le \delta'$.  Show that $X \deq Z$. \textbf{Hint:} There is an easy and short solution.
+	\item \textbf{Part (b) is unmarked -- Do not submit a solution to it. You may rely on it below.} Show that $\left|\mathbb{E}\left[\prod_{j=1}^{d}X(j)^{k(j)} \right] \right|<\infty$ for all $k(1),\ldots,k(d) \in \mathbb{Z}_+:=\{0,1,2,\ldots\}$. 
+	\\ \textbf{Hint:} Use (*) and Part (i) of Question 6 to show that $X(j) \in L^p$ for all $p \in \mathbb{N}$, for all $j \in [d]$. Then use Holder's inequality to get that $\left|\mathbb{E}\left[\prod_{j=1}^{d}X(j)^{k(j)} \right] \right|^d \le \prod_{j=1}^{d}\mathbb{E}\left[|X(j)|^{k(j)d} \right]$. 
+	
+	\item Suppose that for all $k(1),\ldots,k(d) \in \mathbb{Z}_+$,  $\mathbb{E}\left[\prod_{j=1}^{d}X_n(j)^{k(j)} \right]$ is finite for all $n$ and that $\lim_{n \to \infty}\mathbb{E}\left[\prod_{j=1}^{d}X_n(j)^{k(j)} \right]=\mathbb{E}\left[\prod_{j=1}^{d}X(j)^{k(j)} \right]$. Show that\footnote{In particular, this shows that if (*) holds and  $\mathbb{E}\left[\prod_{j=1}^{d}Y(j)^{k(j)} \right]=\mathbb{E}\left[\prod_{j=1}^{d}X(j)^{k(j)} \right]$  for all $k(1),\ldots,k(d) \in \mathbb{Z}_+$, then  $X \deq Y=(Y(1),\ldots,Y(d))$.} $X_n \Rightarrow X$.
+	
+	\textbf{Hint:} Apply the method of moments to $t \cdot X$ for any $t \in \mathbb{R}^d$. 
+\end{enumerate} 
+
+
+
+
+
+\item
+This problem concerns the method of Monte Carlo integration, which is
+a method for the approximate evaluation of an integral $I=\int_0^1 f(x) \mathrm{d}x$.
+%\begin{enumerate}
+%\item
+\\
+Let $U_1, \ldots ,U_N$ be i.i.d.\ uniform
+random variables on the interval $(0,1)$, and let
+\[
+    I_N = \frac{1}{N}[f(U_1) + \cdots + f(U_N)] \, .
+\]
+Suppose that $\int_0^1 f(x)^2  \mathrm{d}x < \infty$,
+and let $\sigma^2 = {\rm Var}f(U_1) = \int_0^1 f(x)^2  \mathrm{d}x - I^2$.
+Apply the central limit theorem to
+show that $I_N$ converges to $I$ as $N \to \infty$, in the sense that for all $x \in \mathbb{R}$
+\[
+  \lim_{N \to \infty}  \mathbb{P} \left( |I_N - I| \leq \frac{\sigma x}{\sqrt{N}} \right)
+    = \mathbb{P}(|Z| \leq x) \, ,
+\]
+where $Z$ is a standard normal random variable.
+%\item
+%Assuming that $\sigma \leq 1$,
+%how large should $N$ be taken to be $95\%$ confident that $I_N$ is within
+%$0.01$ of $I$?
+%\end{enumerate}
+
+\textbf{Solution.}
+Consider the random variable $S_N = f(U_1) + \ldots + f(U_N)$.
+Then, $m = f(U_i) = I$.
+By Corollary 11.2.3 (an extension of the CLT) in the text, we have
+\[
+\lim_{n \to \infty} P \left( \frac{S_n - nm}{\sqrt{n v}} \leq x \right)  = \Phi(x)
+\] 
+if $S_n$ is the sum of random variables $X_n$ with mean $m$ and variance $v$.
+In this case, we have $S_n = N I_N$, $m = I$, and $\sqrt{v} = \sigma$.
+We then substitute:
+\begin{align*}
+    \lim_{n \to \infty} P \left( \frac{N I_N - NI}{\sqrt{N v}} \leq x \right) &= \lim_{n \to \infty} P \left( I_N - I \leq \frac{\sigma x}{\sqrt{N}} \right) = \Phi(x) = P(Z \leq x)
+.\end{align*}
+Therefore, the CDFs are the same, and we get:
+\[
+\lim_{n \to \infty}  P \left( |I_N - I| \leq \frac{\sigma x }{\sqrt{N}} \right)  = P(|Z| \leq x)
+.\] 
+
+\item
+Let $X_1, X_2, \dots$ be i.i.d.\ random variables with c.d.f.\ $F$.
+The \emph{empirical c.d.f.} \ $\widehat F_n : \R \to [0,1]$ is
+defined by $\widehat F_n(x) = \frac 1 n \sum_{k=1}^n \1_{\{ X_k \le x\}}$.
+Thus, for each $x\in\R$ and $n \ge 1$, $\widehat F_n(x)$ is a random variable.
+\begin{enumerate}
+\item
+For each $x \in \R$, prove that $\widehat F_n(x) \to F(x)$ a.s.\ as $n \to \infty$.
+\item
+If $x$ satisfies $0<F(x) < 1$, prove that
+\[
+    \frac{\sqrt{n}(\widehat F_n(x) - F(x)) }{\sqrt{ F(x)[1-F(x)]}} \Rightarrow N(0,1) \, .
+\]
+\end{enumerate}
+
+\item
+Let $X_1, X_2, \dots$ be i.i.d.\ random variables with known mean $m$ and
+unknown variance $\sigma^2$, both finite and with $\sigma^2 \neq 0$. Let $W_n:=\sum_{k=1}^{n} (X_k - m)^2$ and $U_n:=\begin{cases} \sqrt{W_n} & \text{if } W_n>0
+	\\ 1 & \text{if } W_n=0
+\end{cases}$.  Prove that
+\[
+    \frac{ S_n - nm }{U_n} \Rightarrow N(0,1) \, .
+\]
+
+\textbf{Solution.} 
+
+By CLT, we have that
+\[
+\frac{S_n - nm}{\sqrt{n}\sigma} \implies N(0, 1)
+.\] 
+Now, by the strong law of large numbers, which applies since we are dealing with i.i.d. R.V.s with $(X_k - m)^2$ having finite expectation, we have
+\[
+\frac{W_n}{n} \to \sigma^2 \quad a.s
+.\] 
+Since $\sqrt{x}$ is a continuous function, we have that the limit
+\[
+\sqrt{W_n / n} \to \sigma \quad a.s
+.\] 
+
+Now, 
+\[
+U_n / \sqrt{n} = \begin{cases}
+    \sqrt{W_n} / \sqrt{n} &\text{ if } W_n > 0 \\
+    1 / \sqrt{n} &\text{ if } W_n = 0
+\end{cases}
+.\] 
+
+Now, since $P(W_n = 0) = 0$ as $n \to \infty$, we have that $U_n / \sqrt{n} \to \sqrt{W_n} / \sqrt{n}$ a.s.
+Therefore, $U_n \imlies \sigma$.
+
+Then, we apply Slutsky's theroem to $X_n = \frac{S_n - nm}{\sqrt{n} \sigma}$ and $Y_n = U_n / \sqrt{n}$.
+Since $U_n$ is never zero, $Y_n$ is never zero either.
+Then,
+\[
+\frac{S_n - nm}{ U_n} = \frac{S_n - nm}{\sqrt{n} \sigma U_n / \sqrt{n}} = \sigma N(0, 1) / \sigma  = N(0, 1)
+.\] 
+
+
+
+\end{enumerate}
+
+
+\bigskip  \noindent
+{\bf Recommended problems.}
+The following problems from Rosenthal are recommended but are not to be handed in:
+
+11.5.2, 11.5.4, 11.5.6, 11.5.12
+
+9.5.2, 11.4.2, 11.5.18
+\\
+For solutions to even-numbered problems see: \url{http://www.probability.ca/jeff/grprobbook.html}.
+
+
+\bigskip \noindent
+Additional recommended problems (\textbf{do not hand in}):
+\\
+%Solution in Durrett 3rd ed, 2.2.11.
+\begin{enumerate}
+	\item
+	Prove Slutsky's Theorem: For every $n \in \mathbb{N}$ let $X_n$ and $Y_n$ be two random variables defined on the same probability space. Let $X$ be a random variable on some probability space. Let $c \in \mathbb{R}$ be a constant. Suppose that $X_n \Rightarrow X$ and that $Y_n \Rightarrow c$. Then
+	\\
+	(a)
+	$X_n+Y_n \Rightarrow X+c$.
+	(Consequently if $X_n \Rightarrow X$ and $Y_n:=Z_n-X_n \Rightarrow 0$ then
+	$Z_n=X_n+Y_n \Rightarrow X$.)
+	\\
+	%(b)
+	%Prove or disprove that, more generally, if %$X_n \Rightarrow X$ and $Y_n \Rightarrow Y$
+	%then $X_n+Y_n \Rightarrow X+Y$.
+	%\\
+	(b) $X_nY_n \Rightarrow cX$.
+	\\
+	(c) Suppose $c \neq 0$ and let $z$ be an arbitrary non-zero real number. Then $X_n/Z_n \Rightarrow X/c$, where $Z_n:=\begin{cases} Y_n & \text{if } Y_n \neq 0
+		\\ z & \text{if } Y_n=0
+	\end{cases}$.  
+	\item Show that there exists $s>0$ such that $M_X(t)<\infty$ for all $t \in [-s,s]$ if and only if there exist $C,c>0$ such that $\mathbb{P}[|X|>r] \le Ce^{-cr}$ for all $r \ge 0$.\footnote{If this conditions holds for all sufficiently large $r$ for some $C,c>0$ then it also holds for all $r \ge 0$ for some other $C,c>0$. Thus it suffices to confirm it for sufficiently large $r$.}
+	
+	\item
+	A collection of probability measures $(\mu_j:j \in J)$ on $(\mathbb{R},\mathcal{B})$ is called uniformly integrable if for all $\varepsilon>0$ there exists $M>0$ such that $\int |x|\1_{|x|>M}\mathrm{d} \mu_j(x) < \varepsilon$ for all $j \in J$. Show that $(\mu_j:j \in J)$ is  uniformly integrable if and only if (i) $\sup_{j \in J}\int |x|\mathrm{d} \mu_j(x) < \infty$ and (ii) $(\nu_j:j \in J)$ is tight, where for $j \in J$, $\nu_j$ is the probability measure on $(\mathbb{R},\mathcal{B})$  satisfying that for every bounded Borel function $f:\mathbb{R} \to \mathbb{R}$  \[\int f(x)\mathrm{d} \nu_j(x)=\frac{\int (1+|x|)f(x)\mathrm{d} \mu_j(x)}{\int (1+|x|)\mathrm{d} \mu_j(x)} \, . \]  
+\end{enumerate}	
+
+
+\bigskip \noindent
+Quote of the week:
+\emph{
+I know of scarcely anything so apt to impress the imagination as the wonderful
+form of cosmic order expressed by the ``Law of Frequency of Error." The law would
+have been personified by the Greeks and deified, if they had known of it. It
+reigns with serenity and in complete self-effacement, amidst the wildest confusion.
+The huger the mob, and the greater the apparent anarchy, the more perfect is its
+sway. It is the supreme law of Unreason. Whenever a large sample of chaotic
+elements are taken in hand and marshalled in the order of their magnitude,
+an unsuspected and most beautiful form of regularity proves to have been
+latent all along.}
+
+\hspace*{\fill}{Francis Galton\footnote{Galton's reputation is tarnished
+by his work on eugenics. \url{https://en.wikipedia.org/wiki/Francis_Galton}} describing the Central Limit Theorem [(1889) Natural Inheritance]}
+
+
+
+\end{document}

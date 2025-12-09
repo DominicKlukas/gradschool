@@ -1,0 +1,28 @@
+{
+  "os":  "Linux-6.17.7-arch1-1-x86_64-with-glibc2.42",
+  "python":  "CPython 3.11.14",
+  "startedAt":  "2025-12-08T21:42:54.712567Z",
+  "program":  "/home/dominic/gradschool/ece571n/hm4/hm4_code/td3_continuous_action.py",
+  "codePath":  "ece571n/hm4/hm4_code/td3_continuous_action.py",
+  "codePathLocal":  "td3_continuous_action.py",
+  "git":  {
+    "remote":  "git@github.com:DominicKlukas/gradschool.git",
+    "commit":  "e6a1dcbf238f252224e16d69f6aeb406e8efbc60"
+  },
+  "email":  "klukasdominic@gmail.com",
+  "root":  "/home/dominic/gradschool/ece571n/hm4/hm4_code",
+  "host":  "dominic-work",
+  "executable":  "/home/dominic/Projects/equivariant-rl/.venv/bin/python3",
+  "cpu_count":  4,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "56106856448",
+      "used":  "28559093760"
+    }
+  },
+  "memory":  {
+    "total":  "16478453760"
+  },
+  "writerId":  "994j0bzzwnwupt8plfwbuqi4y5v4pvw8"
+}
