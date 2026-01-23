@@ -205,6 +205,36 @@ In Lecture 12, we proved the undiscounted, episodic case of the policy gradient 
 \end{enumerate}
 
 
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{EpisodicReturn.png}
+        \caption{Global Step vs Episodic Return}
+        \label{fig:episodic-return}
+    \end{subfigure}
+
+    \begin{subfigure}{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{QFLoss.png}
+        \caption{Global Step vs QF Loss}
+        \label{fig:qf-loss}
+    \end{subfigure}
+
+    \begin{subfigure}{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{QF1Values.png}
+        \caption{Global Step vs QF1 Values}
+        \label{fig:qf1-values}
+    \end{subfigure}
+
+    \caption{TD3 ablations on \texttt{HalfCheetah-v4}.}
+    \label{fig:td3-ablations}
+\end{figure}
+
+
+
 \section*{4. Running the TD3 Algorithm}
 Run the TD3 algorithm on the \texttt{HalfCheetah-v4} environment by editing and running the corresponding Python file in the CleanRL repository. Make the following changes in the file before running it:
 \begin{itemize}
@@ -215,12 +245,30 @@ Run the TD3 algorithm on the \texttt{HalfCheetah-v4} environment by editing and 
 \end{itemize}
 Run the code and include the \texttt{charts/episodic\_return} plot from the Weights \& Biases project after training completes.
 
+\textbf{Solution.} See Figure \ref{fig:episodic-return} Q4 Vanilla TD3. The episodic return levels out to about 7000.
+
 \section*{5. Ablating the TD3 Replay Buffer}
 Deep RL algorithms assume that samples used for training are i.i.d., but data collected by an agent is sequential and correlated. Replay buffers break this correlation by shuffling experiences.
 \begin{enumerate}
     \item[(a)] Modify the TD3 argument \texttt{buffer\_size} so that it equals the batch size (256).
     \item[(b)] Compare the \texttt{episodic\_return} against the baseline, as well as the \texttt{qf1\_value} plot.
     \item[(c)] Comment on what you observe. Does the algorithm fail to learn entirely? Why does performance change when the replay buffer is removed?
+\end{enumerate}
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item[(a)] One line modification in the parameters.
+    \item[(b)] The episodic return levels off much sooner, converging to about 2000 vs 7000 for the baseline. See Figure \ref{fig:episodic-return}.
+        The corresponding value functions are also lower: see Figure \ref{fig:qf-loss}.
+    \item[(c)] The algorithm does not fail to learn entirely.
+        However, we note that at 120k the policy experiences a spike in performance, and before that it was very noisy.
+
+        When the replay buffer is removed, each sample is only used once, and only 256 samples are used to update the Q function each iteration.
+        As a result, the Q estimates are noisy, and so inaccurate, which means the policy updates are poor as well.
+        As a result, the Q function's values are lower since the policy is performing more poorly.
+
+        The noisy Q increase also explain the random increase in performance at 120k\ldots this was a result of stochasticity in the Q updates randomly resulting in a better policy, rather than consistently accurate Q updates.
 \end{enumerate}
 
 \section*{6. Ablating the TD3 Target Networks}
@@ -232,6 +280,18 @@ TD3 uses Polyak averaging to update parameters of the target actor $\bar{\mu}_\t
     \item[(a)] Remove the target network mechanism by setting $\tau = 1$, making all target networks identical to the main networks.
     \item[(b)] Compare the \texttt{episodic\_return} against the baseline, as well as the \texttt{qf\_loss} plot.
     \item[(c)] Comment on what you observe. Does the algorithm fail to learn entirely? Why does performance change when target networks are removed?
+\end{enumerate}
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item[(a)] Adjusted appropriate parameter after restoring buffer size to original.
+    \item[(b)] See Figures \ref{fig:episodic-return} and \ref{fig:qf-loss}. The policy is noisy, and doesn't start seeing noticable increases in return until 300k steps, and experiences about half the final reward as the baseline policy.
+        The Q function loss at the start of training is orders of magnitude higher than the baseline, but slowly decreases until it reduces to below the baseline Q function loss.
+    \item[(c)] The algorithm does not fail completely, but underperforms. 
+        The QF loss shows how the Q function gets massive feedback spikes. 
+        The spikes are caused precisly because recent (noisy) updates to the Q function are immediately copied directly to the critic network without polyak averaging and so the policy learns them directly resulting in feedback issues.
+        Target networks prevent this, by ensuring the critic that the policy learns from is smoothed via Polyak averaging, reducing noise.
 \end{enumerate}
 
 \section*{7. Ablating the Twin Critic: Overestimation Bias}
@@ -247,5 +307,17 @@ to reduce overestimation.
     \item[(d)] Explain why taking the minimum of two independent estimators reduces value overestimation.
 \end{enumerate}
 
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item[(a)] Modified the file to omit the second Q network, and take QF as the value of Q1 rather than the minimum of Q1 and Q2.
+    \item[(b)] See Figure \ref{fig:episodic-return} and \ref{fig:qf1-values}.
+    \item[(c)] Interestingly enough, the ablation does not lead to lower returns by the end of the run. Perhaps in this case, the conservative estimates in the baseline policy hinder good policy updates that the single Q function critic takes.
+        However, in Figure \ref{fig:qf1-values} we do see a disproportionately higher Value function, even when the episodic returns at that time are not higher.
+        So, we do have evidence of value overestimation.
+    \item[(d)] The logic between two independent estimators is similar to the logic behind double Q functions.
+        The two estimates are used in each other's Q-estimates, which prevents feedback in Q function updates.
+        Next, the chance that both Q functions overestimate a state action pair is much lower than a single Q function overestimating a state action pair, so taking the minimum of the two functions should ensure that only state action pairs that are genuinely performant get good evaluations, thereby reducing value overestimation.
+\end{enumerate}
 
 \end{document}

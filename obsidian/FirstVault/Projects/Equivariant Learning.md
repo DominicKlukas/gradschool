@@ -141,3 +141,6 @@ This paper considers the physical symmetries present in a robot [[2025_Apraez_Mo
 
 
 Complete list of references
+
+
+

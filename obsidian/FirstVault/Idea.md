@@ -56,6 +56,7 @@
 - Koopman Q-learning: Offline Reinforcement Learning via Symmetries of Dynamics
 - Port-Hamiltonian Neural ODE Networks on Lie Groups For Robot Dynamics Learning and Control
 - Clebsch-Gordan Transformer: Fast and Global Equivariant Attention
+- EquAct
 - Group Equivariant Convolutional Networks
 - Sample Efficient Grasp Learning Using Equivariant Models
 - Group Equivariant Deep Reinforcement Learning

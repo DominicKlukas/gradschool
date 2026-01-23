@@ -259,3 +259,35 @@ Matched the settings on this website as good as I could
 ## Mujoco Code
 - On CleanRL RPO is what is being used... so will try and use this algorithm instead. Apparently it is strictly better.
 - module load mujoco
+
+
+
+
+Based on the optuna study
+
+## Fetch dense reach
+batch_size: 256
+dihedral_N: 16
+reg_rep_N: 64
+Gamma: 0.97
+Tau: 0.005
+Policy_LR: 4e-4
+Q_Lr: 1e-3
+
+## Fetch pick and place dense
+batch_size:    256
+dihedral_N:    8
+reg_rep_N:     128
+gamma:         0.99
+tau:           0.005
+policy_lr:     6e-4
+q_lr:          1.2e-3
+
+## Fetch Slide Dense
+batch_size:    256
+dihedral_N:    64
+reg_rep_N:     64
+gamma:         0.97
+tau:           0.002
+policy_lr:     1e-3
+q_lr:          2e-3

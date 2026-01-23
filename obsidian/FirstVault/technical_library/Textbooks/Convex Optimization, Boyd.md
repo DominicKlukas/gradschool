@@ -68,3 +68,6 @@ $$
 f(y) \leq f(x) \implies \nabla f(x)^{T}(y-x) \leq 0
 $$
 This is a way to write this when you are in a higher dimensional space.
+
+#### 3.5 Log Convexity
+We have that if the property $f(\theta x + (1 - \theta)y) \geq f(x)^{\theta} f(y)^{1 - \theta}$ holds, then a function is called log-concave. Alternatively, $\log(f)$ is concave. These functions have nice properties which we will perhaps see later.

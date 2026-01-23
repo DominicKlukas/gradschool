@@ -8,17 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "9e39bf9f1a57feac",
+            "id": "a189850ececd00a7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Master Todo List.md",
+                "file": "Projects/Equivariant Subset, Transformation Identification.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Master Todo List"
+              "title": "Equivariant Subset, Transformation Identification"
+            }
+          },
+          {
+            "id": "d459781ac420e2f6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "technical_library/Papers/2024_Tian_VisualAutoregressiveModeling.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2024_Tian_VisualAutoregressiveModeling"
             }
           }
         ]
@@ -172,49 +186,52 @@
       "system3-relay:Relay": false
     }
   },
-  "active": "9e39bf9f1a57feac",
+  "active": "a189850ececd00a7",
   "lastOpenFiles": [
-    "Courses/EECE 571 Sequential Decision Making/Course Project/Presentation Flow.md",
-    "Courses/EECE 571 Sequential Decision Making/Course Project/Project Notes.md",
-    "technical_library/Textbooks/Numerical Optimization.md",
-    "Other/Grad School Funding Applications.md",
-    "technical_library/Papers/Wang_2021_EquivariantQLearningSpatialActionSpaces.md",
-    "Tidbits.md",
-    "Master Todo List.md",
-    "Idea.md",
+    "Images/Screenshot2026-01-22_17-35-26.png",
+    "Projects/Equivariant Subset, Transformation Identification.md",
+    "Images/Pasted image 20260122173506.png",
+    "Images/Pasted image 20260122173313.png",
+    "Images/Pasted image 20260122171616.png",
+    "Images/Screenshot2026-01-22_17-10-14.png",
+    "Projects/Controls Seminar Presentation.md",
+    "technical_library/Papers/2024_Tian_VisualAutoregressiveModeling.md",
     "Dataview.md",
-    "Images/Screenshot2025-11-13_11-12-21.png",
-    "technical_library/Papers/2022_DAlonzo_SymmetryDetection.md",
-    "technical_library/Papers/2023_Wang_DiscoveringSymmetryBreakingRelaxedGroupConvolution.md",
-    "technical_library/Papers/2016_Cohen_GroupEquivariantConvolutionalNetworks.md",
-    "technical_library/Papers/2022_Wang_ApproxEquivNNSymmetricDynamics.md",
-    "technical_library/Papers/2006_Lehmann_TestingStatisticalHypothesis.md",
+    "Idea.md",
+    "Master Todo List.md",
+    "Welcome.md",
+    "Math Problems.md",
+    "Tidbits.md",
+    "Courses/EECE 589/Course Reading Log.md",
+    "technical_library/Papers/2022_Satorras_EGNN.md",
+    "technical_library/Papers/2007_Keshav_HowToReadPaper.md",
+    "technical_library/Papers/2024_Yang_EquivAct_SIM(3)_Equivarant.md",
+    "technical_library/Papers/2021_Bronstein_GeoDLGGGGG.md",
+    "technical_library/Papers/2025_Zhu_EquAct.md",
+    "technical_library/Papers/2025_Lu_TheAIScientist.md",
+    "technical_library/Papers/2025_McClellan_PEnGUiNPartialEquivariantNetwork.md",
+    "technical_library/Papers/2025_Neary_VLAPSModelBasedSearch.md",
     "technical_library/Papers/2025_Park_ApproxEquivRL.md",
     "technical_library/Papers/2025_Seo_SE3EquivRobotLearningTutorialSurvey.md",
-    "technical_library/Papers/2022_Lagrave_EquivNNPDES.md",
-    "technical_library/Papers/2021_Zhou_MetaLearningSymmetries.md",
-    "technical_library/Papers/2025_McClellan_PEnGUiNPartialEquivariantNetwork.md",
-    "Projects/Equivariant Learning.md",
-    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Relevant Resources.md",
-    "Other/Psalms Study on Lament.md",
-    "Other/Psalms Bible Study.md",
-    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Project Instructions.md",
-    "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/Project Description.md",
-    "technical_library/Textbooks/Abstract Algebra, Dummit and Foote.md",
+    "technical_library/Papers/2025_Wang_PracticalEquivariantDiffusionPolicy.md",
+    "technical_library/Papers/2025_Xi_AgentGymRL.md",
+    "technical_library/Papers/2025_Zhao_ImprovDroneRacingIterLearningMPC.md",
+    "technical_library/Papers/2021_Wang_EquivariantQLearningSpatialActionSpaces.md",
+    "Courses/EECE 589",
+    "Courses/EECE 571 Sequential Decision Making/Course Project/Project Notes.md",
+    "Images/Screenshot2025-11-13_11-12-21.png",
     "Images/Pasted image 20251112155835.png",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/attachments",
     "Images/Screenshot2025-10-23_17-53-47.png",
     "Images/Screenshot2025-10-23_17-53-55.png",
     "Images/Screenshot2025-10-07_15-08-09.png",
     "Images",
-    "Images/Pasted image 20251018125658.png",
     "Projects/Research Grant Applications",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones",
     "Courses/EECE 571 COCO/Project",
     "Courses/EECE 571 COCO",
     "Other",
     "Courses/EECE 571 Sequential Decision Making/Course Project",
-    "Courses/EECE 571 Sequential Decision Making",
-    "Projects"
+    "Courses/EECE 571 Sequential Decision Making"
   ]
 }
