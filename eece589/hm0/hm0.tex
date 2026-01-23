@@ -1,0 +1,195 @@
+\documentclass[11pt]{article}
+
+
+\input{../../preamble.tex}
+
+% ---------- Packages ----------
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{physics} % optional, for \qty, \dv, etc.
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+
+% ---------- Handy macros ----------
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\bm{#1}}
+
+% If you prefer explicit: \skew{s} prints [s]_\times
+% You can also define:
+\newcommand{\e}{\mathrm{e}}
+
+% ---------- Header ----------
+\title{MECH 464/563 \ \ \ ELEC442/EECE589 \\
+Homework Assignment \#0: Linear/Matrix Algebra Refresher}
+\author{Dominic Klukas \\ Student \#: \texttt{64348378}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Notes}
+All work shown clearly. MATLAB checks included where requested.
+
+% =========================================================
+\section{Exercise \#1}
+Find, by hand, the eigenvalues and eigenvectors of $A$ as well as $\e^{At}$ for
+\[
+A =
+\begin{bmatrix}
+0 & -\omega & 0\\
+\omega & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix}.
+\]
+Compute these in MATLAB for a few values of $\omega$.
+
+\textbf{Solution.}
+
+We compute:
+\[
+    \det \begin{pmatrix} -\lambda & - \omega & 0 \\ \omega & - \lambda & 0 \\ 0 & 0 & - \lambda \end{pmatrix}  = \lambda( \lambda^2 + \omega^2)
+.\] 
+The eigenvalues satisfy $\lambda(\lambda^2 + \omega^2) = 0$, so that $\lambda = \pm i \omega, 0$.
+We then compute the vectors for each of these eigenvalues.
+We know that each eigenspace has dimension 1, since there are 3 distinct eigenvalues in a vector space of dimension 3.
+Thus, since $(A - 0 I) \cdot (0, 0, 1) = 0 $, $v_3 = (0, 0, 1)$ corresponds to $\lambda_3 = 0$.
+Next, we simply compute:
+\[
+    (A - \lambda_{1, 2}) v =  \begin{pmatrix} \pm i \omega & - \omega & 0 \\ \omega & \pm \omega & 0 \\ 0 & 0 & - \pm \omega \end{pmatrix} v = 0
+\] 
+when $v = (\mp i, 1, 0)$ respectively, so we must have that these are the remaining two eigenvalues $v_1$ and $v_2$.
+
+
+For $e^{At}$, we compute, by observing the patterns that the series take and recognizing the form:
+\begin{align*}
+    e^{At} &=  I + At + \frac{A^2 t^2}{2!} \ldots \\
+           &= \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}  + \begin{pmatrix} 0 & - \omega t & 0 \\ \omega  t & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} + \begin{pmatrix} - \omega^2 t^2 /2 & 0 & 0 \\ 0 &  - \omega^2 t^2 /2 & 0 \\ 0 & 0 & 0 \end{pmatrix} + \begin{pmatrix} 0 & \omega^{3} t^3 / 3! & 0 \\ \omega^{3}  t^3 / 3! & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix} \ldots \\
+           &= \begin{pmatrix} 0&0&0 \\ 0 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix}  +  \begin{pmatrix} \sum_{n=0}^{\infty} \frac{(-1)^{n}\omega^{2n} t^{2n}}{(2n)!} & - \sum_{n = 0}^{\infty} \frac{(-1)^{n}\omega^{2n+1} t^{2n}}{(2n+1)!} & 0 \\ \sum_{n = 0}^{\infty} \frac{(-1)^{n}\omega^{2n+1} t^{2n}}{(2n+1)!} &\sum_{n=0}^{\infty} \frac{(-1)^{n}\omega^{2n} t^{2n}}{(2n)!} & 0 \\ 0 & 0 & 0 \end{pmatrix}\\
+           &= \begin{pmatrix} \cos(\omega t) & -\sin(\omega t) & 0 \\ \sin(\omega t) & \cos(\omega t) & 0 \\ 0 & 0 & 1 \end{pmatrix} 
+.\end{align*}
+We then compute $\det (e^{At} - \lambda I) = (1 - \lambda) (\lambda^2 - 2\lambda \cos(\omega t) + 1)$.
+The zeros are $e^{\pm i \omega t}$, and $1$.
+Again, since we know there exist 3 linearly independent eigenvectors, we can simply plug in $(0, 0, 1)$, $(\pm i, 1, 0)$ from the last part to observe that these are indeed the corresponding eigenvectors to $1, e^{\pm i\omega}$ respectively.
+
+\begin{verbatim}
+% Example MATLAB snippet:
+omega = 2;
+A = [0 -omega 0; omega 0 0; 0 0 0];
+eig(A)
+expm(A*t)
+\end{verbatim}
+
+% =========================================================
+\section{Exercise \#2}
+\subsection*{(b) Commutation and transpose identities}
+Show that for any square matrix:
+\[
+A \ \text{and}\ \e^{At}\ \text{commute},\quad A\e^{At}=\e^{At}A,
+\]
+and
+\[
+\left[\e^{At}\right]^\T = \e^{A^\T t}.
+\]
+
+\textbf{Solution.}
+
+We compute:
+\[
+Ae^{At} = A \left( \sum_{n = 0}^{\infty} \frac{A^{n}t^{n}}{n!} \right)  = \sum_{n=0}^{\infty} \frac{A^{n+1} t^{n}}{n!} = \left( \sum_{n=0}^{\infty} \frac{A^{n} t^n}{n!} \right) A = e^{At} A
+.\] 
+Similarly, using the properties of the transpose (namely, that the sum of the transpose is the transpose of the sums, and the transpose multiplied by a scalar is the transpose of a map multiplied by a scalar, and transpose of a composition is composition of tranposes in reversed order):
+\[
+\left[ e^{At} \right]^{\top} = \left[ \sum_{n=0}^{\infty} \frac{A^{n} t^n}{n!} \right]^{\top} = \sum_{n=0}^{\infty} \frac{(A^{\top})^{n}t^n}{n!} = e^{A^{\top} t}
+,\] 
+as desired.
+
+Finally, we have that:
+\[
+e^{CAC^{T}} = \sum_{n=0}^{\infty} \frac{(CAC^{T})^{n}}{n!} = \sum_{n=0}^{\infty} \frac{C (A C^{T}C)^{n-1}AC^{T}}{n!} = \sum_{n=0}^{\infty} \frac{CA^{n} C^{T}}{n!} = C \sum_{n=0}^{\infty} \frac{A^{n}}{n!} C^{T} = C e^{A} C^{T}
+.\] 
+I brushed by the $n=0$ case a bit sloppily, but it follows since $I = C C^{T}$.
+
+% =========================================================
+\section{Exercise \#3}
+Show that for any rotation matrix $Q$ and any $s\in\R^3$,
+\[
+(Qs)_\times = Q\,s_\times\,Q^\T,
+\]
+equivalently $(Qs)\times(Qt) = Q(s\times t)$ for all $s,t\in\R^3$.
+Hint: $a^\T(s\times t)=\det[a\ s\ t]$.
+
+
+\textbf{Solution.}
+We follow the hint, computing:
+\[
+a^{\T} (s \times t) = \det [a\ s\ t] = 1 \cdot \det [a\ s\ t] = \det Q \cdot \det [a\ s\ t] = \det[ Qa \ Qs \ Qt] = a^{T}Q^{T} (Qs \times Qt)
+.\] 
+Since this must be the case for any vector $a$, we can choose our favourite basis vector to show that the operators $(s \times t) = Q^{T} (Qs \times Qt)$ are equal.
+However, since $Q^{T} = Q^{-1}$ because $Q$ is a rotation matrix (and is unitary), by applying $Q$ to both sides of the equation we have $Q(s \times t) = (Qs \times Qt)$.
+That is, $Q(s\times) = ((Qs)\times )Q$.
+Multiplying both sides from the left by $Q^{T}$ we get
+\[
+Q(s\times) Q^{T} = (Qs)\times
+,\] 
+as desired.
+
+
+% =========================================================
+\section{Exercise \#4}
+Let $s\in\R^3$, $s=[a\ b\ c]^\T$, with $s^\T s = 1$. Then
+\[
+\e^{\theta s_\times} = I + \sin\theta\,(s_\times) + (1-\cos\theta)\,(s_\times)^2,
+\]
+where
+\[
+s_\times =
+\begin{bmatrix}
+0 & -c & b\\
+c & 0 & -a\\
+-b & a & 0
+\end{bmatrix}.
+\]
+Hint: $(s_\times)^2 = ss^\T - I$ and $(s_\times)^3 = -s_\times$.
+Compute the eigenvalues of $e^{\theta s\times}$.
+Give an intuitive geometrical interpretation of $e^{\theta s \times}$ as an operator.
+
+We compute, from the definition, and given the property that $(s \times)^{3} = - s\times$,
+\begin{align*}
+    e^{\theta s\times} &= I  + s\times \theta + \theta^{2} (s\times)^2 / 2 - \frac{\theta^{3} s\times}{3!} + \ldots \\
+    &= I + (s\times)^2 \left( - \sum_{n=0}^{\infty} \frac{\theta^{2n}(-1)^{n}}{(2n)!} + 1 \right) + (s\times) \left( \sum_{n=0}^{\infty} \frac{\theta^{2n + 1}(-1)^{n}}{(2n+1)!} \right)   \\
+    &= I + (s\times)^2 (\cos(\theta) - 1) + (s\times) \sin\theta
+.\end{align*}
+
+
+\begin{verbatim}
+% Example MATLAB snippet:
+s = [1; 0; 0]; s = s/norm(s);
+theta = pi/3;
+
+sx = [  0   -s(3)  s(2);
+      s(3)   0    -s(1);
+     -s(2)  s(1)   0  ];
+
+C = expm(theta*sx);
+
+% Orthonormal check:
+C'*C
+
+% Exercise 2(c) check:
+A = randn(3,3);
+lhs = expm(C*A*C');
+rhs = C*expm(A)*C';
+norm(lhs-rhs)
+
+% Exercise 3 check:
+t = randn(3,1);
+lhs = (C*s); % etc, fill in
+\end{verbatim}
+
+\end{document}
+

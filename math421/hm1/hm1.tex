@@ -1,0 +1,101 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{mathtools}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ellinfty}{\ell^{\infty}}
+\newcommand{\ellone}{\ell^{1}}
+\newcommand{\ellzero}{\ell_{0}}
+\newcommand{\ellc}{\ell_{c}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\restr}[2]{#1\!\upharpoonright_{#2}}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{Math 421/510: Homework 1}}
+\end{center}
+
+\begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=10pt]
+
+\item Define $d_1(x,y)=\lvert \arctan(x)-\arctan(y)\rvert$ for $x,y\in\R$. Show that:
+\begin{enumerate}[label=(\alph*), itemsep=4pt]
+\item $d_1$ is a metric on $\R$;
+\item $(\R,d_1)$ is not complete;
+\item $d_1$ produces the same topology (collection of open sets) on $\R$ as the usual metric
+$d(x,y)=\lvert x-y\rvert$.
+\end{enumerate}
+
+\item Consider the following spaces of sequences:
+\[
+\ellinfty=\{x=(x_1,x_2,\dots)\mid x_j\in\C,\ \norm{x}_\infty=\sup_j |x_j|<\infty\}\qquad\text{(bounded sequences)}
+\]
+\[
+\ellzero=\{x=(x_1,x_2,\dots)\mid x_j\in\C,\ \lim_{j\to\infty} x_j=0\}\qquad\text{(sequences tending to $0$)}
+\]
+\[
+\ellc=\{x=(x_1,x_2,\dots,x_m,0,0,\dots)\mid x_j\in\C,\ m\in\N\}\qquad\text{(finite sequences)}.
+\]
+Note that: $\ellc\subset \ellzero\subset \ellinfty$, and all are vector spaces.
+\begin{enumerate}[label=(\alph*), itemsep=4pt]
+\item show that $\norm{\cdot}_\infty$ is a norm on $\ellinfty$ (hence also on $\ellc$ and $\ellzero$);
+\item in class we showed that $(\ellinfty,\norm{\cdot}_\infty)$ is complete (hence Banach). Show that $\ellc$
+is not complete in the metric produced by $\norm{\cdot}_\infty$;
+\item show that $(\ellzero,\norm{\cdot}_\infty)$ is complete (hence Banach);
+\item show that $\ellzero$ is the closure of $\ellc$ (the smallest closed set which contains it) in
+$(\ellinfty,\norm{\cdot}_\infty)$.
+\end{enumerate}
+
+\item Show that on $C^{1}([0,1])$:
+\begin{enumerate}[label=(\alph*), itemsep=4pt]
+\item $\norm{f}_0=|f(0)|+\norm{f'}_\infty$ is a norm (where, recall $\norm{g}_\infty=\sup_{x\in[0,1]}|g(x)|$);
+\item $\norm{\cdot}_0$ is equivalent to the norm $\norm{f}_{C^1}=\norm{f}_\infty+\norm{f'}_\infty$.
+\end{enumerate}
+
+\item Let $X,Y,Z$ be normed vector spaces. Show:
+\begin{enumerate}[label=(\alph*), itemsep=4pt]
+\item (leftover from class) the operator norm is a norm on $L(X,Y)$;
+\item if $T\in L(X,Y)$, $S\in L(Y,Z)$, composition $ST\in L(X,Z)$ with $\norm{ST}\le \norm{S}\,\norm{T}$;
+\item for $X=C([0,1])$, $\norm{\cdot}_\infty$, find $S,T\in L(X,X)$ with $\norm{ST}<\norm{S}\,\norm{T}$.
+\end{enumerate}
+
+\item Consider the following spaces of sequences:
+\[
+\ellone=\{x=(x_1,x_2,\dots)\mid x_j\in\C,\ \norm{x}_1=\sum_{j=1}^{\infty}|x_j|<\infty\}\qquad\text{(absolutely summable sequences)}
+\]
+\[
+\ellzero=\{x=(x_1,x_2,\dots)\mid x_j\in\C,\ \lim_{j\to\infty} x_j=0\}\qquad\text{(sequences tending to $0$)}
+\]
+(both are vector spaces). Show that
+\begin{enumerate}[label=(\alph*), itemsep=4pt]
+\item $\norm{\cdot}_1$ is a norm on $\ellone$;
+\item for $y=(y_1,y_2,\dots)\in \ellone$, the map $f_y:\ellzero\to\C$ given by $x=(x_1,x_2,\dots)\mapsto y\cdot x=\sum_{j=1}^{\infty} y_j x_j$
+is a bounded linear functional on $\ellzero$, $\norm{\cdot}_\infty$ (i.e.\ $f_y\in (\ellzero)^*$);
+\item $\norm{f_y}=\norm{y}_1$;
+\item if $f\in (\ellzero)^*$, then $f=f_y$ for some $y\in \ellone$;
+\item the map $y\mapsto f_y$ is an isometric isomorphism $\ellone\to (\ellzero)^*$.
+\end{enumerate}
+
+\item On $(\ellinfty,\norm{\cdot}_\infty)$, define the shift operator $S:(x_1,x_2,\dots)\mapsto (x_2,x_3,\dots)$, the subset
+$Y=\{x-Sx\mid x\in \ellinfty\}\subset \ellinfty$, and the sequence $z=(1,1,1,\dots)\in \ellinfty$. Show:
+\begin{enumerate}[label=(\alph*), itemsep=4pt]
+\item $S$ is linear and $Y$ is a subspace;
+\item $\mathrm{dist}(z,Y)=\inf_{y\in Y}\norm{z-y}_\infty=1$;
+\item by applying (a Corollary of) the Hahn--Banach theorem to $\overline{Y}$ and $z$, that there
+is $T\in (\ellinfty)^*$ with $\restr{T}{Y}=0$, $T(z)=1$ and $\norm{T}=1$;
+\item $T$ is shift-invariant: $TS=T$;
+\item if $x=(x_1,x_2,\dots)\in \ellinfty$ satisfies $\lim_{k\to\infty} x_k=L$ then $Tx=L$.
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
+
