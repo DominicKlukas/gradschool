@@ -1,0 +1,185 @@
+\documentclass[11pt]{article}
+
+\input{../../preamble.tex}
+% --- Page geometry tuned to match the PDF look ---
+\usepackage[margin=1.2in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{mathtools}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\newcommand{\ellinfty}{\ell^{\infty}}
+\newcommand{\ellone}{\ell^{1}}
+\newcommand{\ellzero}{\ell_{0}}
+\newcommand{\ellc}{\ell_{c}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\restr}[2]{#1\!\upharpoonright_{#2}}
+
+\usepackage{cancel}
+
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{Math 421/510: Homework \# 4}}\\[0.5em]
+\end{center}
+\vspace{1em}
+
+\begin{enumerate}[leftmargin=*, label=\arabic*.]
+
+    \item Let $X$ be a reflexive (and separable) normed vector space, and let
+    $\{x_n\} \subset X$ be a bounded sequence
+    ($\norm{x_n} \le R$ for all $n$, for some $R > 0$):
+    \begin{enumerate}[label=(\alph*)]
+        \item show there is a subsequence $x_{n_k}$ converging weakly to some $x \in X$;
+        \item show that $\norm{x} \le \liminf_{k \to \infty} \norm{x_{n_k}}$
+        (\textit{hint: Q5 of HM 3 may help});
+        \item if $X$ is Hilbert, show that $x_{n_k} \to x \text{ strongly (in norm)}
+        \quad \Longleftrightarrow \quad
+        \lim_{k \to \infty} \norm{x_{n_k}} = \norm{x}
+        $
+        (\textit{hint: express $\norm{x_{n_k}-x}^2$ using the inner product}).
+    \end{enumerate}
+
+
+\textbf{Solution.}
+    \begin{enumerate}
+        \item First, we use the hint given by Prof. Yavicoli that if a space's dual is seperable then the space is seperable.
+            This comes from exercise 25 in section 5.2, that says that if $\mathcal{X}$ is a Banach space, and $\mathcal{X}*$ is seperable, then $\mathcal{X}$ is seperable.
+
+            Let $Q \subset \mathcal{X}$  be a countable dense subset of $\mathcal{X}$.
+            Then, since $\mathcal{X}$ is reflexive, we have that $\mathcal{X} \cong \mathcal{X}^{**}$.
+            Then, the map $x \to \hat{x}$ is an isometry, so $\hat{\cdot}$ maps $Q$ into a countable dense subset of $\mathcal{X}^{**}$, so $\mathcal{X}^{**}$ is separable.
+            Now, since $\mathcal{X}^{*}$ is a set of linear functionals, it is the set of linear maps into a complete vector space (that is, $\mathbb{C}$), this implies $\mathcal{X}^{*}$ is complete by proposition 5.4 in Folland, so it is a Banach space.
+
+            Then, we were given by Prof. Yavicoli that we can use Exercise 25 in section 5.2 in Folland without proof, that if $X$ is Banach and $\mathcal{X}^{*}$ is seperable then $\mathcal{X}$ is seperable.
+            In particular, $(\mathcal{X}^{*})^{*}$ separable and $\mathcal{X}^{*}$ Banach implies that $\mathcal{X}^{*}$ separable.
+
+            Then, we can apply Banach-Alaoglu, which is theorem 4.48 in the notes, that says (applied to this context) that $\mathcal{X}^{*}$ separable implies that any bounded sequence in $(\mathcal{X}^{*})^{*}$ has a weak* convergent subsequence.
+            In particular, this means that a sequence $\hat x_n$ in $\mathcal{X}^{**}$ has a subsequence $\hat x_{n_k}$ converging to some $\hat x \in \mathcal{X}^{**}$ with respect to weak* convergence.
+            However, this means precisely for all $f \in X^{*}$, $\hat x_{n_k}(f) \to \hat x(f)$, which means that $f(x_n) \to f(x)$.
+            This, then, is the same statement as $x_{n_k} \to x$ with respect to weak convergence in $\mathcal{X}$.
+            Therefore, $x_{n_k}$ is a subsequence of $x_n$ that converges to $x \in \mathcal{X}$ weakly, as desired.
+    \item First, since $\|x_{n_k}\|$ is bounded below (by 0), there exists some subsequence $\{x_{n_j}\} \subseteq \{x_{n_k}\} $ such that $\lim_{j \to \infty}\|x_{n_j}\| = \liminf_{k \to \infty} \|x_{n_k}\|$.
+        Since $x_{n_j}$ is a subsequence of $x_{n_k}$, $x_{n_j} \to x$.
+        Now, since $f \in \mathcal{X}^{*}$ are linear functionals, we have that for $\alpha \neq 0, \alpha \in \C$, $f(\alpha x_{n_j}) \to f(\alpha x) \iff f(x_{n_j}) \to f(x)$.
+        Now, suppose $R > \liminf_{k \to \infty} \|x_{n_k}\|$.
+        Then, there exists some $N$ such that for $j > N$, $\|x_{n_j}\| < R$.
+        This then implies that, for such $j$, $\|x_{n_j}\| / R \leq 1$, so in the notation of Homework 3 question 5, $x_{n_j} / R \in B$ where $B = \{x \in \mathcal{X} : \|x\| \leq 1\} $.
+        Then, since for all $f \in X^{*}$ $f(x_{n_j} / R) \to f(x / R)$ ($x_{n_j} / R$ converges weakly to $x / R$), and $B$ is closed under weak convergence by Homework 3 question 5, we have that $x / R \in B$.
+        However, this implies $\|x / R\| \leq 1$, so $\|x\| \leq R$.
+        Thus, for all $R > \liminf_{k \to \infty} \|x_{n_k}\|$, $\|x\| \leq R$, so $\|x\| \leq \liminf_{k \to \infty} \|x_{n_k}\|$.
+    \item We have that $\|x_{n_k} - x\|^2 = \|x_{n_k}\|^2 -2 \text{Re} \left<x_{n_k}, x\right> + \|x\|^2$.
+        However, since $\left<\cdot, x \right>$ is a linear functional, we have that $\left<x_{n_k}, x\right> \to \left<x, x\right> = \|x\|^2$ since $x_{n_k} \to x$ weakly.
+        Therefore, $\|x_{n_k} -x\|^2 \to \|x_{n_k}\|^2 - \|x\|^2$, and we have that this is greater or equal to $0$ by part b).
+        Thus, this limit lets us conclude that $\|x_{n_k} - x\|^2 \to 0$ iff $\|x_{n_k}\| \to \|x\|$, as desired.
+    \end{enumerate}
+
+
+    \item Show that $C_0(\R^n)$ is the closure of $C_c(\R^n)$ in the supremum norm $\norm{\cdot}_{\infty}$.
+
+
+        \textbf{Solution.}
+
+        We need to show two things. First, if $\{f_{n}\} \subset C_{c}(\R^{n})$ is such that $f_n \to_{\|\cdot \|} f$ for $f \in L^{\infty}(\R^{n})$, then $f \in C_{0}(\R^{n})$.
+        Next, if $f \in C_{c}(\R^{n})$, then there exists some sequence in $C_0(\R^{n})$ that converges to $f$.
+
+        $(\rightarrow)$ Let $\{f_n\} \subset  C_{c}(\R^{n})$.
+        We start by showing that $C_{0}(\R^{n})$ is a complete subspace of $L^{\infty}(\R)$ with respect to the uniform norm $\|\cdot \|_{\infty}$.
+        First, we note that $C_0(\R^{n})$ is bounded, because on a compact domain any continuous function is bounded and outside the compact domain we have $|f(x)| \to 0$ as $\|x\|_{2} \to \infty$.
+        Next, we also have $|f(x) + \lambda g(x)| \to 0$ for $\|x\|_{2} \to 0$ for $f, g \in C_0(\R^{n})$.
+        Finally, we proved in Math 321 that the space of complex valued, bounded, continues functions is complete with respect to the uniform norm.
+        Thus, if $\{g_n\} \subset C_{0}(\R^{n})$ is a cauchy sequence, then it converges to some $g \in C(\R^{n})$ w.r.t. the uniform norm, then there exists some $N$ such that $\|g_n - g\|_{\infty} < \epsilon / 2$.
+        But then, for a fixed $n > N$ there exists some $R$ such that for $\|x\|_{2} > R$, we have $g_n(x) < \epsilon / 2$.
+        Thus, for $\|x\|_{2} > R$,
+        \[
+        |g(x)| \leq |g(x) - g_n(x)| + |g_n(x)| < \epsilon / 2 + \epsilon / 2 = \epsilon 
+        .\] 
+        Therefore, $g \in C_{0}(\R^{n})$, so $C_0(\R^{n})$ is a closed subset of a complete set, so it is complete.
+
+        Now, if $f_n \to f$ with $f \in L^{\infty}(\R^{n})$, then $f_n$ is cauchy, and since $C_c(\R^{n}) \subset C_0(\R^{n})$ and $C_0(\R^{n})$ is complete, we have that $f_n$ converges to some $h \in C_0$. But since $h \in L^{\infty}$, we have that $f = h \in C_0(\R^{n})$.
+        Therefore, every sequence in $C_c(\R^{n})$ that converges to some $f \in L^{\infty}(\R^{n})$ will then have $f \in C_0(\R^{n})$.
+
+        ($\leftarrow$) Suppose $f \in C_{0}(\R^{n})$.
+        We show that there exists a sequence $f_n$ in $C_{c}(\R^{n})$ such that $f_n \to f$.
+        Let 
+        \[
+        f_n(x) = \begin{cases}
+            f(x) & \text{ if } \|x\|_{2} < n\\
+            f(x \frac{n}{\|x\|_2}) \cdot  (n + 1 - \|x\|_{2}) & \text{ if } n \leq \|x\|_{2} < n + 1\\
+            0  & \text{ otherwise}
+        \end{cases}
+        .\] 
+        In particular, $\text{supp}(f_n) \subset  \|x\|_{2} \leq n+1$, so $f_n \in C_c$.
+        $f_n$ is continous inside $\|x\|_{2} < n$ because $f$ is  continuous. It is continuous at the boundary $\|x\|_{2} = n$ because then $x n / \|x\|_2 = x$ so $f(x) = f(x n / \|x\|_2) = f(x\cdot  1)$.
+        It is continuous in the annulus $n < \|x\|_{2} < n + 1$ because it is the composition and product of functions ($\|x\|_{2}$ is continuous and doesn't take $0$ in this annulus).
+        Finally, it is continuous at the boundary $\|x\|_{2} = n+1$ because 
+        \[
+        f(x \frac{n}{\|x\|_{2}}) (n + 1 - \|x\|_2) = f(x \frac{n}{ \|x\|_{2}}) (n + 1 - n + 1) = 0
+        .\] 
+
+        Next, $|f_n(x) - f(x)| = 0$ when $\|x\|_{2} \leq 0$, and $|f_n(x) - f(x)| \leq |f(x n / \|x\|_2)(1) - f(x)| \leq \sup_{\|x\|_2 \geq n} |f(x)|$, and $\leq \sup_{\|x\|_{2} \geq n+1} |f(x)|$ for $\|x\|_{2} \geq n + 1$.
+        Therefore, in every case we can see that we always have $|f_n(x) - f| \leq 2\sup_{\|x\|_{2} \geq n} |f(x)|$, which goes to zero as $n \to \infty$ since $f \in C_0(\R^{n})$.
+        Therefore, $f_n \to f$, as desired.
+
+        Thus, $\overline{C_c(\R^{n})} = C_0(\R^{n})$.
+
+    \item The solution of the initial value problem for the heat equation on $\R^n$:
+    \[
+    \begin{cases}
+        \partial_t u = \Delta u, & (x,t) \in \R^n \times (0,\infty), \\
+        u(x,0) = f(x),
+    \end{cases}
+    \]
+    is given by
+    \[
+    u(x,t) = (4\pi t)^{-n/2} \int_{\R^n} e^{-\frac{|x-y|^2}{4t}} f(y)\,dy.
+    \]
+    \begin{enumerate}[label=(\alph*)]
+        \item by expressing $u(x,t)$ as convolution with an approximate identity,
+        show that if $f \in L^p$ ($1 \le p < \infty$), then
+        \[
+        \lim_{t \to 0^+} \norm{u(\cdot,t)-f}_p = 0;
+        \]
+        \item give an example to show that we may not have $\lim_{t \to 0^+} u(x,t) = f(x)$ pointwise.
+    \end{enumerate}
+
+
+    \textbf{Solution.}
+
+    \begin{enumerate}
+        \item First, we check that $\phi_t(x) = (4 \pi t)^{ - n / 2} e^{- \frac{|x|^2}{4t}}$ is an approximate identity.
+            Let $t$ be arbitrary. Then, we recognize the Gaussian integral, and by Fubini-Tonelli so that we have
+            \begin{align*}
+                \int_{\R^{n}} \phi_{t}(x) dx &= \int_{\R^{n}} (4\pi t)^{-n / 2} e^{- \frac{|x|^2}{4t}}\\
+                                             &= \left( (4 \pi t)^{- 1 / 2} \int_{\R} e^{-x^2 / 4t} dx \right)^{n} \\
+                                             &= (1)^{n} \text{ (Gaussian Integral)} \\
+                                             &= 1
+            .\end{align*}
+            Then, we see that $u(x, t) = \phi_t * f = f * \phi_t$.
+            However, then, by Theorem 8.14 a, we have that if $f \in L^{p}$, then $f * \phi_t \to af$ in the $L^{p}$ norm as $t \to 0$.
+            In particular, since $\phi_t$ is an approximate identity, $a = \int \phi_t = 1$.
+            However, the statment $f * \phi_t \to f$ in the $L^{p}$ norm is precisely
+            \[
+            \lim_{t \to 0^{+}} \|u(\cdot , t) - f\|_p =  \lim_{t \to 0^{+}} \|f * \phi_t - f\|_p = 0 
+            .\] 
+        \item Consider
+        \[
+        f(x) = \begin{cases}
+                1 \text{ if } & x \in [0, 1] \\
+                -1 \text{ if } & x \in [-1, 0) \\
+                0 \text{ else } & 
+        \end{cases}
+        .\] 
+        Then,
+        \[
+        u(0, t) = \int_{-1}^{0} \phi_t(-y)dy - \int_{0}^{1} \phi_t(-y)dy
+        .\] 
+        However, since $\phi_t(x)$ is a symmetric function, and both of these integrals are fintie, we have $u(0, t) = 0$.
+        Thus, $\lim_{t \to 0^{+}}u(0, t) = 0 \neq f(0)$.
+    \end{enumerate}
+
+\end{enumerate}
+\end{document}

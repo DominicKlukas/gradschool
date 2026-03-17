@@ -1,0 +1,363 @@
+\documentclass[11pt]{article}
+
+\input{../../preamble.tex}
+% --- Page geometry tuned to match the PDF look ---
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{mathtools}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\newcommand{\ellinfty}{\ell^{\infty}}
+\newcommand{\ellone}{\ell^{1}}
+\newcommand{\ellzero}{\ell_{0}}
+\newcommand{\ellc}{\ell_{c}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\restr}[2]{#1\!\upharpoonright_{#2}}
+
+\usepackage{cancel}
+
+
+\begin{document}
+
+
+\begin{center}
+{\Large Math 421/510: Homework 3}
+\end{center}
+
+\begin{enumerate}[label=\arabic*.]
+
+\item (Folland Ex. 5.63) Let $\mathcal{H}$ be an infinite-dimensional Hilbert space. Show that:
+\begin{enumerate}[label=(\alph*)]
+\item every orthonormal sequence in $\mathcal{H}$ converges weakly to $0$;
+\item every element of the (norm) closed unit ball
+\[
+B = \{x \in \mathcal{H} : \|x\| \le 1\}
+\]
+is the weak limit of a sequence in the unit sphere
+\[
+S = \{x \in \mathcal{H} : \|x\| = 1\}
+\]
+(hence $S$ is dense in $B$ in the weak topology).
+\end{enumerate}
+
+\vspace{1em}
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item Let $\{e_n\}_{n \in \N} $ be a sequence of orthonormal vectors.
+        Recall that, $e_n \to 0$ in the weak topology iff $\forall  f \in \mathcal{H}^{*}$, $f(e_n) \to f(0) = 0$.
+        Let $f \in \mathcal{H}^{*}$.
+        Then, by Riesz representation theorem, $f(\cdot ) = \left<\cdot , y \right>$ for some $y \in \mathcal{H}$.
+        But then, by Bessel's inequality, we have that $\sum_{n=1}^{\infty} |\left<y, e_n \right>|^2 \leq \|y\|^2 < \infty$.
+
+        Let $\epsilon > 0$.
+        Then, there exists some $N$ such that $\sum_{n = N}^{\infty} | \left<y, e_n\right>|^2 <\epsilon^2$.
+        However, this implies that for $n > N$,
+        \[
+        |f(e_n) - 0|^2 = |\left<e_n, y \right>|^2 = |\left<y, e_n \right>|^2 \leq \sum_{n=N}^{\infty} |\left<y, e_n \right>|^2 < \epsilon^2
+        ,\] 
+        so that $|f(e_n)| < \epsilon$.
+        Therefore, $f(e_n) \to f(0)$, as desired.
+        Since $f$ was arbitrary, it follows that $e_n \to 0$ weakly in $\mathcal{H}$.
+    \item If $\|x\| = 1$, then observe that the sequence $(x, x, \ldots)$ satisfies our requirement since then $x \in S$.
+        If $\|x\| = 0$, then $x = 0$, so any orthonormal sequence, which we can construct by the Gram-Schmidt process, will converge to $x=0$ by part a).
+
+        Finally, consider the case $0 < \|x\| < 1$.
+        Define $e_1 = x / \|x\|$.
+        Then, $\|e_1\| = 1$.
+        We can then, by the Gram-Schmidt process construct an orthonormal sequence $(e_1, e_2, \ldots)$.
+        Now, let $\lambda = \sqrt{1 - \|x\|^2}$.
+        Let $y_n = x + \lambda e_{n+1}$.
+        In particular, since $e_n \perp x$ for $n > 1$, we have that
+        \[
+        \|y_n\|^2 = \|x + \lambda e_{n+1}\|^2 = \|x\|^2 + \lambda^2 = 1
+        \] 
+        so that $\|y_n\| = 1$.
+        Thus, $y_n \in S$ for $n \in \N$.
+
+        To show that $y_n \to x$ weakly, let $f \in \mathcal{H}^{*}$.
+        Then, 
+        \[
+        |f(y_n - x)| = |f(\lambda e_{n+1})| = |\lambda| |f(e_{n+1})| \to 0 \text{ since } \{e_{n}\}_{n=2}^{\infty} \text{ orthonormal ($f(e_n)\to^w 0$ by part (a))}
+        .\] 
+        Since $f$ was arbitrary, we conclude $y_n \to x$ weakly.
+\end{enumerate}
+\vspace{1em}
+
+\item Show that $\ell^p$ is separable for $1 \le p < \infty$ (recall that separable means that it contains a countable dense subset).
+
+\vspace{1em}
+
+Consider the set of sequences $S = \{(q_1, \ldots, q_n, 0, \ldots) : q_i \in \Q, n \in \N \}$.
+This set is countable, because for fixed $n$, it is isomorphic to the product of a finite number of copies of $\Q$, and so it is the union of countably many countable sets, which is countable.
+
+Also, it is in $\ell^{p}$, since for $q \in S$, we have that there exists some $N$ such that for $n > N$ $q_n = 0$, so that
+\[
+    \|q\|_{p} = \sqrt[p]{\sum_{n = 1}^{N} |q_i|^{p}} < \infty
+,\] 
+so that $q \in \ell^{p}$.
+
+Now, for $x \in \ell^{p}$ and $\epsilon > 0$, we have that the balls of the form $B_{\epsilon}(x) = \{ y : \|x - y\|_{p} < \epsilon\} $ form a basis for $\ell^{p}$, so to show that $S$ is dense, we need merely show that each such ball contains an element of $S$.
+
+
+Let $x \in \ell^{p}$ and let $\epsilon > 0$.
+Then, since $\|x\|_{p} < \infty$, there exists some $N$ such that $\sum_{n = N + 1}^{\infty} |x_n|^{p} < \epsilon^{p} / 2$.
+Also, we can choose rational numbers $q_1, \ldots, q_N$ such that $|q_i - x_i| < \epsilon / \sqrt[p]{2N}$ for $1 \leq i \leq N$.
+If we let $q = (q_1, \ldots, q_N, 0, \ldots)$, then $q \in S$, and 
+\begin{align*}
+    \|x - q\|_{p} &= \sqrt[p]{\sum_{n = 1}^{N} |x_n - q_n|^{p} + \sum_{n = N+1}^{\infty} |x_n|^{p}}\\
+    &< \sqrt[p]{N\epsilon^{p} / 2N + \epsilon^{p} / 2} = \epsilon 
+,\end{align*}
+as desired.
+
+
+\vspace{1em}
+
+\item By some measure theory, together with the Weierstrass approximation theorem, one can show that polynomials are dense in $L^p([0,1])$ (with Lebesgue measure), $1 \le p < \infty$. Given this, show:
+\begin{enumerate}[label=(\alph*)]
+\item $L^p([0,1])$ is separable;
+\item $L^p(\R)$ is separable.
+\end{enumerate}
+
+\vspace{1em}
+
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item Consider the polynomials on $[0, 1]$ with rational coefficients, $S = \mathcal{P}_{\Q}([0, 1])$.
+        Then, $S \cong \cup_{n = 1}^{\infty} \Q^{n}$ (where we construct this isomorphism by associating coefficients with elements in $\Q^{n}$) so this set is countable.
+        Also, $S \subset L^{p}([0, 1])$ by assumption, since we are given that the polynomials $\mathcal{P}([0, 1])$ are dense in $L^{p}([0, 1])$ so they must be members of $L^{p}([0, 1])$.
+
+        Now, $S$ is dense $\iff$ every open ball in $L^{p}([0, 1])$ contains an element of $S$.
+        So, let $f \in L^{p}([0,1])$, and $\epsilon > 0$.
+        Then, by assumption, there exists $g \in \mathcal{P}([0, 1])$ such that $\|f - g\|_{p} < \epsilon / 2$.
+        Let $n$ be the degree of $g$, so that $g = \sum_{m = 0}^{n} a_m x^{m}$ and $a_m \in \R$.
+        Then, let $b_m \in \Q$ such that $|a_m - b_m| < \epsilon / 2(n + 1)$, and define $h = \sum_{m = 0}^{n} b_m x^{m}$, so that $h \in \mathcal{P}_{\Q}([0, 1])$.
+        In particular, in $[0, 1]$ we have that $|h - g| \leq \sum_{m=0}^{n}|b_m - a_m| |x|^{m} \leq \sum_{m = 0}^{n} |b_m -a_m| < \epsilon / 2$.
+        Then, 
+        \begin{align*}
+            \|h - g\|_{p} = \sqrt[p]{\int_{[0, 1]} \left| \sum_{m=0}^{n} (b_m-a_m)x^{m} \right|^{p}} &\leq \sqrt[p]{\int_{[0, 1]} \left|\sum_{m = 0}^{n} |b_m - a_m| \right|^{p} }\\
+                                                                                                     &< \sqrt[p]{\int_{[0, 1]}\sum_{m=0}^{n}|\epsilon / 2(n+1)|^{p}} = \epsilon / 2
+        .\end{align*}
+        Thus, 
+        \[
+        \|h - f\|_{p} \leq \|h - g\|_{p} + \|g - f\|_{p} < \epsilon / 2 + \epsilon / 2 = \epsilon
+        .\] 
+        Therefore, $\mathcal{P}_{\Q}([0, 1])$ is a countable dense subset of $L^{p}([0, 1])$, so $L^{p}([0, 1])$ is separable.
+
+    \item Let $S = \bigcup_{n = 1}^{\infty} \{ \sqrt[p]{2n}f(2nx - n) : f(x) \in \mathcal{P}_{\Q}([0, 1])\} $, where $\mathcal{P}_{\Q}([0, 1])$ are the polynomials with rational coefficients in $[0, 1]$ and $0$ in $\R \setminus [0, 1]$.
+        Since this is a countable collection of countable sets it is countable.
+
+
+        Let $g \in L^{p}(\R)$ and $\epsilon > 0$.
+        We showed in class that $g \chi_{[-n, n]} \to g$ in $L^{p}(\R)$.
+        Therefore, there exists some $n$ such that $\|g - g \chi_{[-n, n]}\|_{p} < \epsilon / 2$.
+
+        Next, since $g_n = g \chi_{[-n, n]}$ is $0$ outside $[-n, n]$, we have that the function $\sqrt[p]{\frac{1}{2n}} g_n \left( \frac{u + n}{2n} \right) $ is zero outside $u \in [0, 1]$, and then we can compute, by change of variables $\frac{u + n}{2n} \to x$
+        \[
+            \int_{[0, 1]} \left|\sqrt[p]{\frac{1}{2n}} g_n \left( \frac{u + n}{2n} \right)\right|^{p} du = \int_{[-n, n]} |g_n(x)|^{p} dx \leq \int |g|^{p} < \infty
+        ,\] 
+        so $\sqrt[p]{\frac{1}{2n}} g_n \left(\frac{u + n}{2n}\right) \in L^{p}([0, 1])$.
+
+        Then, by part a), there exists some $f \in \mathcal{P}_{\Q}([0, 1])$ such that $\|f(u) - \sqrt[p]{\frac{1}{2n}} g_n( \frac{u + n}{2n} )\|_{p} < \epsilon / 2$.
+        In particular, $\sqrt[p]{2n} f(2nx - n) \in S$.
+        This then implies, by change of variables $2nx - n \to u$, that
+        \begin{align*}
+            \|g_n(x) - \sqrt[p]{2n}f(2nx - n)\|_{p}^{p} &= \int_{[-n, n]}| g_n(x) - \sqrt[p]{2n}f(2nx - n) |^{p} dx\\
+                                                     &= \int_{[0, 1]} \left| \sqrt[p]{\frac{1}{2n}} g_n \left(\frac{u + n}{2n}\right) - f(u)\right|^{p} du\\
+                                                     &< (\epsilon/ 2)^{p}
+        .\end{align*}
+        Then, this gives us that:
+        \[
+        \|g - \sqrt[p]{2n}f(2n x - n)\|_{p} \leq \|g - g_n\|_{p} + \|g_n - \sqrt[p]{2n}f(2n x - n)\|_{p} < \epsilon / 2 + \epsilon / 2 = \epsilon
+        .\] 
+        Therefore, $S$ is dense in $L^{p}(\R)$.
+\end{enumerate}
+
+\vspace{1em}
+
+\item Show that the sequence $\{e^{ikx}\}_{k=1}^{\infty}$ converges to $0$ weakly in $L^p([0,1])$, $1 < p < \infty$.
+
+(Hint: you may use that any $L^p$ function can be approximated (in the $L^p$ norm) by a simple function whose sets are intervals — a variant of Folland, Thm. 2.26.)
+
+\vspace{1em}
+
+\textbf{Solution.}
+
+We show that, for every $f \in (L^{p})^{*}$, $f(e^{ikx}) \to f(0) = 0$.
+Fix $f \in (L^{p})^{*}$.
+We show that there exists $M$ such that for all $k > M$, $|f(e^{ikx})| < \epsilon$, so that $f(e^{ikx}) \to f(0)$.
+
+By the duality theorem, there exists some $g \in L^{q}$ such that $f(\cdot) = \int_{[0, 1]} (\cdot) g$.
+We are given that there exists some simple function $h$ whose sets are intervals such that $h \in L^{q}$ and $\|h - g\|_{q} < \epsilon / 2$.
+Then, $h = \sum_{n = 1}^{N} a_n I_n$, where $I_n = (a_n, b_n) \subset  [0, 1]$. 
+(Note that these intervals must be finite for $h$ to be in $L^{q}$).
+
+Let $M = 4 N \max_{1 \leq n \leq N} \{|a_n|\} / \epsilon$.
+Then, for $k > M$, we have 
+\[
+\left|\int_{[0, 1]} e^{ikx} I_n\right| = \left|\int_{a_n}^{b_n} e^{ikx}\right| =\left| \frac{1}{ik} (e^{ikb_n} - e^{ika_n})\right| \leq \frac{2}{k}
+.\] 
+
+But then, since $k > M$, we have
+\begin{align*}
+    \left|\int_{[0, 1]} e^{ikx} h \right| &\leq \sum_{n = 1}^{N} |a_n| \left| \int_{[0, 1]} e^{ikx}I_n  \right|\\
+                                          &\leq \sum_{n=1}^{N} a_n (2 / k) < 2 N \max_{1 \leq n \leq N} \{|a_n|\} / (4 N \max_{1 \leq n \leq N} \{|a_n|\} / \epsilon) < \epsilon / 2
+.\end{align*}
+
+But then, we have the following.
+For all $k > M$,
+
+\begin{align*}
+    \left|\int_{[0, 1]} e^{ikx} g \right| \leq \left| \int_{[0, 1]} e^{ikx} ( g - h) \right| +  \left|\int_{[0, 1]} h e^{ikx} \right| &\leq \|e^{ikx}\|_{p} \|g - h\|_{q} + \epsilon / 2\\
+                                                                                                                                      &= 1\cdot  \|g - h\|_{q} + \epsilon / 2 < \epsilon / 2 + \epsilon / 2 = \epsilon
+.\end{align*}
+Therefore, $\int e^{ikx} g = f(e^{ikx}) \to f(0)$ and since $f \in (L^{p})^{*}$ was arbitrary it follows that $e^{ikx} \to 0$ weakly.
+
+\vspace{1em}
+
+\item Let $X$ be a normed vector space, and
+\[
+B = \{x \in X : \|x\| \le 1\}
+\]
+its (norm) closed unit ball.
+\begin{enumerate}[label=(\alph*)]
+\item Show
+\[
+B = \bigcap_{\substack{f \in X^* \\ \|f\| \le 1}} \{x \in X : |f(x)| \le 1\}.
+\]
+
+(Hint: it may help to use a consequence of the Hahn–Banach theorem.)
+
+\item Show that $B$ is weakly closed.
+\end{enumerate}
+
+\vspace{1em}
+
+\begin{enumerate}
+    \item $(\rightarrow)$ Suppose $x \in B$. 
+        Then, for any $f \in X^{*}$ with $\|f\| \leq 1$, we have that $|f(x)| \leq \|f\|\|x\| = \|x\| \leq 1$, so
+        \[
+        x \in \bigcap_{\substack{f \in X^{*} \\ \|f\| \leq 1}} \{x \in X : |f(x)| \leq 1\}
+        .\] 
+
+        $(\leftarrow)$ Suppose
+        \[
+        x \in \bigcap_{\substack{f \in X^{*} \\ \|f\| \leq 1}} \{x \in X : |f(x)| \leq 1\}
+        .\] 
+        If $x = 0$, then $\|x\| = 0 \leq 1$, so $x \in B$. Assume $x \neq 0$.
+        By a consequence of the Hahn-Banach theorem, there exists some $f \in X^{*}$ with $\|f\| = 1$ such that $|f(x)| = \|x\|$.
+        Since $f \in X^{*}$ with $\|f\| \leq 1$, by assumption $|f(x)| \leq 1$.
+        But then, this implies $\|x\| = |f(x)| \leq 1$, so $x \in B$.
+    \item Suppose $x_n \to x$ weakly in $X$ where $x_n \in B$. If $x = 0$ then since $x \in B$ we are done, so suppose $x \neq 0$.
+        Then, by a consequence of the Hahn-Banach theorem, we have that there exists $f \in X^{*}$ such that $\|x\| = |f(x)|$.
+        Since $x_n \to x$ weakly, in particular $|f(x_n) - f(x)| \to 0$.
+        By the triangle inequality, $\|x\| = |f(x)| \leq |f(x) - f(x_n)| + |f(x_n)| \leq \epsilon + |f(x_n)|$ for any $\epsilon > 0$, if we choose $n$ large enough.
+        But since $\|f\| \leq 1$ and $x_n \in B$, we have that $|f(x_n)| \leq 1$.
+        Thus, $\|x\| \leq 1 + \epsilon$ for all $\epsilon > 0$, so $\|x\| \leq 1$ and so $x \in B$.
+\end{enumerate}
+
+\vspace{1em}
+
+\item Let $X$ be a normed vector space. If $U \subset X$ is open in the weak topology and $x \in U$, then $U$ contains a subset of the form
+\[
+\{y \in X : |f_k(y-x)| < \varepsilon,\ k=1,\dots,n\}
+\]
+for some $\varepsilon > 0$ and $f_1,\dots,f_n \in X^*$ (this is a consequence of Folland, Thm. 5.14).
+\begin{enumerate}[label=(\alph*)]
+\item If $X$ is infinite dimensional, show that any non-empty weakly open set is (norm) unbounded.
+\item Conclude that the weak topology on an infinite-dimensional normed vector space is strictly weaker than the norm topology.
+\end{enumerate}
+
+\vspace{1em}
+
+\begin{enumerate}
+    \item Let $U \in \mathbb{T}_{w}$.
+        To show that $U$ is unbounded, we produce a vector $z \in U$ such that $\|z\| > M$ for any $M \in \N$.
+        Then, as stated, we have that $U$ contains a subset of the form
+        \[
+        \{y \in X : |f_k(y - x)| < \epsilon, k=1, \ldots, n\} 
+        .\] 
+        Now, consider the set $Y = \bigcap_{k = 1}^{n} \ker(f_k)$.
+        Since each $f_i$ is a linear functional, we have that $\text{codim}(\ker(f_i)) = 1$.
+        Then, $\text{codim}(Y) \leq \sum \text{codim}(\ker(f_i)) = n$.
+        Since $X$ is infinite dimensional, this implies that $Y$ is infinite dimensional.
+        Therefore, there exists some $y \in Y$ such that $y \neq 0$.
+        In particular, $f_k(y) = 0$ for all $1 \leq k \leq n$.
+        Let $\lambda = \frac{M - \|x\|}{\|y\|}$.
+        Then, $\|x + \lambda y\| \geq \| \lambda y\| - \|x\| = \frac{M - \|x\|}{\|y\|} \|y\|- \|x\| = M$.
+        However, we also have that for each $f_k$,
+        \[
+        |f_k((x + \lambda y) - x)| = |f_k(\lambda y)| = 0
+        .\] 
+        Therefore, $x + \lambda y \in U$.
+        Since $M$ was arbitrary, this implies that $U$ is unbounded, since for any $M$ it contains a vector of norm greater than $M$.
+
+    \item The topology $\mathbb{T}_{w}$ is the smallest topology such that every $f \in X^{*}$ is continuous.
+        Now, fixing $f \in X^{*}$, the norm implies that $|f(x) - f(y)| \leq \|f\|\|x - y\|$ which implies continuity in the norm topology.
+        Therefore $\mathbb{T}_{w}$ is weaker than the norm topology.
+        To show that it is strictly weaker, we need to show that the norm topology contains an open set which is not in $\mathbb{T}_{w}$.
+        Consider the set $B = \{x : \|x\| < 1\} $.
+        Then, $B$ is open in the norm toplogy, but since it is bounded, and every open set in $\mathbb{T}_{w}$ is unbounded, $B \not\in  \mathbb{T}_{w}$. Thus, $\mathbb{T}_{w} \subsetneq \mathbb{T}_{\|\cdot \|}$.
+\end{enumerate}
+
+\vspace{1em}
+
+\item Consider the sequence $\{x^{(k)}\}_{k=1}^{\infty} \subset \ell^\infty$ defined by
+\[
+x^{(k)}_n =
+\begin{cases}
+0 & n < k \\
+1 & n \ge k
+\end{cases}
+\]
+
+Show that:
+\begin{enumerate}[label=(\alph*)]
+\item $\|x^{(n)}\|_{\infty} = 1$ for all $n$;
+\item $x^{(n)} \to 0$ in the weak-* topology on $\ell^\infty$;
+\item $x^{(n)}$ has no convergent subsequence in the weak topology on $\ell^\infty$.
+
+(Hint: see question 6 on the previous homework.)
+\end{enumerate}
+
+\vspace{1em}
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item $\|x^{(n)}\|_{\infty} = \sup_{j}|x_j^{(n)}| = 1$, since $x_j^{(n)} \in \{0, 1\} $, and there exists $j$ (namely $j = n+1$) such that $x_j^{(n)} = 1$.
+    \item By Theorem 6.15 in Folland (the dual space characterization) we have that $\ell^{\infty} \cong (\ell^{1})^{*}$.
+        Thus, $x^{(n)}$ converges in the weak-* topology on $\ell^{\infty} \iff$  for each $y \in \ell^{1}$, $x^{(n)}(y) = x^{(n)}\cdot y \to 0$.
+        Let $y \in \ell^{1}$.
+        Let $\epsilon > 0$.
+        Then, there exists some $N$ such that $\sum_{j=N}^{\infty} |y_j| < \epsilon$.
+        But then, for $n > N$,
+        \[
+        |x^{(n)}\cdot y| = \left| \sum_{j=n}^{\infty} y_j \right| \leq \sum_{j=N}^{\infty} |y_j| < \epsilon
+        ,\] 
+        so $x^{(n)}\cdot y \to 0$.
+        Since $y$ was arbitrary, we conclude $x^{(n)} \to 0$ in the weak-* topology.
+
+    \item Suppose for the sake of contradiction that $x^{(n)} \to x$ in the weak topology for some $x \in \ell^{\infty}$.
+        By Proposition 2.16 in the notes, we have for each $y \in \ell^{1}$, $y(\cdot) = \sum_{j=1}^{\infty} y_j  (\cdot )_j$ is a linear functional in $(\ell^{\infty})^{*}$.
+        In particular, $y^{(k)} = (0, \ldots, 0, 1, 0, \ldots)$, where the $1$ is in the $k$-th element, is a member of $(\ell^{\infty})^{*}$.
+        Now, we have that $|y^{(k)}(x^{(n)}) - y^{(k)}(x)| = |x^{(n)}_k - x_k| \to 0 $.
+        Since $x^{(n)}_k = 0$ for all $n > k$, this implies that $x_k = 0$.
+
+
+        Now, in Homework 1 question 6, we showed that there exists $T \in \ell^{\infty}$ such that $T((1, 1, 1, \ldots)) = 1$, and if $z = (z_1, z_2, \ldots)$ satisfies $\lim_{j \to \infty} z_k = L$, then $T(z) = L$.
+        Since $x = 0$, $T(x) = 0$.
+        However, $\lim_{j \to \infty}x^{(n)}_j = 1$ for each $x^{(n)}$.
+        Therefore, $T(x^{(n)}) = 1$ for each $x^{(n)}$, so $|T(x^{(n)}) - T(x)| \to 1$.
+
+        This contradicts that $x^{(n)} \to x$ in the weak topology on $\ell^{\infty}$.
+\end{enumerate}
+
+\end{enumerate}
+\end{document}
