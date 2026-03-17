@@ -5,6 +5,7 @@ This week, we studied **psalms of lament**, following last week's focus on psalm
 **What is lament?**  
 Lament is an expression of grief or sorrow, often mixed with protest or complaint. Though it may seem opposed to faith, Scripture shows that bringing our grief to God can be an act of trust.
 
+(Break into groups, trying to answer the question: what do these psalms tell us about the Bible's view on suffering?)
 Key passages on suffering and grief:
 - Psalm 119:67, 71, 75, 78  
 - Romans 5:3–4  

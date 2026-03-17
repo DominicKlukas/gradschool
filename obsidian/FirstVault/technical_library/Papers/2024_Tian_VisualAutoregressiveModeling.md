@@ -15,8 +15,6 @@ stars:
 ---
 # First Reading
 What type of paper: a new type of model. Look to understand how it works, and the previous architectures, what they didn't do well, and why this one works so much better.
-
-
 # Terms
 - Autoregression: when you factor a probability distribution as 
 $$
@@ -25,9 +23,8 @@ p(x_{1}, x_{2}, \dots, x_{n}) = \prod_{k=1}^K p(x_{k} | x_{<k})
 	Inference time, the distribution is sampled as: $x_{1} \sim p(x_{1}), x_{2} \sim p(x_{2} | x_{1}), \dots, x_{K} \sim \prod_{k=1}^K p(x_{k} | x_{<k})$.
 - Raster-scan: moving on a screen left to right top to bottom. The old way images may have been generated.
 - Zero shot: when you do something you weren't trained on without additional fine tuning. LLMs have this property: there are many separate tasks you can encode as text instructions, so if you learn an LLM you don't need extra training for each task.
-
-
 # Questions
 3.1 
 - How does the tokenization work?
 	- They design the tokens through autoencoders
+

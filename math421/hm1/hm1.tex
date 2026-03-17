@@ -24,6 +24,12 @@
 {\Large \textbf{Math 421/510: Homework 1}}
 \end{center}
 
+
+\begin{center}
+\textbf{Dominic Klukas}\\
+SN: 64348378
+\end{center}
+
 \begin{enumerate}[label=\arabic*., leftmargin=*, itemsep=10pt]
 
 \item Define $d_1(x,y)=\lvert \arctan(x)-\arctan(y)\rvert$ for $x,y\in\R$. Show that:
@@ -32,6 +38,56 @@
 \item $(\R,d_1)$ is not complete;
 \item $d_1$ produces the same topology (collection of open sets) on $\R$ as the usual metric
 $d(x,y)=\lvert x-y\rvert$.
+\end{enumerate}
+
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item We show that $d_1(x, y) = 0 \implies x = y$, $d_1(x, y) = d_1(y, x) \quad \forall x, y \in \R$, and the triangle inequality.
+        \begin{itemize}
+            \item $d_1(x, y) = 0$ implies $x = y$:
+                \begin{align*}
+                    0 = d_1(x, y) = |\arctan(x) - \arctan(y)| \implies \arctan(x) = \arctan(y)
+                .\end{align*}
+                Since $\arctan(x)$ is bijective, this implies $x = y$.
+            \item Symmetry:
+                \begin{align*}
+                    d_1(x, y) = |\arctan(x) - \arctan(y)| &= |-(\arctan(y) - \arctan(x))|\\
+                                                          &= |\arctan(y) - \arctan(x)| = d_1(y, x)
+                .\end{align*}
+            \item Triangle Inequality:
+                \begin{align*}
+                    d_1(x, z) = |\arctan(x) - \arctan(z)| &= |\arctan(x) - \arctan(y) + \arctan(y) - \arctan(z)| \\
+                    &\leq |\arctan(x) - \arctan(y)| + |\arctan(y) - \arctan(z)|\\
+                    &= d_1(x, y) + d_1(y, z)
+                .\end{align*}
+        \end{itemize}
+    \item Consider the sequence $\{x_n = n\}_{n \in \N}$.
+        We show that this sequence is cauchy in $(\R, d_1)$.
+        Let $\epsilon > 0$.
+        Then, $\lim_{n \to \infty} \arctan(x_n) = \pi / 2$ (one of the properties of $\arctan(x)$) so there exists some $N$ such that for all $n > N$, $|\pi / 2 - \arctan(x)| < \epsilon / 2$ (since $\arctan(x)$ is strictly increasing).
+        But then, for any $n, m > N$, we have
+        \[
+        d_1(x_n, x_m) = |\arctan(x_n) - \arctan(x_m)| \leq |\arctan(x_n) - \pi / 2| + |\pi / 2 -  \arctan(x_m)| \leq \epsilon / 2 + \epsilon / 2
+        .\] 
+        Now, suppose that $\lim_{n \to \infty} d_1(x_n, z) = 0$ for some $z \in \R$.
+        Then, there exist some $N$ such that $z < N$.
+        However, then we have that $d_1(z, x_n) > d_1(z, x_N) > 0$ for all $n > N$, which contradicts that $\lim_{n \to \infty}d_1(x_n, z) = 0$.
+        Thus, this sequence has no limit in $(\R, d_1)$.
+    \item Let $B_{d}(x, \delta) = \{y \in \R : d(x, y) < \delta\}$.
+        By the definition of open sets, $d$ and $d_1$ produce the same open sets iff for any $B_{d}(x, \delta)$ there exists $\delta'$ such that $B_{d_1}(x, \delta') \subset B_{d}(x, \delta)$ and vice versa.
+
+        Let $x \in \R$, $\delta > 0$.
+        Then, there exists some $y \in (- \pi / 2, \pi /2)$ such that $\arctan(x) = y$.
+        But then, $\tan(y) = x$, and since $\tan(x)$ is continuous at $x$, we have that there exists some $\delta' > 0$ such that for all $|y - z'| < \delta'$, $|\tan(y) - \tan(z')| < \delta$.
+        However, this implies that for all $z$ with $|\arctan(x) - \arctan(z)| < \delta'$, $|\tan(\arctan(x)) - \tan(\arctan(z))| = |x - z| < \delta$.
+        Therefore, $B_{d_1}(x, \delta') \subset B_{d}(x, \delta)$.
+
+        For the other direction, let $x \in \R, \delta > 0$.
+        Now, since $\arctan'(x) = \frac{1}{1 + x^2}$, we have that $0 < \arctan'(x) \le 1$ for all $x$.
+        Then, by the mean value theorem, this implies $|\arctan(x) - \arctan(y)| = \arctan'(z) \cdot |x - y|$ for some $z \in (x, y)$, so $|\arctan(x) - \arctan(y)| \le 1 \cdot |x - y|$.
+        Therefore, if $|x - y| < \delta$, then $|\arctan(x) - \arctan(y)| < \delta$, so $B_{d}(x, \delta) \subset  B_{d_1}(x, \delta)$, as desired.
 \end{enumerate}
 
 \item Consider the following spaces of sequences:
@@ -54,10 +110,104 @@ is not complete in the metric produced by $\norm{\cdot}_\infty$;
 $(\ellinfty,\norm{\cdot}_\infty)$.
 \end{enumerate}
 
+\begin{enumerate}
+    \item Suppose that $z \in \ell^{\infty}$ is such that $\|z\|_{\infty} = 0$.
+        In particular, $\sup_{j} |(z)_j| = 0$.
+        However, this implies $|(z)_j| \leq 0$, so $z_j = 0$.
+        Thus, $z= 0$.
+
+        Let $z \in \ell^{\infty}$, and let $\lambda \in \C$.
+        Now, for each index $j$, we have $(\lambda z)_j = \lambda (z)_j$.
+        Then,
+        \[
+        \|\lambda z\|_{\infty} = \sup_{j}|(\lambda z)_j| = \sup_{j} |\lambda (z)_j| = \sup_{j} |\lambda| |(z)_j| = |\lambda| \sup_j |(z)_j| = |\lambda| \|z\|_{\infty}
+        .\] 
+        Finally, we prove the triangle inequality. Let $y, z \in \ell^{\infty}$ We have that:
+        \[
+            \|y + z\| = \sup_{j} |(y + z)_j| \leq \sup_{j} (|(y)_j| + |(z)_j|) \leq \sup_{j} |(y)_j| + \sup_{k} |(z)_k| = \|y\|_{\infty} + \|z\|_{\infty}
+        .\] 
+        Therefore, $\|\cdot \|_{\infty}$ is a norm over $\ell^{\infty}$.
+    \item Consider the sequence $z_n = (1, \ldots, \frac{1}{n}, 0, 0, \ldots)$.
+        Then, $z_n \to z \in \ell^{\infty}$, where $z$ is the sequence with $(z)_n = \frac{1}{n}$ for all $n \in \N$.
+        In particular, $z \not\in \ell_{c}$.
+        However, for all $m, n > N$, (assume wlog $m > n$) we have $\|z_n - z_m\|_{\infty} = \|(0, 0, \ldots, 1 / (n + 1), \ldots, 1 / m)\|_{\infty} = 1 /(n + 1) < 1 / N$.
+        Therefore, $\{z_n\}_{n \in \N} $ is a Cauchy sequence, which doesn't converge to any $z' \in \ell_{c}$.
+    \item Suppose $\{z_n\}_{n \in \N} $ is a Cauchy sequence in $\ell_{0}$.
+        Since $\ell^{\infty}$ is complete, and $\{z_n\}_{n \in \N} $ is also a sequence in $\ell^{\infty}$ because $\ell_{0} \subset  \ell^{\infty}$, we have that there exists some $z \in \ell^{\infty}$ such that $z_n \to z$.
+
+
+        Let $\epsilon > 0$.
+        Then, there exists some $n$ such that $\|z - z_n\| < \epsilon / 2$.
+        Also, there exists some $M$ such that for all $j > M$, $|(z_n)_j| < \epsilon / 2$, since $z_n \in \ell_{0}$.
+        Therefore, for all $j > M$,
+        \[
+        |(z)_j - (z_n)_j| \leq \sup_{j}|(z)_j - (z_n)_j| \leq \|z - z_n\|_{\infty} = \epsilon / 2
+        ,\] 
+        and so
+        \[
+            |(z)_j| \leq \epsilon / 2 + |(z_n)_j| < \epsilon / 2 + \epsilon / 2 = \epsilon
+        .\] 
+        Since we can find such an $M$ for any $\epsilon > 0$, we conclude that $\lim_{j \to \infty} (z)_j = 0$.
+        Therefore, $z \in \ell_{0}$, so $(\ell_0, \| \cdot \|_{\infty})$ is complete.
+
+    \item We need to show that the limit of every sequence in $\ell_{c}$ in $\ell^{\infty}$ is in $\ell_{0}$, and that every element of $\ell_{0}$ is the limit of a sequence in $\ell_{c}$.
+
+        Suppose $z_n \to z$, where $z_n \in \ell_{c}$.
+        We show $\lim_{j\to \infty}(z)_j = 0$.
+        Let $\epsilon > 0$.
+        Since $z_n \to z$, there exists some $n$ such that $\|z_n - z\| < \epsilon$.
+        However, since $z_n \in \ell_{c}$, we have that there exists some $M$ such that $(z_n)_j = 0$ for all $j > M$.
+        But then, for all $j > M$, $|(z)_j - (z_n)_j| = |(z)_j| < \|z_n - z\| < \epsilon$.
+        Since we can findsuch an $M$ for any $\epsilon$, $\lim_{j \to \infty}(z)_j = 0$, so $z \in \ell_{0}$.
+
+        Now, suppose $z \in \ell_{0}$, so $z = (x_1, x_2, \ldots)$, and define $z_n = (x_1, x_2, \ldots, x_n, 0, 0, \ldots)$.
+        Then, $z - z_n = (0,\ldots,0, x_{n+1}, x_{n+2}, \ldots)$, so that $\|z - z_n\|_{\infty} = \sup_{j > n} |(z)_j| \to 0$ since $z \in \ell_{0}$.
+        Therefore, $z_n \to z$.
+        Thus, $\ell_0$ is the smallest closed set which contains $\ell_{c}$.
+\end{enumerate}
+
 \item Show that on $C^{1}([0,1])$:
 \begin{enumerate}[label=(\alph*), itemsep=4pt]
 \item $\norm{f}_0=|f(0)|+\norm{f'}_\infty$ is a norm (where, recall $\norm{g}_\infty=\sup_{x\in[0,1]}|g(x)|$);
 \item $\norm{\cdot}_0$ is equivalent to the norm $\norm{f}_{C^1}=\norm{f}_\infty+\norm{f'}_\infty$.
+\end{enumerate}
+
+
+\begin{enumerate}
+    \item Suppose $\|f\|_{0} = 0$.
+        In particular, this implies $\|f'\|_{\infty} = 0$.
+        Let $x \in (0, 1]$.
+        Then, by MVT, there exists some $y \in (0, x)$ such that $f(x) - f(0) = f'(y)(x - 0)$.
+        But then, $f'(y) = 0$, so $f(x) = f(0) = 0$.
+        Therefore, $f(x) = 0$.
+
+        Next, let $\lambda \in \C$.
+        Then, $(\lambda f)' = \lambda f'$.
+        We compute:
+        \[
+        \|\lambda f\|_{0} = |\lambda f(0)| + \sup_{x \in [0, 1]} |\lambda f'(x)| = |\lambda| |f(0)| +|\lambda| \sup_{x \in [0, 1]} |f'(x)| = |\lambda| \|f\|_0
+        .\] 
+        Finally, by the linearity of the derivative, and the fact that $\|\cdot \|_{\infty}$ is a norm over continuous function son $[0, 1]$ (we checked this in class),we compute the triangle inequality:
+        \begin{align*}
+            \|f + g\|_0 = |f(0) + g(0)| + \|(f + g)'\|_{\infty} &\leq |f(0)| + |g(0)| + \|f' + g'\|_{\infty}\\
+            &\leq |f(0)| + |g(0)| + \|f'\|_{\infty} + \|g'\|_{\infty}\\
+            &= \|f\|_{0} + \|g\|_{0}
+        .\end{align*}
+    \item First, we have
+        \[
+        \|f\|_{0} = |f(0)| + \|f'\|_{\infty} \leq \|f\|_{\infty} + \|f'\|_{\infty} = \|f\|_{C^{1}}
+        .\] 
+        Next, by the MVT we have that for all $x \in (0, 1]$, we have that
+        \[
+        |f(x)| - |f(0)| \leq |f(x) - f(0)| = |f'(x)| x \leq |f'(x)| \leq \|f'\|_{\infty}
+        .\] 
+        therefore, $|f(x)|\leq \|f'\|_{\infty} + |f(0)|$.
+        Since this applies for all $x > 0$, combined with $|f(0)| \leq \|f'\|_{\infty} + |f(0)|$, we have that $\|f\|_{\infty} \leq \|f'\| + |f(0)|$
+        Thus,
+        \[
+            \|f\|_{C^{1}} = \|f\|_{\infty} + \|f'\|_{\infty} \leq (|f(0)| + \|f'\|_{\infty}) + \|f'\|_{\infty} \leq 2(|f(0)| + \|f'\|_{\infty}) = 2 \|f\|_{0}
+        .\] 
+        Therefore, $\|f\|_{0} \leq \|f\|_{C^{1}} \leq 2\|f\|_{0}$, which proves these two norms are equivalent.
 \end{enumerate}
 
 \item Let $X,Y,Z$ be normed vector spaces. Show:
@@ -65,6 +215,48 @@ $(\ellinfty,\norm{\cdot}_\infty)$.
 \item (leftover from class) the operator norm is a norm on $L(X,Y)$;
 \item if $T\in L(X,Y)$, $S\in L(Y,Z)$, composition $ST\in L(X,Z)$ with $\norm{ST}\le \norm{S}\,\norm{T}$;
 \item for $X=C([0,1])$, $\norm{\cdot}_\infty$, find $S,T\in L(X,X)$ with $\norm{ST}<\norm{S}\,\norm{T}$.
+\end{enumerate}
+
+
+\begin{enumerate}
+    \item Recall that the operator norm is defined as $\|T\| = \sup \{|T(x)|_Y : |x|_{X} = 1\}$.
+        (I will omit the subscripts, since whether to use the the norm on $X$ or $Y$ is clear from context).
+        Suppose $\|T\| = 0$.
+        If $T \neq 0$, then there exists some $x \in X$ such that $Tx \neq 0$. In that case, $x \neq 0$ since $Tx = 0$ for any linear map $T$.
+        Then, $0 < |T (x / |x|)| \leq \|T\|$, which is a contradiction. Therefore, $T= 0$.
+
+        Next, for $\lambda \in \mathbb{K}$,
+        \[
+        \|\lambda T\| = \sup \{|\lambda T(x)| : |x| = 1 \} = \sup \{ |\lambda| |T(x)| : |x| = 1\} = |\lambda| \sup \{ |T(x)| : |x| = 1\} = |\lambda| \| T\|   
+        .\] 
+
+        Finally, for the triangle inequality, let $|x| = 1$. Then,
+        \begin{align*}
+            |(T + S)(x)| = |T(x) + S(x)| \leq |T(x)| + |S(x)| \leq \|T\| + \|S\|
+        .\end{align*}
+        The last inequality follows from the definition of the operator norm because $|x| = 1$.
+        Taking the supremum of $|(T + S)(x)|$ over all such $|x|=1$, we get that $\|T + S\| \leq \|T\| + \|S\|$.
+    \item Let $T \in L(X, Y)$ and $S \in L(Y, Z)$.
+        Then, $\| ST\| = \sup \{|TS x| : | x | = 1\} $.
+        But then, for $x$ with $|x| = 1$, we have that either $Tx = 0$ so $STx = 0 \leq \|T\|\|S\|$, or $Tx \neq 0$ and
+        \[
+            |ST x| = |Tx| |S(Tx / |Tx|)| \leq |Tx| \|S\| \leq \|T\|\|S\|
+        .\] 
+        Taking the supremum of $|ST x|$ over all $|x|=1$, we get that $\|ST\| \leq \|T\|\|S\|$.
+    \item For $f \in X$, let $S(f) = f(0)(1 - x)$ and let $T(f) = f(1)x$, for $x \in [0, 1]$. We show that $T, S \in L(X, X)$.
+        In particular, these are both linear functions, so clearly $S(f), T(f) \in X$.
+        Also, $S(\lambda f + g) = \lambda f(0)(1 - x) + g(0)(1 - x) = \lambda S(f) + S(g)$, and with a similar calculation for $T(f)$, we show that both $S$ and $T$ are linear maps.
+        Finally, if $\|f\|_{\infty} \leq 1$, then $|T(f)|_{\infty}, |S(f)|_{\infty} \leq |f(0)|, |f(1)| \leq \|f\|_{\infty} \leq 1$, and since this applies for all $\|f\|_{\infty} = 1$ we have that $\|T\|, \|S\| \leq 1$. Therefore, $T, F$ are bounded linear maps so they are in $L(X, X)$.
+
+        Now, we compute $\|T\|, \|S\|$.
+        Consider $f(x) = 1$.
+        Then, $\|f\|_{\infty} = 1$, and $T(f) = x$, $S(f) = 1 - x$.
+        We have that $\|T(f)\|_{\infty} = \|S(f)\|_{\infty} = 1$.
+        Therefore, $\|T\| = \|S\| = 1$.
+
+        However, for all $f \in X$, $ST(f) = (T(f)(0))(1 - x) = (f(1)\cdot 0)(1 - x) = 0$.
+        Since this applies for all $f \in X$, $ST = 0$, and so $\|ST\| =0$.
+        But then, $0=\|ST\| < \|S\|\|T\| = 1 \cdot  1 = 1$.
 \end{enumerate}
 
 \item Consider the following spaces of sequences:
@@ -84,6 +276,80 @@ is a bounded linear functional on $\ellzero$, $\norm{\cdot}_\infty$ (i.e.\ $f_y\
 \item the map $y\mapsto f_y$ is an isometric isomorphism $\ellone\to (\ellzero)^*$.
 \end{enumerate}
 
+\begin{enumerate}
+    \item Let $y \in \ell^{1}$ and suppose $\|y\|_{1} = 0$.
+        Then, for all $j \in \N$ $|y_j| \leq \sum_{k = 1}^{\infty} |y_k| = \|y\|_{1} = 0$. Therefore, $y = 0$.
+        Next, let $\lambda \in \C$, and $y \in \ell^{1}$.
+        Then,
+        \[
+        \|\lambda y \|_{1} = \sum_{j = 1}^{\infty} | \lambda y_j| = \lim_{n \to \infty} \sum_{j = 1}^{n} |\lambda y_j| = \lim_{n \to \infty} |\lambda| \sum_{j = 1}^{n} |y_j| = |\lambda| \lim_{n \to \infty} \sum_{j = 1}^{n} |y_j| = |\lambda| \|y\|_{1}
+        .\] 
+        Finally, since $y, z \in \ell^{1}$, both are absolutely convergent, so
+        \[
+        \|y + z\|_{1} = \lim_{n \to \infty}  \sum_{j=1}^{n} |y_j + z_j| \leq \lim_{n \to \infty} \sum_{j = 1}^{n} (|y_j| + |z_j|) = \lim_{n \to \infty}\sum_{j=1}^{n} |y_j| + \lim_{n \to \infty} \sum_{j=1}^{n} |z_j| = \|y\|_{1} + \|z\|_{1}
+        .\] 
+    \item First, we show that $f_y$ is a linear functional. Let $x \in \ell_{0}$. Then, there exists some $N$ such that for all $j > N$, $|x_j| \leq 1$.
+        \begin{align*}
+             \sum_{j = 1}^{\infty} |y_j x_j| \leq  \sum_{j=1}^{N} |y_j x_j| + \sum_{j = N+1}^{\infty}| x_j y_j|  \leq  \sum_{j=1}^{N} |y_j x_j|  + \|y\|_{1} < \infty
+        .\end{align*}
+        This shows that any $x \in \ell_{0}$ such sums are absolutely summable.
+        Therefore, since for any $\lambda \in \C$, $x, z \in \ell_{0}$, the fact that $x + \lambda z \in \ell_{0}$ and absolute summability gives us that we can break the sum apart:
+        \[
+            f_y(x + \lambda z) = \sum_{j = 1}^{\infty} (x_j + \lambda z_j)y_j = \sum_{j = 1}^{\infty} x_j y_j + \lambda \sum_{j = 1}^{\infty} z_j y_j = f_y(x) + \lambda f_y(z)
+        .\] 
+        Therefore, $f_y$ is a linear functional.
+        To show that $f_y$ is bounded, for any $x \in \ell_{0}$ with $\|x\|_{\infty} = 1$, we have that $|x_j| \leq 1$, so
+        \[
+        |f_y(x)| = \left|\sum_{j = 1}^{\infty} x_j y_j\right| \leq \sum_{j = 1}^{\infty} |x_j y_j| \leq \sum_{j=1}^{\infty} |y_j| = \|y\|_{1}
+        .\] 
+        In particular, by the definition of the operator norm, this tells us that $\|f_y\| \leq \|y\|_{1}$.
+    \item In part (b), we showed that $\|f_y\| \leq \|y\|_{1}$.
+        Next, define
+        \[
+        x_N = \begin{cases}
+            y_j^{*} / |y_j| &\text{ if } y_j \neq 0, j \leq N\\
+            1 &\text{ if } y_j = 0, j \leq N\\
+            0 & \text{ else }
+        \end{cases}
+        .\]
+        Then, by construction, $\|x_N\|_{\infty} = 1$, 
+        \[
+            |f_y(x_N)| = \sum_{j=1}^{N}|y_j|
+        .\] 
+        But then, since $\lim_{N \to \infty} |f_y(x_N)| = \|y\|_{1}$, we have that for all $\epsilon > 0$, there exists some $N$ such that $|f_y(x_N)| > \|y\|_{1} - \epsilon$.
+        Therefore, $\|f_y\| = \sup \{|f_y(x)| : \|x\|_{\infty}\} \ge \|y\|_{1}$, so we deduce $\|f_y\| = \|y\|_{1}$.
+    \item Let $f \in (\ell_{0})^{*}$. Let $e_j \in \ell_{0}$ be $(0, \ldots, 0, 1, 0, \ldots)$ where the $1$ is in the $j$-th spot.
+        Now, let $y$ be such that $y_j = f(e_j)$.
+        We show that $y \in \ell^{1}$.
+
+        Define $x_N$ as in part (b), with $y$.
+        Then, $x_N \in \ell_{0}$.
+        However, since $f$ is bounded, and $x_N = \sum_{j = 1}^{N} x_j e_j$
+        \[
+        f(x_N) = \sum_{j=1}^{N} f(x_j e_j) = \sum_{j=1}^{N} x_j f(e_j) = \sum_{j=1}^{N} |y_j|
+        .\] 
+        Now, since $f$ is in $(\ell_{0})^{*}$, we have that $f$ is bounded, and because $\|x_N\|_{\infty} = 1$, we have that $|f(x_N)| \leq \|f\|$. Then,
+        \[
+        \lim_{N \to \infty} |f(x_N)| = \lim_{N \to \infty} \sum_{j = 1}^{N} |y_j| = \sum_{j=1}^{\infty} |y_j| \leq \|f\|
+        .\] 
+        Therefoe, $y$ is absolutely summable, so $y \in \ell^{1}$.
+        Then, as we saw earlier, for $x \in \ell_{0}$
+        \[
+        f_y(x) = \lim_{N \to \infty} \sum_{j= 1}^{N} x_j f(e_j) =\lim_{N \to \infty} \sum_{j = 1}^{N} f(x_j e_j) = \lim_{N \to \infty} f \left(\sum_{j = 1}^{N} x_j e_j  \right) = f(x)
+        ,\] 
+        as required, where in the last step we use the continuity of $f$, and the fact that $\|\sum_{j = 1}^{N} x_j e_j - x \|_{\infty} \to 0$ as $N \to \infty$, because $x_j \to 0$ since $x \in \ell^{0}$.
+
+    \item We have seen already that $y \mapsto f_y$ is an injective map from $\ell^{1} \to (\ell_{0})^{*}$: 
+\begin{itemize}
+    \item Map: part (b) shows that $f_y$ is a linear function on $\ell_{0}$.
+    \item Injective: part (c) shows that if $y_1 \neq y_2$, then $\|y_1 - y_2\|_{1} \neq 0$, and then $\|f_{y_1 - y_2}\| = \|y_1 - y_2\|_{1} \neq 0$ so $f_{y_1 - y_2} \neq 0$.
+    \item Surjective: part (d) shows that if $f \in (\ell_{0})^{*}$, there exists $y \in \ell^{1}$ such that $f = f_y$.
+    \item Isometry: $\|f_y\| = \|y\|_{1}$.
+\end{itemize}
+Therefore, $y \mapsto f_y$ is an isometric isomorphism.
+        \end{enumerate}
+
+
 \item On $(\ellinfty,\norm{\cdot}_\infty)$, define the shift operator $S:(x_1,x_2,\dots)\mapsto (x_2,x_3,\dots)$, the subset
 $Y=\{x-Sx\mid x\in \ellinfty\}\subset \ellinfty$, and the sequence $z=(1,1,1,\dots)\in \ellinfty$. Show:
 \begin{enumerate}[label=(\alph*), itemsep=4pt]
@@ -93,6 +359,53 @@ $Y=\{x-Sx\mid x\in \ellinfty\}\subset \ellinfty$, and the sequence $z=(1,1,1,\do
 is $T\in (\ellinfty)^*$ with $\restr{T}{Y}=0$, $T(z)=1$ and $\norm{T}=1$;
 \item $T$ is shift-invariant: $TS=T$;
 \item if $x=(x_1,x_2,\dots)\in \ellinfty$ satisfies $\lim_{k\to\infty} x_k=L$ then $Tx=L$.
+\end{enumerate}
+
+\begin{enumerate}
+    \item To show $S$ is linear, let $x, y \in \ell^{\infty}$.
+        Then, for $\lambda \in \C$
+        \begin{align*}
+            S(x + \lambda y) = (x_2 + \lambda y_2, \ldots) = (x_2, \ldots) + \lambda (y_2, \ldots) = S(x) + \lambda S(y)
+        .\end{align*}
+        To show $Y$ is a subspace, we see that $z \in \ell^{\infty}$ and $0 = z - Sz$, so $0 \in Y$.
+        Next, for $x, y \in Y$, we have some $x', y' \in \ell^{\infty}$ such that $x = x' - Sx'$ and $y = y' - Sy'$.
+        Then, for $\lambda \in \C$, we have by the linearity of $S$ that 
+        \[
+            x + \lambda y  = x' - S x' + \lambda y' - S \lambda y' = (x' + \lambda y') - S(x' + \lambda y')
+        .\] 
+        Therefore, $x + \lambda y \in Y$.
+    \item To see that $\inf \|z - y\|_{\infty} \leq 1$, we notice that $0 \in Y$ since $Y$ is a subspace, and $\|z - 0\|_{\infty} = 1$.
+        For the other direction, suppose for the sake of contradiction that there exists $y \in Y$ such that $\|z - y\|_{\infty} < 1$. Then, $\|z - y\|_{\infty} < 1 - \epsilon$ for some $\epsilon > 0$.
+        In particular, for each $j \in \N$, $|z_j - y_j| = | 1 - y_j| < 1 - \epsilon$, so $\epsilon < y_j < 2 - \epsilon$.
+        However, there exists some $x \in \ell^{\infty}$ such that $y = x - S x$, so that $y_j = x_j - x_{j+1}$.
+        Then, we notice that $\sum_{j = 1}^{N} y_j = x_1 - x_{N+1}$.
+        However, $N\epsilon < \sum_{j = 1}^{N}y_j = x_1 - x_{N+1}$, which implies that $N \epsilon - |x_1| \leq |x_{N+1}|$.
+        Therefore, $|x_{N+1}| \to \infty$ as $N \to \infty$, which contradicts that $x \in \ell^{\infty}$ so that $|x_N| \leq \|x\|_{\infty}$ for all $N \in \N$.
+        Therefore, it cannot be the case that $\|z - y\|_{\infty} < 1$, so we must have $\inf_{y \in Y} \|z  - y\|_{\infty} \geq 1$.
+    \item Since $\|z - y\| \geq 1$ for all $y \in Y$, we have that $z$ is not a limit point of any sequence of points in $Y$, so $z \not\in  \overline{Y}$.
+        Therefore, $z \in \ell^{\infty} \setminus \overline{Y}$, and we can apply Theorem 5.8 a. from Folland (a Corollary of the Hahn Banach theorem) to produce a linear map $T \in (\ell^{\infty})^{*}$ with $T(z) = 1 = \inf_{y \in \overline{Y}} \|y - z\|$ and $\|T\| = 1$.
+        (In particular, $\inf_{y \in \overline{Y}} \|y - z\| = \inf_{y \in Y} \|y - z\|$) because the norm map is a continuous map, and any limit point is arbitrarily close to points in $Y$).
+    \item Let $x \in \ell^{\infty}$. Let $y \in Sx - x$, so $y \in Y$.
+        Then,
+        \[
+            (TS - T)x = TSx - Tx = T(Sx - x) = Ty = 0
+        ,\] 
+        since $\restr{T}{Y} = 0$.
+        However, this implies that $TSx = Tx$.
+        Since $x$ was arbitrary, we have that $TS = T$, as desired.
+    \item Since $T$ is shift invariant, we have that for all $n \in \N$, $TS^{n} = T$.
+        Let $\epsilon > 0$. We will show that $Tx = T(L\cdot z) = LT(z) = L$.
+        Since $\lim_{k \to \infty} x_k = L$, we know that there exists some $N$ such that for $k \geq N$, $|x_k - L| < \epsilon$.
+        Then, by shift invariance of $T$ and $z$, we have that
+        \begin{align*}
+            T(x - L\cdot z) = TS^{N}(x - L \cdot z) = T(S^{N}x - L\cdot S^{N}z) = T(S^{N}x - L \cdot z)
+        .\end{align*}
+        However, $S^{N}x - L \cdot z = (x_N - L, x_{N+1} - L, \ldots) $ so we know that $\|S^{N}x - L \cdot z\| < \epsilon$.
+        This then implies that
+        \[
+        |T(x - L \cdot z)| \leq \|T\| \|S^{N}x - L \cdot z\| < 1 \cdot \epsilon
+        .\] 
+        Since $\epsilon$ is arbitrary, it follows that $|T(x - L \cdot z)| = 0$, so $Tx = L T(z) = L$, as desired.
 \end{enumerate}
 
 \end{enumerate}
