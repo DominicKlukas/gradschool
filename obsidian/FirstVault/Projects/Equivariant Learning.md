@@ -140,7 +140,3 @@ Next, we consider PEnGUiN [[2025_McClellan_PEnGUiNPartialEquivariantNetwork]], w
 This paper considers the physical symmetries present in a robot [[2025_Apraez_MorphologicalSymmetriesInRobotics]].
 
 
-Complete list of references
-
-
-

@@ -1,0 +1,282 @@
+\documentclass[11pt]{article}
+
+\input{../../preamble.tex}
+% --- Page geometry tuned to match the PDF look ---
+\usepackage[margin=1.2in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\newcommand{\ellinfty}{\ell^{\infty}}
+\newcommand{\ellone}{\ell^{1}}
+\newcommand{\ellzero}{\ell_{0}}
+\newcommand{\ellc}{\ell_{c}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\restr}[2]{#1\!\upharpoonright_{#2}}
+
+\usepackage{cancel}
+
+
+\begin{document}
+
+\noindent
+
+\begin{center}
+\textbf{Math 421/510: Homework 6}
+
+Dominic Klukas
+
+SN: 64348378
+\end{center}
+
+\vspace{1em}
+
+\begin{enumerate}
+\item Let $1 \le p \le 2$ and $\frac{1}{p} + \frac{1}{q} = 1$. Then $\mathcal{F} : L^p(\mathbb{R}^n) \to L^q(\mathbb{R}^n)$ and
+\[
+\|\hat{f}\|_q \le \|f\|_p.
+\]
+
+
+\textbf{Solution.}
+
+By Plancherel's theorem, we have tht for $f \in L^{1}(\R^{n}) \cap L^{2}(\R^{n})$, that $\|\mathcal{F}(f)\|_{2} = \|f\|_{2}$.
+Furthermore, by theorem 5.10.1 in the notes, $\|\mathcal{F}(f)\|_{\infty} \leq \|f\|_{1}$.
+Since $\mathcal{F}$ is a linear operator we apply Theorem 5.51 in the notes (Riesz Thorin Interpolation theorem) with $p_0 = 1$, $p_1 = 2$, $q_0 = \infty$, $q_1 = 2$, $M_0 = M_1 = 1$, so that for 
+\[
+\frac{1}{p_{\theta}} = \frac{1 - \theta}{p_0} + \frac{\theta}{p_1}, \quad \frac{1}{q_{\theta}} = \frac{1 - \theta}{q_0} + \frac{\theta}{q_1}
+,\] 
+we have that $\mathcal{F}$ extends to a bounded linear operator $\mathcal{F} : L^{p_{\theta}} (\R^{n}) \to L^{q_{\theta}}(\R^{n}) $ 
+ with $\|\mathcal{F}(f)\|_{L^{q_{\theta}}} \leq M_{0}^{1 - \theta} M_{1}^{\theta} \|f\|_{L^{p_{\theta}}} = \|f\|_{L^{p_{\theta}}}$, for $0 \leq \theta \leq 1$.
+
+ Now, let $1 \leq p \leq 2$.
+ Then, in particular, we have that when $\theta = 2(1 - p) $, then
+ \[
+     p_{\theta} = \left( \frac{1 - 2(1 - \frac{1}{p})}{1} + \frac{2(1 - \frac{1}{p})}{2} \right)^{-1} = \left( \frac{1}{p} \right)^{-1} = p
+ .\] 
+ Also, then
+ \[
+ \frac{1}{q^{\theta}} = \frac{\theta}{q_1} = \frac{2(1 - \frac{1}{p})}{2} = 1 - \frac{1}{p}
+ ,\] 
+ so that $\frac{1}{p} + \frac{1}{q} = 1$.
+ Therefore, for $1 \leq p \leq 2$, we have that $\mathcal{F} : L^{p}(\R^{n}) \to L^{q}(\R^{n})$ and $\|\hat f\|_{q} \leq \| f\|_{p}$, as desired.
+
+\item For each integer $m \ge 2$ there exists a constant $C_m > 0$ such that the following holds.
+
+If $f \in C^m(a,b)$ and
+\[
+f^{(m)}(x) \ge 1 \quad \text{for all } x \in (a,b),
+\]
+then for every $R \ge 1$,
+\[
+\left| \int_a^b e^{i R f(x)} \, dx \right| \le C_m R^{-1/m}.
+\]
+
+More generally, if $f^{(m)}(x) \ge \lambda > 0$ on $(a,b)$, then
+\[
+\left| \int_a^b e^{i R f(x)} \, dx \right| \le C_m (R\lambda)^{-1/m}.
+\]
+
+Moreover, the decay rate $R^{-1/m}$ is sharp in general: one cannot replace $R^{-1/m}$ by $R^{-\alpha}$ for any $\alpha > \frac{1}{m}$.
+
+
+
+\textbf{Solution.}
+
+We prove by induction.
+
+We start with the base case, for $m = 2$, which we proved in class.
+For the generalization, if $f^{(2)} \leq \lambda > 0$ on $(a, b)$, then $\frac{1}{\lambda} f^{(m)}(x) \geq 1$ for all $(a, b)$, so the second Van der Corput lemma quickly gives us that
+\[
+\left| \int_{a}^{b} e^{i R f(x)} dx \right|  = \left| \int_{a}^{b} e^{i (\lambda R) ( \frac{1}{\lambda} f(x))} dx \right|   \leq \frac{10}{\sqrt{\lambda R}}
+,\] 
+as required.
+This completes our base case.
+
+For inductive step, suppose that the result holds for $m - 1$, where $m \geq 3$.
+That is, if $f^{(m-1)} (x) \geq 1$ for all $x \in (a, b)$, then there exists some $C_{m-1}$ such that
+\[
+\left| \int_{a}^{b} e^{i R f(x)} dx \right| \leq C_{m-1} R^{-1 / (m-1)}
+.\] 
+Now, suppose $f^{(m)}(x) \geq 1$ for all $x \in (a, b)$.
+In particular, this implies that $f^{(m-1)}$ is strictly increasing.
+If $f^{(m-1)} \geq 1$, then by our inductive hypothesis, we have
+\[
+\left| \int_{a}^{b} e^{i R f(x)} dx \right| \leq C_{m-1} R^{-1 / (m-1)} \leq C_{m-1} R^{-1 /m }
+,\] 
+as required.
+Next, suppose that $f^{(m-1)}(x) \geq \lambda > 0$ in $(a, b)$, for any $\lambda > 0$.
+Since $f^{(m-1)}$ is strictly increasing, we must have that $f^{(m-1)}(x) \geq \lim_{y \to a} f^{(m-1)}(y)$ for $x \in (a, b)$.
+In particular, the mean value theorem gives us taht $f^{(m-1)}(a + \delta) > \lambda + \delta$, for $0 < \delta < b - a$.
+Choose $\delta > \frac{1}{R^{1 / m}}$.
+Then, where the bound on the second integral follows by the inductive hypothesis, and the bound on the first integral follows from the fact that $|e^{iRf(x)} | = 1$,
+\begin{align*}
+    \left| \int_{a}^{b} e^{i R f(x)} dx \right| \leq \left| \int_{a}^{a + \delta} e^{i R f(x)}dx \right|  + \left| \int_{a + \delta}^{b} e^{i R f(x)}dx \right| &\leq \frac{1}{R^{1 / m}} + C_{m-1} (R \frac{1}{R^{1 / m}})^{ -1 / (m-1)}\\
+    &=  \frac{1}{R^{1 / m}} + C_{m-1} (R^{\frac{(m-1)}{m}})^{-1 / (m-1)}\\
+    &= (1 + C_{m-1}) R^{- 1 / m} 
+.\end{align*}
+
+Finally, suppose that there exists some $x_0 \in (a, b)$ such that $f^{(m-1)}(x_0) = 0$.
+ince $f^{(m-1)}$ is strictly increasing, there can only be one such point.
+Also, by the mean value theorem, if $\delta > 0$, then we have that both
+\begin{align*}
+    f^{(m-1)}(x_0 - \delta) & \leq 0 - \delta \text{ and }\\
+    f^{(m-1)}(x_0 + \delta) & \geq 0 + \delta 
+.\end{align*}
+Then, we can split up the integral into three intervals:
+\begin{align*}
+    \int_{a}^{x_0 - \delta} e^{i R f(x)} dx + \int_{x_0 - \delta}^{x_0 + \delta} e^{i R f(x)} dx + \int_{x_0 + \delta}^{b} e^{i R f(x)} dx &=  I + II + III
+.\end{align*}
+We compute bounds on each in turn.
+For $I$, note that if we take the conjugate of the integral, its magnitude doesn't change, and we get
+\[
+\overline{I} =     \overline{\int_{a}^{x_0 - \delta} e^{i R f(x) } dx} = \int_{a}^{x_0 - \delta} e^{- i R f(x)} dx 
+.\] 
+Then, since $(-f)^{(m-1)} = -(f^{(m-1)}) \geq -(-\delta) = \delta$ for $x \in (a, x_0 - \delta)$ so we can apply our inductive hypothesis to get
+\[
+\left| I \right|  = \left| \overline{I} \right|  \leq C_{m-1}(R \delta)^{- 1 / (m-1)}
+.\] 
+For $II$ we use $\left| e^{iRf(x)} \right| = 1 $ to get that
+\[
+\left| \int_{x_0 - \delta}^{x_0 + \delta} e^{i R f(x)} dx  \right| \leq 2\delta
+.\] 
+Finally, for $III$, we use our inductive hypothesis, along with the bound $f^{(m-1)}(x_0 + \delta) \geq \delta$ that we established earlier:
+\[
+\left| III \right|  \leq C_{m-1} (R \delta)^{- 1 / (m-1)}
+.\] 
+Thus,
+
+\begin{align*}
+    \int_{a}^{x_0 - \delta} e^{i R f(x)} dx + \int_{x_0 - \delta}^{x_0 + \delta} e^{i R f(x)} dx + \int_{x_0 + \delta}^{b} e^{i R f(x)} dx &=  I + II + III\\
+    &\leq 2 C_{m-1} (R \delta)^{- 1 / (m-1)} + 2\delta
+.\end{align*}
+Now, if we set $\delta = \frac{1}{R^{1 / m}}$, we get:
+\begin{align*}
+   \left| \int_{a}^{b} e^{i R f(x)} dx \right| \leq 2 C_{m-1} (R^{\frac{m-1}{m}})^{- 1 / (m-1)} +  \frac{2}{R^{1 / m}} = (2 C_{m-1} + 2) R^{- 1 / m}
+,\end{align*}
+as desired. (The desired constant is $\max (2 C_{m-1} + 2)$).
+For the general case, consider that if $f^{(m)} \geq \lambda > 0$, then $1 / \lambda f^{(m)} \geq 1$, so we can use the result we just derived to compute 
+\[
+    \left| \int_{a}^{b} e^{i R f(x)}dx \right| = \left| \int_{a}^{b} e^{i (R \lambda)( f(x) / \lambda) } dx \right| \leq C_m (\lambda R)^{- 1 / m}
+,\] 
+as desired.
+
+
+To show that the decay rate is strict, consider the function $f(x) = \frac{1}{m!} x^{m}$.
+In particular, we have $f^{(m)}(x) = 1$.
+Then, consider:
+\[
+\int_{0}^{1} e^{i R \frac{1}{m!}x^{m}} dx = R^{-1 /m}  \int_{0}^{R^{ 1 / m}} e^{i \frac{1}{m!} u^{m}} du
+.\] 
+
+
+
+Now, as $R \to \infty$, we can use a similar contour integration trick as shown in the extra lecture notes (but since this is not a complex analysis course, I will omit the details) to show that
+\[
+\int_{0}^{R^{1/m}} e^{i \frac{1}{m!} u^{m}}\,du
+=
+\int_{0}^{R^{1/m}} e^{- \frac{1}{m!} u^{m}}\,du
++
+\epsilon(R),
+\]
+where $\epsilon(R)\to 0$ as $R\to\infty$.
+
+Now make the change of variables
+\[
+t=\frac{1}{m!}u^m.
+\]
+Then
+\[
+dt=\frac{m}{m!}u^{m-1}\,du=\frac{1}{(m-1)!}u^{m-1}\,du.
+\]
+Since $u=(m!t)^{1/m}$, we have
+\[
+du=(m-1)!u^{1-m}\,dt
+=(m-1)!(m!t)^{\frac1m-1}\,dt
+=
+\frac{(m!)^{1/m}}{m}\, t^{\frac1m-1}\,dt.
+\]
+Also, when $u=0$ we have $t=0$, and when $u=R^{1/m}$ we have $t=R/m!$. Therefore,
+\[
+\int_{0}^{R^{1/m}} e^{- \frac{1}{m!} u^{m}}\,du
+=
+\frac{(m!)^{1/m}}{m}
+\int_0^{R/m!} t^{\frac1m-1}e^{-t}\,dt.
+\]
+
+Then we cite Rudin, in the section on the Gamma function, which says that
+\[
+\Gamma\!\left(\frac1m\right)=\int_0^\infty t^{\frac1m-1}e^{-t}\,dt.
+\]
+Hence
+\[
+\lim_{R\to\infty}\int_{0}^{R^{1/m}} e^{- \frac{1}{m!} u^{m}}\,du
+=
+\frac{(m!)^{1/m}}{m}\Gamma\!\left(\frac1m\right),
+\]
+which is a finite real number. It follows that
+\[
+\int_{0}^{R^{1/m}} e^{i \frac{1}{m!} u^{m}}\,du
+\to
+\frac{(m!)^{1/m}}{m}\Gamma\!\left(\frac1m\right)
+\qquad\text{as }R\to\infty.
+\]
+Therefore, we have that
+\[
+\int_{0}^{1} e^{i R \frac{1}{m!} x^{m}} dx = R^{-1 / m} \int_{0}^{R^{1 / m}} e^{i \frac{1}{m!} u^{m}} du \to R^{- 1 / m} \left(\frac{(m!)^{1/m}}{m}\Gamma\!\left(\frac1m\right)\right)
+,\] 
+so the decay rate is strict.
+
+
+
+\item Let $f_n := \chi_{[2^n, 2^{n+1}]}$ for $n \in \mathbb{N}$.
+
+\begin{enumerate}
+\item Let $1 < p < \infty$. Is it true that $f_n \to 0$ weakly in $L^p(\mathbb{R})$ as $n \to \infty$? Explain why or why not.
+
+\item Is it true that $f_n \to 0$ weak$^\ast$ in $L^\infty(\mathbb{R}) = (L^1(\mathbb{R}))^\ast$ (i.e. as linear functionals on $L^1$) as $n \to \infty$? Explain why or why not.
+\end{enumerate}
+
+
+\textbf{Solution.}
+
+\begin{enumerate}
+    \item 
+        This is false. To show that is this is the case, consider the function 
+        \[
+        g = \sum_{n = 1}^{\infty} 2^{-n} \chi_{[2^{n}, 2^{n+1})}
+        .\] 
+        To see that $\varphi_{g} \in (L^{p})^{*} \cong L^{q}$, we consider that
+        \[
+        \int_{\R} |g|^{q} = \sum_{n=1}^{\infty} 2^{-nq}2^{n} = \sum_{n = 1}^{\infty} (2^{(1 - q)})^{n}
+        .\] 
+        Since $q = (1 - \frac{1}{p})^{-1}$, we have that $1 < q < \infty$, so that $1 - q < 0$, and $0 < 2^{1 - q} < 1$, so that this sum is a geometric series and so converges.
+
+        Then, computing the linear functional for each $f_n$, we have
+        \[
+        \varphi_{g}(f_n) = \int_{\R} g f_n = \int_{2^{n}}^{2^{n+1}} 2^{-n} = 1
+        ,\] 
+        which does not go to zero as $n \to \infty$.
+        Therefore, it is not true that $f_n \to 0$ weakly in $L^{p}(\R)$ as $n \to \infty$.
+
+
+
+    \item Fix $g \in L^{1}$.
+        Then, as a linear functional, we have that $f_n(g) = \int_{\R} f_n g$.
+        By considering that the finitely supported simple functions are dense in $L^{1}$, we find some $h \in L^{1}$ such that $h$ is a finitely supported simple function arbitrarily close the $g$ in the $L^{1}(\R)$ norm and $n$ is such that $n > N$ for $2^{N} > \sup \{\mathrm{supp}(h)\} $.
+        It's quick to see that $\|f_n\|_{L^{\infty}(\R)}= 1$.
+        Then,
+        \begin{align*}
+            \left| \int_{\R} f_n g \right| \leq \left| \int_{\R} f_n (g - h) \right|  + \left| \int_{\R} f_n h \right| &\leq \|f_n\|_{L^{\infty}(\R)} \|g - h\|_{L^{1}(\R)} + 0\\
+            &<  1 \cdot  \epsilon + 0 = \epsilon
+        .\end{align*}
+        Since $\epsilon$ was arbitrary we conclude $f_n \to 0$ weak*.
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}

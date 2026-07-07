@@ -4,39 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "40f1b7ca91ec9ea7",
+        "id": "19f8fdd838b17a13",
         "type": "tabs",
         "children": [
           {
-            "id": "700ac573c34d6563",
+            "id": "65d173fdc7e965b6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Dataview.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Dataview"
-            }
-          },
-          {
-            "id": "0d6d983176963e9b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Projects/Deep Learning Class Project.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Deep Learning Class Project"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -186,34 +167,38 @@
       "system3-relay:Relay": false
     }
   },
-  "active": "0d6d983176963e9b",
+  "active": "65d173fdc7e965b6",
   "lastOpenFiles": [
+    "Projects/MAS/Assume Guarantee Contracts for Heterogeneous Systems.md",
+    "Other/Genesis Study.md",
+    "Projects/MAS/Cyrus Proposal.md",
+    "Projects/MAS/AG Contracts Presentation.md",
+    "Images/Pasted image 20260614150437.png",
+    "Other/FIR Webinar.md",
+    "Projects/MAS/Ideas.md",
+    "Images/Screenshot2026-05-26_09-30-06.png",
+    "technical_library/Interesting Papers.md",
+    "Projects/MAS",
+    "technical_library/Papers/2026_Lillemark_FlowEquivariantWorldModels.md",
+    "technical_library/Papers/2026_Terver_WhatDrivesSuccessPlanningWithJointEmbeddingWorldModels.md",
     "Dataview.md",
-    "technical_library/Papers/2022_Park_LearningSymmetryEmbeddingsEquivariantWorldModels.md",
-    "technical_library/Papers/2024_Yang_LatentSpaceSymmetryDiscovery.md",
-    "technical_library/Papers/2023_Wang_DiscoveringSymmetryBreakingRelaxedGroupConvolution.md",
-    "technical_library/Papers/2023_Neary_MultifidelitySimToReal.md",
-    "technical_library/Papers/2023_Li_PACNeRF.md",
-    "technical_library/Papers/2023_Karjol_SymmetryDiscoveryFramework.md",
-    "technical_library/Papers/2023_Galanti_GeneralizationBoundsForSparseNNs.md",
-    "technical_library/Papers/2023_Djeumou_PhysicsConstrainedNeuralSDEs.md",
-    "technical_library/Papers/2022_Wang_S02EquivRL.md",
-    "technical_library/Papers/2022_Wang_OnRobotEquivariantLearning.md",
-    "technical_library/Papers/2022_Wang_ApproxEquivNNSymmetricDynamics.md",
-    "technical_library/Papers/2025_Park_ApproxEquivRL.md",
-    "technical_library/Papers/2025_Chakra_RealIsSim.md",
-    "technical_library/Papers/2025_DLSymmetryLearningTheory.md",
-    "technical_library/Papers/2025_Esser_RepLearningTheoreticalFoundations.md",
-    "technical_library/Papers/2025_Geng_MotionPromptingVideoGeneration.md",
-    "technical_library/Papers/2025_Hamid_ProbabilisticInferenceMDPSymmetryExploitation.md",
-    "technical_library/Papers/2024_Tian_VisualAutoregressiveModeling.md",
+    "Idea.md",
+    "Welcome.md",
+    "Tidbits.md",
+    "Master Todo List.md",
+    "Projects/Understanding PPO and SAC.md",
+    "Projects/Physics Aware Learning.md",
+    "Projects/Optuna DB.md",
+    "Projects/Equivariant RL Hyperparameter Optimization.md",
+    "Projects/Equivariant Learning.md",
+    "Projects/Equivariance Ideas.md",
     "Projects/Deep Learning Class Project.md",
-    "Projects/Deep Learning EECE 571F Course Project.md",
-    "Projects/Equivariance Gain Predictor/Equivariance Gain Predictor.md",
-    "Courses/EECE 571 Sequential Decision Making/Course Project/Project Notes.md",
-    "Projects/Equivariance Gain Predictor/EGP Lab Notebook.md",
-    "technical_library/Papers/2007_Keshav_HowToReadPaper.md",
-    "technical_library/Papers/2022_Satorras_EGNN.md",
+    "Projects/Controls Seminar Presentation.md",
+    "High Level Notes/Research Directions.md",
+    "technical_library/Papers/2020_Neary_RMsForCooperativeMARL.md",
+    "technical_library/Papers/2022_Park_LearningSymmetryEmbeddingsEquivariantWorldModels.md",
+    "technical_library/Papers/2025_Keller_FlowEquivariantRNNs.md",
+    "High Level Notes",
     "Projects/Equivariance Gain Predictor",
     "Pasted image 20260203090830.png",
     "Images/Screenshot2026-01-22_17-35-26.png",
@@ -225,14 +210,10 @@
     "Images/Screenshot2025-11-13_11-12-21.png",
     "Images/Pasted image 20251112155835.png",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones/attachments",
-    "Images/Screenshot2025-10-23_17-53-47.png",
-    "Images/Screenshot2025-10-23_17-53-55.png",
     "Images",
     "Projects/Research Grant Applications",
     "Courses/EECE 571 COCO/Project/Sub-optimal MPC for drones",
     "Courses/EECE 571 COCO/Project",
-    "Courses/EECE 571 COCO",
-    "Other",
-    "Courses/EECE 571 Sequential Decision Making/Course Project"
+    "Courses/EECE 571 COCO"
   ]
 }

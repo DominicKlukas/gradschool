@@ -1,0 +1,26 @@
+## Introduction
+- We need drones, robots, and full blown autonomous systems, for:
+	- Defense, for example the arctic
+	- The work force, for example care homes, disaster response, infrastructure inspection, mining, and industry
+- In doing so, we face challenges:
+	- Accessible: non-skilled users must be able to use them
+	- Safe: Guarantees on system behavior
+	- Compositional: Humans, and a variety of robots, must work together
+	- Data efficiency: behave in situations never seen before
+- We then, have the following objectives
+	- Integrate LLMs for ease of use, and for safety, with interfaces to semantic, formal reasoning
+	- Design multi-agent systems which accommodate these new needs
+	- Physics aware learning, to handle data efficiency problems
+## Objective 2: Multi-Agent Systems
+- Problem
+	- State space/action space grows exponentially with the number of agents
+	- Communication problems between agents 
+- O2a
+	- Develop a common representation for assume guarantee contracts, LTL logic, reward machines, that must capture heterogeneous capabilities, evolving learned behaviors, and asynchronous interactions (to deal with state space problem).
+	- Use foundation models to automate contract generation and task decomposition steps.
+- O2b
+	- Communication strategies
+		- Senders decide which information is valuable to send
+		- Receivers must decide who to query
+		- Proactive communication... share information early
+		- Using LMs and VLMs for this whole process
